@@ -1,0 +1,11 @@
+/* To make the container holding the charts and calendar at the center of the webpage */
+#chartsAndCalendar-container {
+    width: 80%;
+    margin: auto;
+}
+
+
+/* To make the cursor to become pointer when hovering over the FullCalendar event */
+.fc-event{
+    cursor: pointer;
+}

@@ -1,11 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment</title>
-</head>
-<body>
+    <?php include "./appointmentComponents/header.php"; ?>
+
+    <body>
+
+        <div id='chartsAndCalendar-container'>
+            <?php include"./appointmentComponents/chartsAndCalendar.php" ?>
+        </div>
     
-</body>
+
+        <?php include "./appointmentComponents/scripts.php" ?>
+    </body>
 </html>

@@ -9,3 +9,8 @@
 .fc-event{
     cursor: pointer;
 }
+
+/* To make the an event in the calendar list to become transparent */
+.fc-event-transparent{
+    color: rgba(0,0,0,0.3);
+}

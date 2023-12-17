@@ -4,7 +4,7 @@
     crossorigin="anonymous">
 </script>
 
-<!-- Link to Chart.js CDN -->
+<!-- Link to ApexChart CDN -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <!-- Link to FullCalendar CDN -->
@@ -13,12 +13,11 @@
 <!-- moment lib -->
 <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script>
 
-<!-- the moment-to-fullcalendar connector -->
+<!-- the moment-to-fullcalendar connector (must put below the moment lib) -->
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/moment@6.1.10/index.global.min.js'></script>
 
 <!-- Link to axios CDN -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 
 
 <!-- Link to controller files -->

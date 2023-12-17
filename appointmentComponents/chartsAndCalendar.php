@@ -11,7 +11,7 @@
                     <!-- Title -->
                     <h5 class='card-title'>Total Appointment Info</h5>
 
-                    <div id='pie-chart' style='height: 50vh'></div>
+                    <div id='pie-chart' style='height: 41vh'></div>
                 
                 </div>
             </div>
@@ -23,9 +23,9 @@
 
                 <div class='card-body'>
                     <!-- Title -->
-                    <h5 class='card-title'>Weekly Appointment</h5>
+                    <h5 class='card-title'>Weekly Scheduled Appointment</h5>
 
-                    <div id='area-chart' style='height: 50vh'></div>
+                    <div id='area-chart' style='height: 41vh'></div>
                 </div>
 
             </div>
@@ -40,7 +40,7 @@
 
                 <div class='card-body'>
 
-                    <div id='calendar' style='height: 50vh'></div>
+                    <div id='calendar-admin' style='height: 50vh'></div>
                 </div>
 
             </div>
@@ -48,3 +48,4 @@
     </div>
 
 </div>
+

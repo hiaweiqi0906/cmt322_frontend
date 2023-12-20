@@ -4,24 +4,33 @@
     crossorigin="anonymous">
 </script>
 
+<!-- Popper CDN-->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+
 <!-- Link to ApexChart CDN -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-<!-- Link to FullCalendar CDN -->
+<!-- FullCalendar CDN-->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
-<!-- moment lib -->
+<!-- moment lib CDN-->
 <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script>
 
 <!-- the moment-to-fullcalendar connector (must put below the moment lib) -->
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/moment@6.1.10/index.global.min.js'></script>
 
-<!-- Link to axios CDN -->
+<!-- axios CDN -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+<!-- Tempus Dominus JavaScript (Date and Time Picker) -->
+<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.19/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
 
-<!-- Link to controller files -->
-<script src="./appointmentComponents/controllers/appointmentController.js"></script>
 
-<!-- Link to components files -->
-<script src="./appointmentComponents/helper/chartsAndCalendar.js"></script>
+<script>
+
+  new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+    display: {
+      sideBySide: true
+  }
+});
+</script>

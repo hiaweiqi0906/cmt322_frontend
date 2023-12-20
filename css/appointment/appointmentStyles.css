@@ -1,0 +1,30 @@
+/* To make the container holding the charts and calendar at the center of the webpage */
+#admin-appointment-container {
+  width: 80%;
+  margin: auto;
+}
+
+/* To make the cursor to become pointer when hovering over the FullCalendar event */
+.fc-event{
+  cursor: pointer;
+}
+
+/* To make the an event in the calendar list to become transparent */
+.fc-event-transparent{
+  color: rgba(0,0,0,0.3);
+}
+
+
+/* To make the button background color to dark blue and has shadow effect */
+.button1{
+  background-color: #1C277E;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+/* To make the button font color to dark blue, thicker font and shadow effect */
+.button2{
+  color: #1C277E;
+  font-weight: 500;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}

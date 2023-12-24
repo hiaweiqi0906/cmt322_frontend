@@ -1,5 +1,5 @@
 /* To make the container holding the charts and calendar at the center of the webpage */
-#admin-appointment-container {
+#appointment-container {
   width: 80%;
   margin: auto;
 }
@@ -27,4 +27,15 @@
   color: #1C277E;
   font-weight: 500;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.event-tooltip{
+  --bs-tooltip-bg: #1C277E;
+  --bs-tooltip-color: white;
+  --bs-tooltip-opacity: 1;
+}
+
+.datepicker-dropdown table tr td.disabled,
+.datepicker-dropdown table tr td.disabled:hover {
+  color: rgba(153, 153, 153, 0.5); /* Set the text color for disabled dates */
 }

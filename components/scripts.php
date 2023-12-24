@@ -22,15 +22,5 @@
 <!-- axios CDN -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<!-- Tempus Dominus JavaScript (Date and Time Picker) -->
-<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.19/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
-
-
-<script>
-
-  new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
-    display: {
-      sideBySide: true
-  }
-});
-</script>
+<!-- Bootstrap Datepicker script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"></script>

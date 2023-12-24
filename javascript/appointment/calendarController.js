@@ -1,132 +1,3 @@
-
-// To create a pie chart
-const createPieChart = (id, appointments) => {
-
-  // To get the number of scheduled appointments and cancelled appointments
-  const scheduledAppointments = appointments.filter(appointment => appointment.status === 'scheduled').length;
-  const cancelledAppointments = appointments.length - scheduledAppointments;
-
-  // Pie chart settings
-  var options = {
-    chart: {
-      type: 'donut',      // Use donut chart
-      height: '90%',      // The height of the chart
-    },
-    colors: ['#1C277E', '#3480DF'],
-    plotOptions: {
-      pie: {
-        donut: {
-          labels: {           // To show the total number of appointments in the center of the pie chart
-            show: true,
-            name: {
-              show: true
-            },
-            value: {
-              show: true
-            },
-            total: {
-              show: true,
-              fontSize: '14px',
-              label: 'Total Appointments'
-            }
-          },
-        },
-      },
-    },
-    labels: ['Scheduled Appointments', 'Cancelled Appointments'],   // Category label
-    series: [scheduledAppointments, cancelledAppointments]          // The value for each category
-  }
-
-  var chart = new ApexCharts(document.getElementById(id), options);   // Apply the chart to the id
-
-  chart.render();     // Render the chart
-}
-
-// To create an array of current week dates
-const createWeekDates = () => {
-
-  const today = moment();
-
-  // Calculate the start date of the current week (Sunday)
-  const sundayOfThisWeek = today.clone().startOf('week');
-
-  // Generate an array to store the dates for each day of the week
-  const weekDates = [];
-
-  // Add to the array with dates for each day of the week
-  for (let i = 0; i < 7; i++) {
-    const currentDate = sundayOfThisWeek.clone().add(i, 'days');
-    const formattedDate = currentDate.format('YYYY-MM-DD');
-    weekDates.push(formattedDate);
-  }
-
-  return weekDates;
-}
-
-// To create an area chart
-const createAreaChart = (id, appointments) => {
-
-  // To get the scheduled appointments
-  const scheduledAppointments = appointments.filter(appointment => appointment.status === 'scheduled');
-
-  // Get the week dates
-  const weekDates = createWeekDates();
-
-  // Hold the number of appointments for each day of the week
-  const appointmentsByWeekDates = [];
-
-  // To get the number of appointments for each day of the week
-  weekDates.forEach(date => {
-    const numberOfAppointments = scheduledAppointments.filter(appointment => appointment.dateStart === date).length;
-    appointmentsByWeekDates.push(numberOfAppointments);
-  });
-
-  // Area chart settings
-  options = {
-    chart: {
-      type: 'area',   // USe Area chart
-      height: '90%',  // The height of the chart
-      zoom: {
-        enabled: false  // Disable the zoom functionality
-      }
-    },
-    colors: ['#14529E'],
-    dataLabels: {
-      enabled: false    // Disable the label for each data's value
-    },
-    markers: {          // Show the markers for each data
-      size: 6
-    },
-    stroke: {           // The line style
-      curve: 'straight'
-    },
-    tooltip: {
-      y: {
-        formatter: function (value) {        // To ensure the value is integer
-          return value;
-        }
-      }
-    },
-    xaxis: {
-      categories: weekDates,       // x-axis
-      labels: {
-        formatter: function (value) {
-          return moment(value).format("DD MMM");   // Change the format, example 12 Dec
-        }
-      }
-    },
-    series: [{
-      name: 'Appointments',
-      data: appointmentsByWeekDates  // y-axis
-    }],
-
-  };
-
-  var chart = new ApexCharts(document.getElementById(id), options);   // Apply the chart to the id
-
-  chart.render();     // Render the chart
-}
-
 // To format the time
 // For example 2023-12-12 4 PM to 2023-12-12T16:00 (used for calendar)
 const formatTime = (startDate, startTime, endDate, endTime) => {
@@ -162,16 +33,29 @@ const formatTime = (startDate, startTime, endDate, endTime) => {
   
 }
 
+
 // To compare the end date and time is before current date and time
 const compareBeforeCurrentTime = (endTime) => {
   const currentTime = moment();   // Get the current date and time
 
-  // Special case for all day event time, if it don't have time and compare to current time, it return true although they are current day
+  // Special case for all day event time, if it don't have time and compare to current time, it return true although they are same day
   if (!endTime.includes('T'))
     endTime = endTime + 'T24:00'
 
   return moment(endTime).isBefore(currentTime);
 }
+
+
+// Generate tooltip for each of the appointment events
+const generateTooltip = (timeStart, timeEnd, title) => {
+  if(!timeStart && !timeEnd){
+    return '<b>All day</b>' + '<br>' + title;
+  }
+  else{
+    return '<b>' + timeStart + ' - ' + timeEnd + '</b><br>' + title;
+  }
+}
+
 
 // To create a calendar
 const createCalendar = (id, appointments, username, needFilter) => {
@@ -253,16 +137,19 @@ const createCalendar = (id, appointments, username, needFilter) => {
       }
     }
 
+    const tooltip =  generateTooltip(appointment.timeStart, appointment.timeEnd, appointment.title);
+
     return {        // return each event, as a result it is an array of events
       title: appointment.title,
       start: startEnd.start,
       end: startEnd.end,
-      id: appointment.id,
+      id: appointment._id,
       backgroundColor: backgroundColor,
       textColor: textColor,
       borderColor: borderColor,
       classNames: classNames,
-      appointment: appointment
+      appointment: appointment,
+      tooltip: tooltip
     }
   });
 
@@ -270,6 +157,7 @@ const createCalendar = (id, appointments, username, needFilter) => {
 
   var calendarEl = document.getElementById(id);
 
+  // Calendar settings
   var calendar = new FullCalendar.Calendar(calendarEl, {
     themeSystem: 'bootstrap5',      // To make the calendar suit to the Boostrap theme
     initialView: 'timeGridWeek',    // The initial view for the calendar
@@ -278,9 +166,11 @@ const createCalendar = (id, appointments, username, needFilter) => {
       center: 'title',
       right: 'timeGridWeek,listMonth' // The options for the calendar's views
     },
-    //hiddenDays: [0, 6],                 // To make the calendar only show Monday to Friday in time grid week
-    slotMinTime: '08:00:00',            // To start the time from 8 am
-    aspectRatio: 1.5,                   // The ratio of width to height
+    dayHeaderFormat: {weekday: 'short', day:'numeric'},
+    //hiddenDays: [0, 6],               // To make the calendar only show Monday to Friday in time grid week
+    slotMinTime: '07:00:00',            // To set the start time
+    slotMaxTime: '19:00:00',            // To set the end time
+    aspectRatio: 1.55,                  // The ratio of width to height (high ratio means smaller height)
     timeZone: 'UTC',
     nowIndicator: true,                 // To mark the current time
     now: moment().format('YYYY-MM-DDTHH:mm'),   // Used for current time indicator
@@ -289,37 +179,19 @@ const createCalendar = (id, appointments, username, needFilter) => {
     events: events,
 
     eventClick: function (info) {
-      console.log(info.event.extendedProps.appointment);
+      console.log(info.event.id);
     },
+    eventDidMount: function(info) {
+      var tooltip = new bootstrap.Tooltip(info.el, {
+        title: info.event.extendedProps.tooltip,
+        placement: 'top', // Adjust tooltip placement as needed
+        trigger: 'hover',
+        container: 'body',
+        html: true,
+        customClass: 'event-tooltip'
+      });
+    }
   });
 
   calendar.render();
-}
-
-// To initialize the attendee select options
-const initSelect = (id, username) => {
-  const selectElement = document.getElementById(id);
-
-  // To send get request to get the attendee options list from server except the user himself/herself
-  axios.get('http://localhost:9000/appointments/userlist/' + username)
-    .then((response) => {
-      return response.data
-    })
-    .then((data) => {
-      data.forEach(attendee => {
-        // Add the options to the select
-        const optionElement = document.createElement('option');
-        optionElement.value = attendee;
-        optionElement.text = attendee;
-        selectElement.add(optionElement);
-
-        dselect(selectElement,{  // Modify the select element
-          search: true,   
-        });
-      })
-      
-    })
-    .catch((err) => {
-      console.log('Error fetching user list', err)
-    });
 }

@@ -7,7 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   initSelect('attendees-select', username); // Initialize select options
 
-  axios.get('http://localhost:9000/appointments/admin/' + username)
+  axios({
+    method: 'GET',
+    url: '/api/appointments/',
+  })//'http://localhost:6500/api/appointments/'('http://localhost:9000/appointments/admin/' + username)
     .then((response) => {
       return response.data;
     })

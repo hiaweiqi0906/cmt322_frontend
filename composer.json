@@ -1,0 +1,17 @@
+{
+    "name": "hiaweiqi/case-ace_frontend",
+    "autoload": {
+        "psr-4": {
+            "Hiaweiqi\\CaseAceFrontend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "hiaweiqi0906",
+            "email": "hiaweiqi@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

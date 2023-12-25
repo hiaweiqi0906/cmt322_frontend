@@ -13,7 +13,7 @@
     </div>
 
 
-    <?php include "../../components/scripts.php"; ?>
+    <?php include "../../components/common/scripts.php"; ?>
     <?php include "../../components/appointment/adminScript.php"; ?>
   </body>
 </html>

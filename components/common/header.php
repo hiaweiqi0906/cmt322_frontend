@@ -14,3 +14,5 @@
 <!-- Tempus Dominus Styles (Date and Time Picker) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.19/dist/css/tempus-dominus.min.css" 
   crossorigin="anonymous">
+
+  <link rel="stylesheet" href="../../css/components/styles.css">

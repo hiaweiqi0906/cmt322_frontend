@@ -2,18 +2,13 @@
 <html lang="en">
 
 <head>
-    <!-- import common header and common scripts, using correct relative path -->
     <?php include "../components/common/header.php"; ?>
     <?php include "../components/common/scripts.php" ?>
-
-    <!-- Add any relevant scripts -->
 
     <title>CaseAce Dashboard</title>
     <script>
         // Choose whether protected or unprotected
         checkProtectedRoutes();
-
-        // Add more scripts
     </script>
 </head>
 
@@ -22,69 +17,67 @@
     <?php include "../components/common/navbar.php"; ?>
 
     <div class="main-content">
-        <h1>Dashboard</h1>
-        <h2 class="user-greeting">Good Morning, user</h2>
-        <div class="row">
-            <div class="col-9 no-pr">
-                <div class="row row-1">
-                    <div class="col-6">
+        <h1 class="h1-main-title">Dashboard</h1>
+        <h2 class="h2-user-greeting">Good Morning, user</h2>
+        <div class="flex-con">
+            <div class="col-9 nested-flex-con-col" style="margin-top: 0px;">
+                <div class="nested-flex-con-row">
+                    <div class="col-6 row-1">
                         <!-- Overall Analytics for Cases -->
-                        <div class="float-card">
-                            <h3>Cases Analytics</h3>
-                            <div id="chart-case">
+                        <div class="float-card inner-float-card">
+                            <h3 class="h3-semibold-24">Cases</h3>
+                            <div class="chart-div" id="chart-case">
 
                             </div>
                         </div>
-
                     </div>
-                    <div class="col-6 no-pr">
+                    <div class="col-6 row-1">
                         <!-- Overall Analytics for Users -->
-                        <div class="float-card">
-                            <h3>Users Analytics</h3>
-                            <div id="chart-user">
+                        <div class="float-card inner-float-card" style="margin-right: 0px;">
+                            <h3 class="h3-semibold-24">Users</h3>
+                            <div class="chart-div" id="chart-user">
 
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row row-1">
-                    <div class="col-4" style="background-color: grey;">
-                        <!-- Overall Analytics for Cases -->
-                        <div>
-                            <h3>Clients Analytics</h3>
-                            <div id="chart-clients">
+                <div class="nested-flex-con-row row-1">
+                    <div class="col-4 row-1">
+                        <!-- Overall Analytics for Clients -->
+                        <div class="float-card inner-float-card">
+                            <h3 class="h3-semibold-24">Clients</h3>
+                            <div class="chart-div" id="chart-case">
 
                             </div>
                         </div>
 
                     </div>
-                    <div class="col-8 no-pr" style="background-color: red;">
-                        <!-- Overall Analytics for Users -->
-                        <div>
-                            <h3>Calendar Analytics</h3>
-                            <div id="chart-calendar">
+                    <div class="col-8 row-1">
+                        <!-- Overall Board for appointment -->
+                        <div class="float-card inner-float-card" style="margin-right: 0px;">
+                            <h3 class="h3-semibold-24">Users Analytics</h3>
+                            <div class="chart-div" id="chart-user">
 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-3" style="">
                 <!-- Overall Analytics for Documents -->
-                <div>
-                    asdf
+                <div class="float-card">
+                    <h3 class="h3-semibold-24">Documents Analytics</h3>
+                    <div class="chart-div" id="chart-case">
+
+                    </div>
                 </div>
             </div>
         </div>
-
-
-
     </div>
-    <!-- Write relevant html here -->
 
     <script>
-        $('.user-greeting').text(renderUserGreeting())
-
+        $('.h2-user-greeting').text(renderUserGreeting())
+        endLoader();
         // Get statistics data from server
         axios.get('/api/statistics/dashboard', )
             .then(function(response) {

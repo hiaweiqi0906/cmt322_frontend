@@ -1,9 +1,29 @@
 /* -------------------------------------------------------------------------- */
-/*                                    Main                                    */
+/*                          Main, Titles, Paragraphs                          */
 /* -------------------------------------------------------------------------- */
 body {
     margin: 0;
 }
+
+.h3-semibold-24 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.h1-main-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 3rem;
+}
+
+.h2-user-greeting {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+
 
 /* -------------------------------------------------------------------------- */
 /*                                   Navbar                                   */
@@ -42,7 +62,8 @@ li.navbar-v a:hover:not(.active) {
 .main-content {
     margin-left: 8.33%;
     padding: 0px 50px;
-    height: 1000px;
+    padding-top: 1rem;
+    height: 100vh;
 }
 
 
@@ -53,14 +74,14 @@ li.navbar-v a:hover:not(.active) {
     display: flex;
     flex-direction: row;
     width: 100%;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap;
     padding: 0px;
-    margin: 0px;
+    margin: 0px; */
 }
 
-.margin-between-flex {
+/* .margin-between-flex {
     margin-right: 0.625rem !important;
-}
+} */
 
 .col-3,
 .col-4,
@@ -83,13 +104,14 @@ li.navbar-v a:hover:not(.active) {
 .col-9>div,
 .col-10>div,
 .col-12>div {
-    flex: 1;
-    margin-right: 0.625em;
+    /* flex: 1; */
+
+    margin: 0.625em 0.625em 0px 0px;
     height: 100%;
 }
 
-.float-card{
-    filter: drop-shadow(0px 1.5px 2px #00000050);
+.float-card {
+    filter: drop-shadow(0px 1.5px 2px #00000075);
     background-color: white;
     border-radius: 1.875rem;
     padding: 0.75rem;
@@ -103,10 +125,348 @@ li.navbar-v a:hover:not(.active) {
     width: 75%;
 }
 
+.col-7 {
+    width: 58.33%;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+.col-5 {
+    width: 41.67%;
+}
+
 .col-3 {
     width: 25%;
 }
 
-.row-1{
-    height: 380px;
+.col-4_5 {
+    width: 37.5%;
+}
+
+.row-1 {
+    height: 23.75rem;
+}
+
+.inner-float-card {
+    margin-top: 0px !important;
+}
+
+.flex-con {
+    display: flex;
+    flex-flow: row;
+    min-height: 50px;
+}
+
+.nested-flex-con-col {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.nested-flex-con-row {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Charts                                   */
+/* -------------------------------------------------------------------------- */
+.chart-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.three-line-statistics {
+    color: #000;
+    font-family: Lato;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 90%;
+}
+
+.two-line-statistics {
+    color: #000;
+    font-family: Lato;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 90%;
+}
+
+.document-info-block {
+    margin-top: 1rem;
+}
+
+.two-line-statistics p {
+    margin: 0.4rem;
+    margin-left: 0px;
+}
+
+.three-line-statistics p {
+    margin: 0px;
+}
+
+.last-accessed {
+    color: #000;
+    font-family: Lato;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 100;
+    line-height: 90%;
+    /* 14.4px */
+}
+
+.big-number-statistics {
+    color: #000;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.info-text-document {
+    color: #000;
+    font-family: Lato;
+    font-size: 1.25rem;
+    text-align: justify;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-right: 3rem;
+}
+
+.mg-between-info{
+    margin-top: 1rem;
+}
+
+.info-float-card{
+    filter: none;
+}
+
+.small-number-statistics {
+    color: #000;
+    font-family: Lato;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 800;
+}
+
+.big-number-statistics-block {
+    display: flex;
+    justify-content: space-between;
+    line-height: 2.1rem;
+    height: 3rem;
+}
+
+.big-number-statistics-block span {
+    align-self: flex-end;
+}
+
+.row-1-statistics {
+    height: 14rem;
+}
+
+.non-float-card {
+    margin-left: 0.75rem;
+    margin-top: 2rem;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                Table, TR, TD                               */
+/* -------------------------------------------------------------------------- */
+.table-general {
+    width: 100%;
+}
+
+.table-general {
+    margin-top: 1rem;
+
+}
+
+table.table-general tr td {
+    flex: 1;
+    width: 19px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+th.col-1,
+th.col-2 {
+    color: #000;
+    font-family: Lato;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 100%;
+    /* 14px */
+    text-align: center;
+}
+
+table.table-general th div.sortArrow {
+    width: 11px;
+    height: 6px;
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: 2px;
+    position: relative;
+}
+
+table.table-general th div.sortArrow div.sortArrowAscending,
+table.table-general th div.sortArrow div.sortArrowDescending {
+    position: absolute;
+    display: none;
+    width: 11px;
+    height: 6px;
+}
+
+table.table-general th div.sortArrow div.sortArrowAscending {
+    background: url('../../assets/arrow_asc.png') no-repeat;
+}
+
+table.table-general tr {
+    margin-top: 1.2rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+}
+
+table.table-general th div.sortArrow div.sortArrowDescending {
+    background: url('../../assets/arrow_desc.png') no-repeat;
+}
+
+table.table-general td,
+table.table-general td a {
+    overflow: hidden;
+    color: #000;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    /* 16px */
+}
+
+table.table-general tbody tr:hover {
+    filter: drop-shadow(0px 1.5px 2px #00000075);
+    background-color: white;
+    transition: all .2s ease-in-out;
+    border-radius: 1rem;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                   Loader                                   */
+/* -------------------------------------------------------------------------- */
+.loader-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.loader {
+    --cell-size: 52px;
+    --cell-spacing: 1px;
+    --cells: 3;
+    --total-size: calc(var(--cells) * (var(--cell-size) + 2 * var(--cell-spacing)));
+    display: flex;
+    flex-wrap: wrap;
+    width: var(--total-size);
+    height: var(--total-size);
+}
+
+.cell {
+    flex: 0 0 var(--cell-size);
+    margin: var(--cell-spacing);
+    background-color: transparent;
+    box-sizing: border-box;
+    border-radius: 4px;
+    animation: 1.5s ripple ease infinite;
+}
+
+.cell.d-1 {
+    animation-delay: 100ms;
+}
+
+.cell.d-2 {
+    animation-delay: 200ms;
+}
+
+.cell.d-3 {
+    animation-delay: 300ms;
+}
+
+.cell.d-4 {
+    animation-delay: 400ms;
+}
+
+.cell:nth-child(1) {
+    --cell-color: #00FF87;
+}
+
+.cell:nth-child(2) {
+    --cell-color: #0CFD95;
+}
+
+.cell:nth-child(3) {
+    --cell-color: #17FBA2;
+}
+
+.cell:nth-child(4) {
+    --cell-color: #23F9B2;
+}
+
+.cell:nth-child(5) {
+    --cell-color: #30F7C3;
+}
+
+.cell:nth-child(6) {
+    --cell-color: #3DF5D4;
+}
+
+.cell:nth-child(7) {
+    --cell-color: #45F4DE;
+}
+
+.cell:nth-child(8) {
+    --cell-color: #53F1F0;
+}
+
+.cell:nth-child(9) {
+    --cell-color: #60EFFF;
+}
+
+/*Animation*/
+@keyframes ripple {
+    0% {
+        background-color: transparent;
+    }
+
+    30% {
+        background-color: var(--cell-color);
+    }
+
+    60% {
+        background-color: transparent;
+    }
+
+    100% {
+        background-color: transparent;
+    }
 }

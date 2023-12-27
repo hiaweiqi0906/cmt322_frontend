@@ -29,6 +29,9 @@
 <!-- Charts Related -->
 <script src="../../javascript/common/chart.js"></script>
 
+<script src="../../javascript/common/tsort.min.js"></script>
+
+
 <script type="text/javascript">
   document.write("<base id='myBase' href='http://" + document.location.host + "' />");
   var baseUrl = document.getElementById("myBase").href;
@@ -83,6 +86,26 @@
     console.log(localStorage.getItem("type"));
     return ['client', 'paralegal', 'admin'].includes(localStorage.getItem("type")) ? localStorage.getItem("type") : null
   }
+
+  const truncateIntoEllipse = (value, limit) => {
+    return `${value.substr(0, limit)}...`
+  }
+
+  const ensureTruncated = (str, limit) => {
+    if(str.length >= limit){
+      truncateIntoEllipse(str, limit)
+    }else return str
+  }
+
+  const startLoader = () => {
+        document.querySelector("body").style.visibility = "hidden";
+        document.querySelector(".loader-div").style.visibility = "visible";
+    }
+
+    const endLoader = () => {
+        document.querySelector("body").style.visibility = "visible";
+        document.querySelector(".loader-div").style.visibility = "hidden";
+    }
 </script>
 
 <script>

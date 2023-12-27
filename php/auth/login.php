@@ -11,23 +11,22 @@
 </head>
 
 <body>
-    <form method="post" id="myForm">
+    <form method="post" id="auth-login-loginForm">
         <label for="email">Email:</label>
-        <input type="email" name="email" id="login_email">
+        <input type="email" name="email" id="auth-login-loginForm-email">
         <br>
 
         <label for="password">Password:</label>
-        <input type="password" name="login_password" id="login_password">
+        <input type="password" name="login_password" id="auth-login-loginForm-password">
         <br>
 
         <input type="submit" value="Login">
     </form>
     <script>
-        $("#myForm").submit(function(e) {
-            console.log("object");
+        $("#auth-login-loginForm").submit(function(e) {
             e.preventDefault();
-            const email = $('#login_email').val()
-            const password = $('#login_password').val()
+            const email = $('#auth-login-loginForm-email').val()
+            const password = $('#auth-login-loginForm-password').val()
 
             axios.post('/auth/login', {
                     email,

@@ -5,7 +5,7 @@
 
       <div class='card-body'>
 
-        <div id='calendar' style='height: 50vh'></div>
+        <div id='appointment-admin-calendar' style='height: 50vh'></div>
 
       </div>
 

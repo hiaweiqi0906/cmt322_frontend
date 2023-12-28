@@ -1,5 +1,22 @@
+// To initialize or recreate the attendee select component
+const appointmentForm_attendeeDselect = (attendeeSelectEl, isDisabled=false) => {
+  dselect(attendeeSelectEl, {
+    search: true,
+    maxHeight: '150px'
+  }, isDisabled)
+}
+
+
+// To initialize or recreate the time select component
+const appointmentForm_timeDselect = (timeselectEl, isDisabled=false) => {
+  dselect(timeselectEl, {
+    maxHeight: '150px'
+  }, isDisabled)
+}
+
+
 // To initialize the attendee select options
-const initAttendeesOptions = (id, userList) => {
+const appointmentForm_initAttendeesOptions = (id, userList) => {
   const selectElement = document.getElementById(id);
 
   userList.forEach(attendee => {
@@ -9,28 +26,24 @@ const initAttendeesOptions = (id, userList) => {
   })
 
   // Create the select component using dselect
-  dselect(selectElement, {
-    search: true,
-    maxHeight: '150px'
-  })
-
+  appointmentForm_attendeeDselect(selectElement);
 }
 
 
 // To set the date picker's value
-const setDate = (id, value) => {
+const appointmentForm_setDate = (id, value) => {
   $('#' + id).datepicker('setDate', value);
 }
 
 
 // To disable the date before the value given
-const setStartDate = (id, value) => {
+const appointmentForm_setStartDate = (id, value) => {
   $('#' + id).datepicker('setStartDate', value);
 }
 
 
 // To initialize the date picker with some settings, then set the default value
-const initDatePicker = (id, value = moment()) => {
+const appointmentForm_initDatePicker = (id, value = moment()) => {
   value = value.format('YYYY-MM-DD');
 
   $('#' + id).datepicker({
@@ -40,12 +53,12 @@ const initDatePicker = (id, value = moment()) => {
     startDate: value
   })
 
-  setDate(id, value);
+  appointmentForm_setDate(id, value);
 }
 
 
 // Create end date respond to the start date, to ensure the end date is not before the start date
-const activateRespondEndDate = (start_date_id, end_date_id) => {
+const appointmentForm_activateRespondEndDate = (start_date_id, end_date_id) => {
 
   // Event listener: When the start date change, check and change the end date
   $('#' + start_date_id).datepicker().on('changeDate', function (e) {
@@ -56,18 +69,18 @@ const activateRespondEndDate = (start_date_id, end_date_id) => {
 
     // If the end date is before the start date, set the end date same as the start date and update the disable date
     if(moment(endDateValue).isBefore(startDateValue)){
-      setDate(end_date_id, startDateValue);
-      setStartDate(end_date_id, startDateValue);
+      appointmentForm_setDate(end_date_id, startDateValue);
+      appointmentForm_setStartDate(end_date_id, startDateValue);
     }
     else{
-      setStartDate(end_date_id, startDateValue);  // Else, just update the disabled date
+      appointmentForm_setStartDate(end_date_id, startDateValue);  // Else, just update the disabled date
     }
   });
 }
 
 
 // To get the current time and round to 30 minutes, for example, 3:15 PM, it return the value 3:30 PM
-const getCurrentForStartTime = () => {
+const appointmentForm_getCurrentForStartTime = () => {
   // Get the current date and time
   const currentDate = new Date();
   
@@ -97,9 +110,10 @@ const getCurrentForStartTime = () => {
 
 
 // To initialize the start time options
-const initStartTime = (id, isNextDay) => {
+const appointmentForm_initStartTime = (id, isNextDay) => {
   const startTimeSelect = document.getElementById(id);
   let selectValue;
+  startTimeSelect.innerHTML = ''; // Clear all existing options
 
   // If next day, the default start time value is 8:00 AM
   if(isNextDay){
@@ -107,12 +121,12 @@ const initStartTime = (id, isNextDay) => {
   }
   // Else, based on the current time, and make nearest time if necessary
   else{
-    selectValue = getCurrentForStartTime();
+    selectValue = appointmentForm_getCurrentForStartTime();
   }
   
 
   // Generate a range of option from 8 AM to 5:30 PM, step is 30 minutes
-  for (let hours = 8; hours <= 17; hours++) {
+  for (let hours = 7; hours <= 17; hours++) {
     for (let minutes = 0; minutes < 60; minutes += 30) {
         const period = hours < 12 ? 'AM' : 'PM';
         const hour12 = hours % 12 || 12; // Convert 12 hours format
@@ -130,15 +144,14 @@ const initStartTime = (id, isNextDay) => {
   }
 
   // Create the select component using dselect
-  dselect(startTimeSelect, {
-    maxHeight: '150px'
-  })
+  appointmentForm_timeDselect(startTimeSelect);
 
+  startTimeSelect.disabled = true;
 }
 
 
 // To add 30 minutes for the time value
-const add30Minutes = (value) => {
+const appointmentForm_add30Minutes = (value) => {
   
   // Parse the input time string using Moment.js
   const inputTime = moment(value, 'h:mm A');
@@ -153,18 +166,18 @@ const add30Minutes = (value) => {
 
 
 // To initialize the end time options based on the selected start time option
-const initEndTime = (startTimeID, endTimeID) => {
+const appointmentForm_initEndTime = (startTimeID, endTimeID) => {
   const startTimeSelect = document.getElementById(startTimeID);
   const endTimeSelect = document.getElementById(endTimeID);
 
   const startTimeValue = startTimeSelect.value;       // Get the start time value
-  const endTimeValue = add30Minutes(startTimeValue);  // Get the end time value, later selected
+  const endTimeValue = appointmentForm_add30Minutes(startTimeValue);  // Get the end time value, later selected
 
   endTimeSelect.innerHTML = ''; // Clear all existing options
 
   let optionFlag = false;   // To indicate the options can be added to the select element
 
-  for (let hours = 8; hours <= 17; hours++) {
+  for (let hours = 7; hours <= 17; hours++) {
     for (let minutes = 0; minutes < 60; minutes += 30) {
         const period = hours < 12 ? 'AM' : 'PM';
         const hour12 = hours % 12 || 12; // Convert 0 to 12
@@ -190,22 +203,20 @@ const initEndTime = (startTimeID, endTimeID) => {
   }
 
   // Create the select component using dselect
-  dselect(endTimeSelect, {
-    maxHeight: '150px'
-  })
+  appointmentForm_timeDselect(endTimeSelect);
 }
 
 
 // Activate end time responding to the start time
-const activateRespondEndTime = (startTimeID, endTimeID) => {
+const appointmentForm_activateRespondEndTime = (startTimeID, endTimeID) => {
   document.getElementById(startTimeID).addEventListener('change', () => {
-    initEndTime(startTimeID, endTimeID);
+    appointmentForm_initEndTime(startTimeID, endTimeID);
   });
 }
 
 
 // To initialize all the date and time
-const initDateAndTime = (startDateID, startTimeID, endDateID, endTimeID) => {
+const appointmentForm_initDateAndTime = (startDateID, startTimeID, endDateID, endTimeID, isFirstTime) => {
 
   // Get the current time in the format HH:mm A (12-hour format)
   const currentTime = moment().format('h:mm A');
@@ -220,26 +231,47 @@ const initDateAndTime = (startDateID, startTimeID, endDateID, endTimeID) => {
   if(isAfterCutoff){
     // Get the tomorrow date, and initialize the start date and end date value, and activate responding end date
     const tomorrowDay = moment().add(1, 'days');
-    initDatePicker(startDateID, tomorrowDay);
-    initDatePicker(endDateID, tomorrowDay);
 
-    initStartTime(startTimeID, true);
-    initEndTime(startTimeID, endTimeID);
+    if(isFirstTime){
+      appointmentForm_initDatePicker(startDateID, tomorrowDay);
+      appointmentForm_initDatePicker(endDateID, tomorrowDay);
+    }
+    else{
+      const day = moment(tomorrowDay).format('YYYY-MM-DD');
+      appointmentForm_setStartDate(startDateID, day);
+      appointmentForm_setDate(startDateID, day);
+
+      appointmentForm_setStartDate(endDateID, day);
+      appointmentForm_setDate(endDateID, day);
+    }
+
+    appointmentForm_initStartTime(startTimeID, true);
+    appointmentForm_initEndTime(startTimeID, endTimeID);
   }
   // Else, current date
   else{
-    // Default value is current date when initializing the date pickers, also activate the responding end date
-    initDatePicker(startDateID);
-    initDatePicker(endDateID);
+    
+    if(isFirstTime){
+      appointmentForm_initDatePicker(startDateID);
+      appointmentForm_initDatePicker(endDateID);
+    }
+    else{
+      const day = moment().format('YYYY-MM-DD');
+      appointmentForm_setStartDate(startDateID, day);
+      appointmentForm_setDate(startDateID, day);
 
-    initStartTime(startTimeID, false);
-    initEndTime(startTimeID, endTimeID);
+      appointmentForm_setStartDate(endDateID, day);
+      appointmentForm_setDate(endDateID, day);
+    }
+
+    appointmentForm_initStartTime(startTimeID, false);
+    appointmentForm_initEndTime(startTimeID, endTimeID);
   }
 }
 
 
 // To show or hide the time pickers
-const timePickerSwitch = (isChecked, startTimeDiv, endTimeDiv) => {
+const appointmentForm_timePickerSwitch = (isChecked, startTimeDiv, endTimeDiv) => {
   // If the switch is on, hide the time pickers
   if(isChecked){
     document.getElementById(startTimeDiv).style.display = 'none';
@@ -253,8 +285,81 @@ const timePickerSwitch = (isChecked, startTimeDiv, endTimeDiv) => {
 }
 
 
+// To hide the creator div
+const appointementForm_hideCreator = (divID = 'appointment-multiForm-creatorDisplayDiv') => {
+  document.getElementById(divID).style.display = 'none';
+}
+
+// Show creator div and give value
+const appointmentForm_showCreator = (creatorName, divID = 'appointment-multiForm-creatorDisplayDiv', spanID = 'appointment-multiForm-creator') => {
+  document.getElementById(divID).style.display = 'block';
+  document.getElementById(spanID).innerText = creatorName;
+}
+
+
+// To remove the current user in the attendee list
+const appointmentForm_removeUserAttendee = (attendeeSelectID = 'appointment-multiForm-attendeesSelect') => {
+  const attendeeSelectEl = document.getElementById(attendeeSelectID);
+
+  for (let i = attendeeSelectEl.options.length - 1; i >= 0; i--) {
+    if (attendeeSelectEl.options[i].value.includes('delete')) {
+        attendeeSelectEl.remove(i);
+    }
+  }
+
+}
+
+
+// Clear the modal validation state (except date and time inputs because they always have value, don't need validation)
+const appointmentForm_clearFormValidation = (inputIDs) => {
+  inputIDs.forEach(inputID => {
+    inputElement = document.getElementById(inputID);
+    inputElement.classList.remove('is-valid');
+    inputElement.classList.remove('is-invalid');
+  })
+}
+
+
+// Reset the form data
+const appointmentForm_resetFormData = (titleID, attendeeSelectID, locationID, detailsID, 
+  startDateID, startTimeID, endDateID, endTimeID, allDaySwitchID) => {
+  
+  // For the text and textarea input, just set the value to empty string
+  const textInputIDs = [titleID, locationID, detailsID];
+  textInputIDs.forEach(textInputID => {
+    const textElement = document.getElementById(textInputID);
+    textElement.value = '';
+  })
+
+  // Reset the attendees' all options unselected, then need to use dselect to refresh its display
+  const attendeeSelectElement = document.getElementById(attendeeSelectID);
+  for (var i = 0; i < attendeeSelectElement.options.length; i++) {
+    attendeeSelectElement.options[i].selected = false;
+  }
+
+  // To recreate the attendeeSelect to respond to the changes
+  appointmentForm_attendeeDselect(attendeeSelectElement);
+
+  // Initialize the time
+  appointmentForm_initDateAndTime(startDateID, startTimeID, endDateID, endTimeID, false);
+
+  // For switch, need to set the checked to false and trigger the event (Switch has a event listener)
+  switchElement = document.getElementById(allDaySwitchID);
+  switchElement.checked = false;
+  switchElement.dispatchEvent(new Event('change'));
+}
+
+
+// To enable all the input fields except the attendee select and time select, they can recreate and enable back
+const appointmentForm_enableFormInput = (inputIDs) => {
+  inputIDs.forEach(inputID => {
+    document.getElementById(inputID).disabled = false;
+  })
+}
+
+
 // To check the title input
-const checkTitle = (titleElement) => {
+const appointmentForm_checkTitle = (titleElement) => {
 
   // Get the value and trim it (remove the spaces in front and behind the text)
   const titleValue = titleElement.value.trim();
@@ -274,7 +379,7 @@ const checkTitle = (titleElement) => {
 
 
 // To check the attendees select input
-const checkAttendees = (attendeesElement) => {
+const appointmentForm_checkAttendees = (attendeesElement) => {
   const attendeesList = [];
 
   // Check each of the options, add the selected option to the array
@@ -299,7 +404,7 @@ const checkAttendees = (attendeesElement) => {
 
 
 // To check the location input
-const checkLocation = (locationElement) => {
+const appointmentForm_checkLocation = (locationElement) => {
   // Get the value and trim it (remove the spaces in front and behind the text)
   const locationValue = locationElement.value.trim();
 
@@ -317,7 +422,7 @@ const checkLocation = (locationElement) => {
 
 
 // To check the details textarea input
-checkDetails = (detailsElement) => {
+const appointmentForm_checkDetails = (detailsElement) => {
   // Get the value and trim it (remove the spaces in front and behind the text)
   const detailsValue = detailsElement.value.trim();
 
@@ -336,7 +441,7 @@ checkDetails = (detailsElement) => {
 
 // To validate each of the form element, then submit the form
 // Note: start date, start time, end date, end time and all-day switch don't need to check validity
-const submitAppointmentForm = (titleID, attendeeSelectID, locationID, detailsID, 
+const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locationID, detailsID, 
   startDateID, startTimeID, endDateID, endTimeID, allDaySwitchID) => {
 
   const titleElement = document.getElementById(titleID);
@@ -380,6 +485,10 @@ const submitAppointmentForm = (titleID, attendeeSelectID, locationID, detailsID,
       }
     }
 
+    // Close the modal and showing the loading overlay
+    appointmentModal_closeModal();
+    appointmentLoading_showLoadingOverlay();
+
     appointment = {
       creator: '',
       title: title,
@@ -393,19 +502,284 @@ const submitAppointmentForm = (titleID, attendeeSelectID, locationID, detailsID,
       status: status
     }
 
+    // Send axios post request to store the new appointment and 
+    // fetch all appointments to redraw charts and calendar
     axios.post('http://localhost:6500/api/appointments', appointment)
     .then((response) => {
-      console.log(response.data);
-    }).catch((err) => {
+      const { username, isAdmin, appointments } = response.data;
+
+      // If the user is admin, then create the charts and calendar
+      if(isAdmin){
+        
+        appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
+        appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
+        appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+      }
+      // Else, only create the calendar
+      else{
+        appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+      }
+    })
+    .then(() => {
+      appointmentLoading_hideLoadingOverlay();
+    })
+    .catch((err) => {
+      appointmentLoading_hideLoadingOverlay();
       console.log('Error when initializing data', err);
   });
   }
   // Check the validity of inputs
   else{
-    checkTitle(titleElement);
-    checkAttendees(attendeeSelectElement);
-    checkLocation(locationElement);
-    checkDetails(detailsElement);
+    appointmentForm_checkTitle(titleElement);
+    appointmentForm_checkAttendees(attendeeSelectElement);
+    appointmentForm_checkLocation(locationElement);
+    appointmentForm_checkDetails(detailsElement);
   }
     
+}
+
+
+
+// To display the created appointment's form details
+const appointmentForm_displayCreatedFormData = (titleEl, attendeeSelectEl, locationEl, detailsEl, 
+  startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment, needDisable) => {
+
+    // Show the creator name
+    appointmentForm_showCreator('You');
+
+    // Get the title and display in form
+    titleEl.value = appointment.title;
+
+    // Get the location and display in form
+    locationEl.value = appointment.location;
+
+    // Get the details and display in form
+    detailsEl.value = appointment.details;
+
+    // Get the attendee object and match with the options, mark as selected
+    for (let j = 0; j < appointment.attendees.length; j++) {
+      for (let i = 0; i < attendeeSelectEl.options.length; i++) {
+        if (attendeeSelectEl.options[i].value === appointment.attendees[j].name) {
+          attendeeSelectEl.options[i].selected = true;
+        }
+      }
+    }
+
+    // If the appointment does not have start time and end time, switch on all day switch, else off the switch and display the times
+    if(appointment.timeStart === '' && appointment.timeEnd === ''){
+      allDaySwitchEl.checked = true;
+    }
+    else{
+      allDaySwitchEl.checked = false;
+
+      // Set the selected start time
+      for (let i = 0; i < startTimeEl.options.length; i++) {
+        if (startTimeEl.options[i].value === appointment.timeStart) {
+          startTimeEl.options[i].selected = true;
+        }
+      }
+
+      // Set the selected end time
+      for (let i = 0; i < endTimeEl.options.length; i++) {
+        if (endTimeEl.options[i].value === appointment.timeEnd) {
+          endTimeEl.options[i].selected = true;
+        }
+      }
+    }
+
+    // If the appointment is past, set all the input into disabled state
+    if(needDisable){
+      // Set the text inputs to disabled
+      titleEl.disabled  = true;
+      locationEl.disabled = true;
+      detailsEl.disabled = true;
+      allDaySwitchEl.disabled = true;
+
+      // Disable the attendee select, start and end time select while recreating them
+      appointmentForm_attendeeDselect(attendeeSelectEl, true);
+      appointmentForm_timeDselect(startTimeEl, true);
+      appointmentForm_timeDselect(endTimeEl, true);
+
+      // Need to set the start date of datepicker so the past date can be shown, and disable the datepickers
+      appointmentForm_setStartDate(startDateID, appointment.dateStart);
+      document.getElementById(startDateID).disabled = true;
+      document.getElementById(endDateID).disabled = true;
+    }
+    else{
+      // If it is active appointment, don't need set disabled but need to recreate the select components
+      appointmentForm_attendeeDselect(attendeeSelectEl);
+      appointmentForm_timeDselect(startTimeEl);
+      appointmentForm_timeDselect(endTimeEl);
+    }
+
+    // Now, can display the start date and end date using id attribute
+    appointmentForm_setDate(startDateID, appointment.dateStart);
+    appointmentForm_setDate(endDateID, appointment.dateEnd);
+
+    // To call the switch change event listener
+    allDaySwitchEl.dispatchEvent(new Event('change'));
+}
+
+
+// To display the invited appointment form
+const appointmentForm_displayInvitedFormData = (titleEl, attendeeSelectEl, locationEl, detailsEl, 
+  startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment) => {
+
+    // Show the creator name
+    appointmentForm_showCreator(appointment.creator);
+
+    // Get the title and display in form
+    titleEl.value = appointment.title;
+
+    // Get the location and display in form
+    locationEl.value = appointment.location;
+
+    // Get the details and display in form
+    detailsEl.value = appointment.details;
+
+    // Find the user not present in options
+    let currentUserNotInOptions = appointment.attendees.find(attendee => !attendeeSelectEl.querySelector(`option[value="${attendee.name}"]`));
+
+    // Add the user not present in options as an option
+    if (currentUserNotInOptions) {
+        let newOption = document.createElement('option');
+        newOption.value = `${currentUserNotInOptions.name} delete`;
+        newOption.text = currentUserNotInOptions.name;
+        attendeeSelectEl.add(newOption);
+    }
+
+    // Get the attendee objects and match with the options, mark as selected
+    for (let j = 0; j < appointment.attendees.length; j++) {
+        let attendee = appointment.attendees[j];
+        let optionValue = (attendee.name === currentUserNotInOptions.name) ? `${attendee.name} delete` : attendee.name;
+        let option = attendeeSelectEl.querySelector(`option[value="${optionValue}"]`);
+        if (option) {
+            option.selected = true;
+        }
+    }
+
+    // If the appointment does not have start time and end time, switch on all day switch, else off the switch and display the times
+    if(appointment.timeStart === '' && appointment.timeEnd === ''){
+      allDaySwitchEl.checked = true;
+    }
+    else{
+      allDaySwitchEl.checked = false;
+
+      // Set the selected start time
+      for (let i = 0; i < startTimeEl.options.length; i++) {
+        if (startTimeEl.options[i].value === appointment.timeStart) {
+          startTimeEl.options[i].selected = true;
+        }
+      }
+
+      // Set the selected end time
+      for (let i = 0; i < endTimeEl.options.length; i++) {
+        if (endTimeEl.options[i].value === appointment.timeEnd) {
+          endTimeEl.options[i].selected = true;
+        }
+      }
+    }
+
+
+    // Because it is invited appointments so all data cannot be edited by attendee user
+    titleEl.disabled  = true;
+    locationEl.disabled = true;
+    detailsEl.disabled = true;
+    allDaySwitchEl.disabled = true;
+    document.getElementById(startDateID).disabled = true;
+    document.getElementById(endDateID).disabled = true;
+
+    // Disable the attendee select, start and end time select while recreating them
+    appointmentForm_attendeeDselect(attendeeSelectEl, true);
+    appointmentForm_timeDselect(startTimeEl, true);
+    appointmentForm_timeDselect(endTimeEl, true);
+
+    // Need to set the start date of datepicker so the past date can be shown, and disable the datepickers
+    appointmentForm_setStartDate(startDateID, appointment.dateStart);
+    
+    // Now, can display the start date and end date using id attribute
+    appointmentForm_setDate(startDateID, appointment.dateStart);
+    appointmentForm_setDate(endDateID, appointment.dateEnd);
+
+    // To call the switch change event listener
+    allDaySwitchEl.dispatchEvent(new Event('change'));
+
+}
+
+
+// To display the form when user clicking an event, there will different type of forms based on the event types
+// Note: This function is used by calendar component in calendar.php
+const appointmentForm_displayAppointmentForm = (eventType, appointment) => {
+
+  const titleEl = document.getElementById('appointment-multiForm-title');
+  const attendeeSelectEl = document.getElementById('appointment-multiForm-attendeesSelect');
+  const locationEl = document.getElementById('appointment-multiForm-location');
+  const detailsEl = document.getElementById('appointment-multiForm-details');
+  const startDateID = 'appointment-multiForm-startDate';
+  const startTimeEl = document.getElementById('appointment-multiForm-startTime');
+  const endDateID = 'appointment-multiForm-endDate';
+  const endTimeEl = document.getElementById('appointment-multiForm-endTime');
+  const allDaySwitchEl = document.getElementById('appointment-multiForm-allDaySwitch');
+
+  let needDisable;
+
+  // If the appointment is created by the user, the displayed can be edited and cancelled
+  if(eventType.role === 'creator'){
+
+    // If the appointment is already past, then all the form inputs are disabled and cannot do changes to the appointment
+    if(eventType.status === 'past'){
+      needDisable = true;
+    }
+    else{
+      needDisable = false;
+    }
+    // Set the form to created form
+    appointmentModal_setCreatedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', needDisable);
+
+    // Display the data in the form
+    appointmentForm_displayCreatedFormData(titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment, needDisable);
+
+    // Open the modal
+    appointmentModal_openModal();
+  }
+  // Else, the user can only respond to the appointment by accepting or declining the appointment
+  else{
+
+    // If the appointment is already past, user cannot do respond to the invited appointment
+    if(eventType.status === 'past'){
+      const modalTitle = eventType.response.charAt(0).toUpperCase() + eventType.response.slice(1);
+
+      // Set the form to invited form, both buttons are disabled
+      appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', modalTitle + ' Appointment', true, true);
+    }
+    else{
+      if(eventType.response === 'accepted'){
+        appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', 'Accepted Appointment', true, false);
+      }
+      else if(eventType.response === 'pending'){
+        appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', 'Pending Appointment', false, false);
+      }
+      else{
+        appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', 'Declined Appointment', false, true);
+      }
+    }
+
+    // Display the data in the form
+    appointmentForm_displayInvitedFormData(titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment);
+    
+    // Open the modal
+    appointmentModal_openModal();
+  }
+}
+
+
+// To check the title content has changed by user
+const appointmentForm_checkTitleChange = () => {
+  
+}
+
+
+// To check any data in the form is changed, then send updated data to the server
+const appointmentForm_updateAppointmentForm = () => {
+
 }

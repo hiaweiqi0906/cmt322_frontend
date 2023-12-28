@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class='modal fade' id='appointmentModal' data-bs-backdrop="static" data-bs-keyboard="false" tabindex='-1' aria-labelledby='appointmentModalLabel' aria-hidden='true'>
+<div class='modal fade' id='multiAppointmentModal' data-bs-backdrop="static" data-bs-keyboard="false" tabindex='-1' aria-labelledby='multi-appointmentModalLabel' aria-hidden='true'>
 
   <!-- Locate large modal at center and scrollable -->
   <div class='modal-dialog modal-lg'>
@@ -8,22 +8,22 @@
     <div class='modal-content'>
 
       <!-- Header of the modal -->
-      <div class='modal-header'>
-        <h1 class='modal-title fs-5' id='modal-title'>New Appointment</h1>
+      <div class='modal-header bg-light'>
+        <h1 class='modal-title fs-5' id='appointment-multiAppointmentModal-title'>New Appointment</h1>
         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
       </div>
 
       <!-- Body content of the modal -->
       <div class='modal-body'>
 
-        <form id='appointment-form'>
+        <form id='appointment-multiForm'>
 
           <!-- The title input section -->
           <div class='row mb-3'>
-            <label for='title' class='col-sm-2 col-form-label'>Title</label>
+            <label for='appointment-multiForm-title' class='col-sm-2 col-form-label'>Title</label>
 
             <div class='col-sm-8'>
-              <input type='text' class='form-control' id='title' name='title' placeholder='Add title' required>
+              <input type='text' class='form-control' id='appointment-multiForm-title' name='title' placeholder='Add title' required>
 
               <div class="invalid-feedback">
                 Please provide a valid title.
@@ -33,21 +33,16 @@
 
           <!-- The attendees select options -->
           <div class='row mb-3'>
-            <label for='attendees-select' class='col-sm-2 col-form-label'>Attendees</label>
+            <label for='appointment-multiForm-attendeesSelect' class='col-sm-2 col-form-label'>Attendees</label>
 
             <div class='col-sm-8'>
-              <select class='form-select' id='attendees-select' name='attendees-select' multiple required>
+              <select class='form-select' id='appointment-multiForm-attendeesSelect' name='attendees-select' multiple required>
                 <option value="">Add attendees</option>
               </select>
 
               <div class="invalid-feedback">
                 Please select at least one attendee.
               </div>
-            </div>
-
-            <div class='col-sm-8' id='attendee-display-select' style='display:none'>
-              <select class='form-select' id='attendees-display' disabled>
-              </select>
             </div>
 
           </div>
@@ -57,16 +52,11 @@
             <label class='col-sm-2 col-form-label'>Start</label>
 
             <div class='col-lg-3 col-md-4 col-sm-4 col-4'>
-              <input type='text' class='form-control' id='start-date' name='start-date'>
+              <input type='text' class='form-control' id='appointment-multiForm-startDate' name='start-date'>
             </div>
 
-            <div class='col-lg-2 col-md-3 col-sm-3 col-3 px-1' id='start-time-div'>
-              <select  class='form-select' id='start-time' name='start-time'>
-              </select>
-            </div>
-
-            <div class='col-lg-2 col-md-3 col-sm-3 col-3 px-1' id='start-time-display-div' style='display:none'>
-              <select  class='form-select' id='start-time-display' disabled>
+            <div class='col-lg-2 col-md-3 col-sm-3 col-3 px-1' id='appointment-multiForm-startTimeDiv'>
+              <select  class='form-select' id='appointment-multiForm-startTime' name='start-time'>
               </select>
             </div>
 
@@ -77,24 +67,19 @@
             <label class='col-sm-2 col-form-label'>End</label>
 
             <div class='col-lg-3 col-md-4 col-sm-4 col-4'>
-              <input type='text' class='form-control' id='end-date' name='end-date'>
+              <input type='text' class='form-control' id='appointment-multiForm-endDate' name='end-date'>
             </div>
 
-            <div class='col-lg-2 col-md-3 col-sm-3 col-3 px-1' id='end-time-div'>
-              <select  class='form-select' id='end-time' name='end-time'>
-              </select>
-            </div>
-
-            <div class='col-lg-2 col-md-3 col-sm-3 col-3 px-1' id='end-time-display-div' style='display:none'>
-              <select  class='form-select' id='end-time-display' disabled>
+            <div class='col-lg-2 col-md-3 col-sm-3 col-3 px-1' id='appointment-multiForm-endTimeDiv'>
+              <select  class='form-select' id='appointment-multiForm-endTime' name='end-time'>
               </select>
             </div>
 
             <!-- The All day switch-->
-            <div class='col-lg-2 col-md-3 col-sm-3 col-3 d-flex align-items-center' id='switch-display-div'>
+            <div class='col-lg-2 col-md-3 col-sm-3 col-3 d-flex align-items-center' id='appointment-multiForm-switchDiv'>
               <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="all-day">
-                <label class="form-check-label" for="all-day">All day</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="appointment-multiForm-allDaySwitch">
+                <label class="form-check-label" for="appointment-multiForm-allDaySwitch">All day</label>
               </div>
             </div>
 
@@ -102,10 +87,10 @@
 
           <!-- The appointment location input -->
           <div class='row mb-3'>
-            <label for='location' class='col-sm-2 col-form-label'>Location</label>
+            <label for='appointment-multiForm-location' class='col-sm-2 col-form-label'>Location</label>
 
             <div class='col-sm-8'>
-              <input type='text' class='form-control' id='location' name='location' placeholder='Add location' required>
+              <input type='text' class='form-control' id='appointment-multiForm-location' name='location' placeholder='Add location' required>
             
               <div class="invalid-feedback">
                 Please provide a valid location.
@@ -116,10 +101,10 @@
 
           <!-- The appointment details input -->
           <div class='row mb-3'>
-            <label for='details' class='col-sm-2 col-form-label'>Details</label>
+            <label for='appointment-multiForm-details' class='col-sm-2 col-form-label'>Details</label>
 
             <div class='col-sm-8'>
-              <textarea class='form-control' id='details' name='details' rows='3' placeholder='Write more details for this appointment' required></textarea>
+              <textarea class='form-control' id='appointment-multiForm-details' name='details' rows='3' placeholder='Write more details for this appointment' required></textarea>
               
               <div class="invalid-feedback">
                 Please provide some details.
@@ -127,15 +112,32 @@
             </div>
             
           </div>
+
+          <!-- Show creator, cannot write by user, it automatically show-->
+          <div class='row mb-3' id='appointment-multiForm-creatorDisplayDiv' style='display: none'>
+            <label for='appointment-multiForm-hidden-input' class='col-5 col-form-label fw-bold fst-italic'>
+              Created by,<br>
+              <span id='appointment-multiForm-creator'><span>
+            </label>
+
+            <div class='col-sm-3' style='display: none'>
+              <input type='text' id='appointment-multiForm-hidden-input'>
+            </div>
+            
+          </div>
           
         </form>
+
+        <div class="alert alert-warning" role="alert" id='appointment-multiForm-alert'>
+          You have not make any changes.
+        </div>
 
       </div>
 
       <!-- Footer of the modal -->
-      <div class='modal-footer'>
-        <button type='button' class='btn btn-light button2' data-bs-dismiss='modal'>Close</button>
-        <button type='button' id='form-event-button' class='btn btn-primary button1'>Save</button>
+      <div class='modal-footer bg-light'>
+        <button type='button' id='appointment-multiAppointmentModal-closeButton' class='btn btn-light'>Close</button>
+        <button type='button' id='appointment-multiAppointmentModal-saveButton' class='btn btn-primary'>Save</button>
       </div>
 
     </div>

@@ -1,29 +1,35 @@
 // Send axios request when the page is loaded, and do initialization for the form
 document.addEventListener('DOMContentLoaded', function () {
 
-  // To get the appointments, display them in charts and calendar
-  axios.get('http://localhost:6500/api/appointments')
-    .then((response) => {
-      const { username, isAdmin, appointments } = response.data;
-
-      createPieChart('pie-chart', appointments);                    // Create pie chart
-      createAreaChart('area-chart', appointments);                  // Create area chart
-      createCalendar('calendar', appointments, username, isAdmin);  // Create calendar
-
-    }).catch((err) => {
-      console.log('Error when initializing data', err);
-  });
-  
-
   // To check the user's role, then decide want to display or hide the charts
   axios.get('http://localhost:6500/api/appointments/isAdmin')
     .then((response) => {
       const isAdmin = response.data;
 
-      displayCharts(isAdmin);  // To show or hide the charts
+      appointmentChart_displayCharts(isAdmin);  // To show or hide the charts
 
     }).catch((err) => {
       console.log('Error when checking is admin', err);
+  });
+  
+  // To get the appointments, display them in charts and calendar
+  axios.get('http://localhost:6500/api/appointments')
+    .then((response) => {
+      const { username, isAdmin, appointments } = response.data;
+
+      // If the user is admin, then create the charts and calendar
+      if(isAdmin){
+        appointmentChart_createPieChart('appointment-admin-pieChart', appointments);                    // Create pie chart
+        appointmentChart_createAreaChart('appointment-admin-areaChart', appointments);                  // Create area chart
+        appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Create calendar
+      }
+      // Else, only create the calendar
+      else{
+        appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Create calendar
+      }
+
+    }).catch((err) => {
+      console.log('Error when first initializing data', err);
   });
 
 
@@ -32,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then((response) => {
       const userList = response.data;
 
-      initAttendeesOptions('attendees-select', userList); // Initialize select options
+      appointmentForm_initAttendeesOptions('appointment-multiForm-attendeesSelect', userList); // Initialize select options
       
     })
     .catch((err) => {
@@ -45,63 +51,102 @@ document.addEventListener('DOMContentLoaded', function () {
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
   // Initialize all the default value for the form
-  initDateAndTime('start-date', 'start-time', 'end-date', 'end-time');
+  appointmentForm_initDateAndTime('appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', true);
 
   // Add event listener to the end date so it can respond to the start date
-  activateRespondEndDate('start-date', 'end-date');
+  appointmentForm_activateRespondEndDate('appointment-multiForm-startDate', 'appointment-multiForm-endDate');
 
   // Add event listener to the end time so it can respond to the start time
-  activateRespondEndTime('start-time', 'end-time');
+  appointmentForm_activateRespondEndTime('appointment-multiForm-startTime', 'appointment-multiForm-endTime');
+})
+
+
+// To set the new appointment for modal title and button
+document.getElementById('appointment-newAppointmentButton').addEventListener('click', () => {
+  appointmentModal_setNewAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton');
 })
 
 
 // To control the displaying of the time pickers based on the switch
-document.getElementById('all-day').addEventListener('change', (event) => {
-  timePickerSwitch(event.target.checked, 'start-time-div', 'end-time-div');
+document.getElementById('appointment-multiForm-allDaySwitch').addEventListener('change', (event) => {
+  appointmentForm_timePickerSwitch(event.target.checked, 'appointment-multiForm-startTimeDiv', 'appointment-multiForm-endTimeDiv');
 });
 
 
-// Add event listener to the button of the form 
+// Add event listener to the save button of the form 
 //(It will have many different types of events based on the type of the form)
-document.getElementById('form-event-button').addEventListener('click', () => {
-  formType = document.getElementById('modal-title').innerText
+document.getElementById('appointment-multiAppointmentModal-saveButton').addEventListener('click', () => {
+  formType = document.getElementById('appointment-multiAppointmentModal-title').innerText
 
   switch(formType){
 
     case 'New Appointment':
-      submitAppointmentForm('title', 'attendees-select', 'location', 'details', 
-      'start-date', 'start-time', 'end-date', 'end-time', 'all-day');
+      appointmentForm_submitAppointmentForm('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details', 
+      'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
+      break;
+
+    case 'Created Appointment':
+      appointmentForm_updateAppointmentForm('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details', 
+      'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
       break;
     
     default:
-      console.error('No case matching to the form type');
+      console.error('Save button: No case matching to the form type');
 
   }
 })
 
+
+// Add event listener to the close button of the form
+//(It will have many different types of events based on the type of the form)
+document.getElementById('appointment-multiAppointmentModal-closeButton').addEventListener('click', () => {
+  formType = document.getElementById('appointment-multiAppointmentModal-title').innerText
+
+  switch(formType){
+    case 'New Appointment':
+      appointmentModal_closeModal();
+      break;
+    
+    default:
+      console.error('Close button: No case matching to the form type');
+  }
+})
+
+
 // Add a real-time validation event for the title input
-document.getElementById('title').addEventListener('input', () => {
-  titleElement = document.getElementById('title');
-  checkTitle(titleElement);
+document.getElementById('appointment-multiForm-title').addEventListener('input', () => {
+  titleElement = document.getElementById('appointment-multiForm-title');
+  appointmentForm_checkTitle(titleElement);
 })
 
 
 // Add a real-time validation event for the attendees select input
-document.getElementById('attendees-select').addEventListener('change', () => {
-  attendeeSelectElement = document.getElementById('attendees-select');
-  checkAttendees(attendeeSelectElement);
+document.getElementById('appointment-multiForm-attendeesSelect').addEventListener('change', () => {
+  attendeeSelectElement = document.getElementById('appointment-multiForm-attendeesSelect');
+  appointmentForm_checkAttendees(attendeeSelectElement);
 })
 
 // Add a real-time validation event for the location input
-document.getElementById('location').addEventListener('input', () => {
-  locationElement = document.getElementById('location');
-  checkLocation(locationElement);
+document.getElementById('appointment-multiForm-location').addEventListener('input', () => {
+  locationElement = document.getElementById('appointment-multiForm-location');
+  appointmentForm_checkLocation(locationElement);
 })
 
 
 // Add a real-time validation event for the details textarea input
-document.getElementById('details').addEventListener('input', () => {
-  detailsElement = document.getElementById('details');
-  checkDetails(detailsElement);
+document.getElementById('appointment-multiForm-details').addEventListener('input', () => {
+  detailsElement = document.getElementById('appointment-multiForm-details');
+  appointmentForm_checkDetails(detailsElement);
+})
+
+
+// Add event listener when modal is closed, hide the creator part, remove the current user option, clear validation, enable input and reset data
+document.getElementById('multiAppointmentModal').addEventListener('hidden.bs.modal', event => {
+  appointementForm_hideCreator();
+  appointmentForm_removeUserAttendee();
+  appointmentForm_clearFormValidation(['appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details']);
+  appointmentForm_enableFormInput(['appointment-multiForm-title', 'appointment-multiForm-startDate', 'appointment-multiForm-endDate', 'appointment-multiForm-allDaySwitch', 'appointment-multiForm-location', 'appointment-multiForm-details']);
+  appointmentForm_resetFormData('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details', 
+  'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
 })
 

@@ -1,4 +1,4 @@
-<div class='row' id='chart-container'>
+<div class='row' id='appointment-chartContainer'>
 
   <!-- The first chart-->
   <div class='col-xl-6'> 
@@ -8,7 +8,7 @@
         <!-- Title -->
         <h5 class='card-title'>Total Appointment Info</h5>
 
-        <div id='pie-chart' style='height: 41vh'></div>
+        <div id='appointment-admin-pieChart' style='height: 41vh'></div>
       
       </div>
 
@@ -23,7 +23,7 @@
         <!-- Title -->
         <h5 class='card-title'>Weekly Scheduled Appointment</h5>
 
-        <div id='area-chart' style='height: 41vh'></div>
+        <div id='appointment-admin-areaChart' style='height: 41vh'></div>
         
       </div>
 

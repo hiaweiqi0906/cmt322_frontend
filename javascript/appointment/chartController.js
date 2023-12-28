@@ -1,16 +1,16 @@
 // To determine whether to dislpay the charts
-const displayCharts = (isAdmin) => {
+const appointmentChart_displayCharts = (isAdmin) => {
 
   // If the user is not an admin, hide the charts
   if(!isAdmin){
-    document.getElementById('chart-container').style.display = 'none';
+    document.getElementById('appointment-chartContainer').style.display = 'none';
   }
 
 }
 
 
 // To create a pie chart
-const createPieChart = (id, appointments) => {
+const appointmentChart_createPieChart = (id, appointments) => {
 
   // To get the number of scheduled appointments and cancelled appointments
   const scheduledAppointments = appointments.filter(appointment => appointment.status === 'scheduled').length;
@@ -19,6 +19,7 @@ const createPieChart = (id, appointments) => {
   // Pie chart settings
   var options = {
     chart: {
+      id: 'appointment-admin-pieChart',    // Id of chart, later used for reference to the chart when doing update of data
       type: 'donut',      // Use donut chart
       height: '90%',      // The height of the chart
     },
@@ -53,8 +54,23 @@ const createPieChart = (id, appointments) => {
 }
 
 
+// Tp update the pie chart data because the chart cannot be recreated
+const appointmentChart_updatePieChart = (pie_chart_id, appointments) => {
+
+  // To get the number of scheduled appointments and cancelled appointments
+  const scheduledAppointments = appointments.filter(appointment => appointment.status === 'scheduled').length;
+  const cancelledAppointments = appointments.length - scheduledAppointments;
+
+  // The new data to be used for updated the chart
+  const newSeriesData = [scheduledAppointments, cancelledAppointments]
+
+  // Update the pie chart using the chart id and the updateSeries function with data
+  ApexCharts.exec(pie_chart_id, 'updateSeries', newSeriesData);
+}
+
+
 // To create an array of current week dates
-const createWeekDates = () => {
+const appointmentChart_createWeekDates = () => {
 
   const today = moment();
 
@@ -76,13 +92,13 @@ const createWeekDates = () => {
 
 
 // To create an area chart
-const createAreaChart = (id, appointments) => {
+const appointmentChart_createAreaChart = (id, appointments) => {
 
   // To get the scheduled appointments
   const scheduledAppointments = appointments.filter(appointment => appointment.status === 'scheduled');
 
   // Get the week dates
-  const weekDates = createWeekDates();
+  const weekDates = appointmentChart_createWeekDates();
 
   // Hold the number of appointments for each day of the week
   const appointmentsByWeekDates = [];
@@ -96,7 +112,8 @@ const createAreaChart = (id, appointments) => {
   // Area chart settings
   options = {
     chart: {
-      type: 'area',   // USe Area chart
+      id: 'appointment-admin-areaChart',// Chart ID, later used for reference the chart when doing data updates
+      type: 'area',   // Use Area chart
       height: '90%',  // The height of the chart
       zoom: {
         enabled: false  // Disable the zoom functionality
@@ -137,4 +154,32 @@ const createAreaChart = (id, appointments) => {
   var chart = new ApexCharts(document.getElementById(id), options);   // Apply the chart to the id
 
   chart.render();     // Render the chart
+}
+
+
+// Update the area chart because the chart cannot be recreated
+const appointmentChart_updateAreaChart = (area_chart_id, appointments) => {
+  // To get the scheduled appointments
+  const scheduledAppointments = appointments.filter(appointment => appointment.status === 'scheduled');
+
+  // Get the week dates
+  const weekDates = appointmentChart_createWeekDates();
+
+  // Hold the number of appointments for each day of the week
+  const appointmentsByWeekDates = [];
+
+  // To get the number of appointments for each day of the week
+  weekDates.forEach(date => {
+    const numberOfAppointments = scheduledAppointments.filter(appointment => appointment.dateStart === date).length;
+    appointmentsByWeekDates.push(numberOfAppointments);
+  });
+
+  // The new data to be used for updated the chart
+  const newSeriesData = [{
+    name: 'Appointments',
+    data: appointmentsByWeekDates
+  }]
+
+  // Update the area chart using the chart id and the updateSeries function with data
+  ApexCharts.exec(area_chart_id, 'updateSeries', newSeriesData);
 }

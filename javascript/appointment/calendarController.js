@@ -1,6 +1,6 @@
 // To format the time
 // For example 2023-12-12 4 PM to 2023-12-12T16:00 (used for calendar)
-const formatTime = (startDate, startTime, endDate, endTime) => {
+const appointmentCalendar_formatTime = (startDate, startTime, endDate, endTime) => {
 
   const startEnd = {};
 
@@ -35,7 +35,7 @@ const formatTime = (startDate, startTime, endDate, endTime) => {
 
 
 // To compare the end date and time is before current date and time
-const compareBeforeCurrentTime = (endTime) => {
+const appointmentCalendar_compareBeforeCurrentTime = (endTime) => {
   const currentTime = moment();   // Get the current date and time
 
   // Special case for all day event time, if it don't have time and compare to current time, it return true although they are same day
@@ -47,7 +47,7 @@ const compareBeforeCurrentTime = (endTime) => {
 
 
 // Generate tooltip for each of the appointment events
-const generateTooltip = (timeStart, timeEnd, title) => {
+const appointmentCalendar_generateTooltip = (timeStart, timeEnd, title) => {
   if(!timeStart && !timeEnd){
     return '<b>All day</b>' + '<br>' + title;
   }
@@ -57,8 +57,129 @@ const generateTooltip = (timeStart, timeEnd, title) => {
 }
 
 
+// Generate the events used for the calendar
+const appointmentCalendar_createEvents = (appointments, username) => {
+  const events = appointments.map(appointment => {        // Extract the data needed for an event object
+    const isCreator = appointment.creator === username;   // Check the appointment is created by user
+
+    const startEnd = appointmentCalendar_formatTime(appointment.dateStart, appointment.timeStart, appointment.dateEnd, appointment.timeEnd);
+    const isBeforeCurrentTime = appointmentCalendar_compareBeforeCurrentTime(startEnd.end);  // To check the event is past
+
+    let backgroundColor, textColor, borderColor, classNames;  // The attributes of the event in calendar
+    let role, appointmentEventStatus, eventType;              // Attributes to indicate the event type (later used for event listener)
+
+    if (isCreator) {      // If the user is creator
+      role = 'creator';
+
+      if (isBeforeCurrentTime) { // If the event is past, show it in fade color
+        backgroundColor = '#00B3004D';
+        borderColor = '#00B30080';
+        textColor = '#00000066';
+        classNames = ['fc-event-transparent'];
+
+        appointmentEventStatus = 'past';
+      }
+      else {                      // If it is upcoming appointment, show it in exact color
+        backgroundColor = '#00B300';
+        borderColor = '#00B300B3';
+
+        appointmentEventStatus = 'active';
+      }
+
+      eventType = {
+        role: role,
+        status: appointmentEventStatus
+      }
+    }
+    else {    // Else, the user is attendee of the appointment
+
+      role = 'attendee';
+
+      // To get the user's response
+      const userResponse = appointment.attendees.find(attendee => attendee.name === username).response;
+
+      switch (userResponse) {       // Based on the user's response, set the color for the event
+        case 'accepted':
+          if (isBeforeCurrentTime) {
+            backgroundColor = '#00B3004D';
+            borderColor = '#00B30080';
+            textColor = '#00000066';
+            classNames = ['fc-event-transparent'];
+
+            appointmentEventStatus = 'past';
+          }
+          else {
+            backgroundColor = '#00B300';
+            borderColor = '#00B300B3';
+
+            appointmentEventStatus = 'active';
+          }
+          break;
+        case 'pending':
+          if (isBeforeCurrentTime) {
+            backgroundColor = '#007BFF4D';
+            borderColor = '#007BFF80';
+            textColor = '#00000066';
+            classNames = ['fc-event-transparent'];
+
+            appointmentEventStatus = 'past';
+          }
+          else {
+            backgroundColor = '#007BFF';
+            borderColor = '#007BFFB3';
+
+            appointmentEventStatus = 'active';
+          }
+          break;
+        case 'declined':
+          if (isBeforeCurrentTime) {
+            backgroundColor = '#FF00004D';
+            borderColor = '#FF000080';
+            textColor = '#00000066';
+            classNames = ['fc-event-transparent'];
+
+            appointmentEventStatus = 'past';
+          }
+          else {
+            backgroundColor = '#FF0000';
+            borderColor = '#FF0000B3';
+
+            appointmentEventStatus = 'active';
+          }
+          break;
+      }
+
+      eventType = {
+        role: role,
+        response: userResponse,
+        status: appointmentEventStatus
+      }
+    }
+
+    // Tootlip for each event
+    const tooltip =  appointmentCalendar_generateTooltip(appointment.timeStart, appointment.timeEnd, appointment.title);
+
+    return {        // return each event, as a result it is an array of events
+      title: appointment.title,
+      start: startEnd.start,
+      end: startEnd.end,
+      id: appointment._id,
+      backgroundColor: backgroundColor,
+      textColor: textColor,
+      borderColor: borderColor,
+      classNames: classNames,
+      appointment: appointment,     // appointment, eventType, and tooltip will be the object of extendedProps
+      eventType: eventType,         // automcatically since they are user-defined property
+      tooltip: tooltip
+    }
+  });
+
+  return events;
+}
+
+
 // To create a calendar
-const createCalendar = (id, appointments, username, needFilter) => {
+const appointmentCalendar_createCalendar = (id, appointments, username, needFilter) => {
 
   // If the appointments haven't filter for the user, do filtering based on the username and appointment's status
   // Note: there are two cases, one case is request for all data for admin page, then need to filter here,
@@ -72,90 +193,11 @@ const createCalendar = (id, appointments, username, needFilter) => {
     )
   }
 
-  // To hold the event for the user
-  const events = appointments.map(appointment => {                  // Extract the data needed for an event object
-    const isCreator = appointment.creator === username;
-
-    const startEnd = formatTime(appointment.dateStart, appointment.timeStart, appointment.dateEnd, appointment.timeEnd);
-    const isBeforeCurrentTime = compareBeforeCurrentTime(startEnd.end);  // To check the event is over
-
-    let backgroundColor, textColor, borderColor, classNames;
-
-    if (isCreator) {      // If the user is creator
-      if (isBeforeCurrentTime) {
-        backgroundColor = '#00B3004D';
-        borderColor = '#00B30080';
-        textColor = '#00000066'
-        classNames = ['fc-event-transparent']
-      }
-      else {
-        backgroundColor = '#00B300';
-        borderColor = '#00B300B3'
-      }
-    }
-    else {
-      // To get the user's response
-      const userResponse = appointment.attendees.find(attendee => attendee.name === username).response;
-
-      switch (userResponse) {       // Based on the user's response, set the color for the event
-        case 'accepted':
-          if (isBeforeCurrentTime) {
-            backgroundColor = '#00B3004D';
-            borderColor = '#00B30080';
-            textColor = '#00000066'
-            classNames = ['fc-event-transparent']
-          }
-          else {
-            backgroundColor = '#00B300';
-            borderColor = '#00B300B3'
-          }
-          break;
-        case 'pending':
-          if (isBeforeCurrentTime) {
-            backgroundColor = '#007BFF4D';
-            borderColor = '#007BFF80';
-            textColor = '#00000066'
-            classNames = ['fc-event-transparent']
-          }
-          else {
-            backgroundColor = '#007BFF';
-            borderColor = '#007BFFB3'
-          }
-          break;
-        case 'declined':
-          if (isBeforeCurrentTime) {
-            backgroundColor = '#FF00004D';
-            borderColor = '#FF000080';
-            textColor = '#00000066'
-            classNames = ['fc-event-transparent']
-          }
-          else {
-            backgroundColor = '#FF0000';
-            borderColor = '#FF0000B3'
-          }
-          break;
-      }
-    }
-
-    const tooltip =  generateTooltip(appointment.timeStart, appointment.timeEnd, appointment.title);
-
-    return {        // return each event, as a result it is an array of events
-      title: appointment.title,
-      start: startEnd.start,
-      end: startEnd.end,
-      id: appointment._id,
-      backgroundColor: backgroundColor,
-      textColor: textColor,
-      borderColor: borderColor,
-      classNames: classNames,
-      appointment: appointment,
-      tooltip: tooltip
-    }
-  });
-
-  console.log(events);
+  // Create the appointment events for calendar
+  const events = appointmentCalendar_createEvents(appointments, username);
 
   var calendarEl = document.getElementById(id);
+  calendarEl.innerHTML = '';        // Clear the calendar element
 
   // Calendar settings
   var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -178,20 +220,26 @@ const createCalendar = (id, appointments, username, needFilter) => {
     // The events to be shown on the calendar
     events: events,
 
+    // Event listener to show the form for each event
     eventClick: function (info) {
-      console.log(info.event.id);
+      appointmentForm_displayAppointmentForm(info.event.extendedProps.eventType, info.event.extendedProps.appointment);
     },
+
+    // To create the tooltip for each event (only in timeGridWeek view)
     eventDidMount: function(info) {
-      var tooltip = new bootstrap.Tooltip(info.el, {
-        title: info.event.extendedProps.tooltip,
-        placement: 'top', // Adjust tooltip placement as needed
-        trigger: 'hover',
-        container: 'body',
-        html: true,
-        customClass: 'event-tooltip'
-      });
+      if (info.view.type === 'timeGridWeek'){
+        var tooltip = new bootstrap.Tooltip(info.el, {
+          title: info.event.extendedProps.tooltip, // Tooltip content get from each event object's extendedProps
+          placement: 'top',
+          trigger: 'hover',
+          container: 'body',
+          html: true,                              // Allow html code in the content
+          customClass: 'event-tooltip'             // Add class to tooltip to customize it
+        });
+      }
     }
   });
 
+  // Render the calendar
   calendar.render();
 }

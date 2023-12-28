@@ -4,6 +4,12 @@
 <!-- Link to calendar related controller script -->
 <script src="../../javascript/appointment/calendarController.js"></script>
 
+<!-- Link to modal related controller script -->
+<script src="../../javascript/appointment/modalController.js"></script>
+
+<!-- Link to loading overlay and spinner related controller script -->
+<script src="../../javascript/appointment/loadingController.js"></script>
+
 <!-- Link to form related controller script -->
 <script src="../../javascript/appointment/formController.js"></script>
 

@@ -8,14 +8,17 @@
 
   <body>
 
+    <!-- Loading spinner -->
+    <?php include"../../components/appointment/loading.php" ?>
+
     <!-- A container to move all the content in center and 80% width -->
-    <div id='appointment-container'>
+    <div id='appointment-mainContainer'>
       <div class='container mt-3'>    <!-- The Bootstrap container -->
         
         <?php include "../../components/appointment/modal.php"; ?>   <!-- The Bootstrap Modal form -->
 
         <!-- Button to trigger modal -->
-        <button type='button' class='btn btn-primary mb-3 button1' data-bs-toggle='modal' data-bs-target='#appointmentModal'>
+        <button type='button' id='appointment-newAppointmentButton' class='btn btn-primary mb-3' data-bs-toggle='modal' data-bs-target='#multiAppointmentModal'>
           <i class='bi bi-plus-square' aria-label='plus-square icon'></i>
           New Appointment
         </button>

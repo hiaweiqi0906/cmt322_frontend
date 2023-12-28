@@ -242,4 +242,9 @@ const appointmentCalendar_createCalendar = (id, appointments, username, needFilt
 
   // Render the calendar
   calendar.render();
+
+  // A special call, first time render the calendar no problem, 
+  // but after that if render it in small screen size and enlarge the screen size, it got problem, so use this method to solve
+  calendar.destroy();
+  calendar.render();
 }

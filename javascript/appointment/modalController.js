@@ -71,7 +71,7 @@ const appointmentModal_setCreatedAppointmentModal = (modalTitleID, saveButtonID,
 
   appointmentModal_setSaveButton(saveButtonID, 'Save', needDisable, ['btn', 'btn-primary', 'save-button']);
 
-  appointmentModal_setCloseButton(closeButtonID, 'Cancel', needDisable, ['btn', 'btn-danger']);
+  appointmentModal_setCloseButton(closeButtonID, 'Cancel', needDisable, ['btn', 'btn-danger', 'shadow']);
 }
 
 
@@ -79,28 +79,28 @@ const appointmentModal_setCreatedAppointmentModal = (modalTitleID, saveButtonID,
 const appointmentModal_setInvitedAppointmentModal = (modalTitleID, saveButtonID, closeButtonID, title, acceptDisable, declineDisable) => {
   appointmentModal_setModalTitle(modalTitleID, title);
 
-  appointmentModal_setSaveButton(saveButtonID, 'Accept', acceptDisable, ['btn', 'btn-success']);
+  appointmentModal_setSaveButton(saveButtonID, 'Accept', acceptDisable, ['btn', 'btn-success', 'shadow']);
 
-  appointmentModal_setCloseButton(closeButtonID, 'Decline', declineDisable, ['btn', 'btn-danger']);
+  appointmentModal_setCloseButton(closeButtonID, 'Decline', declineDisable, ['btn', 'btn-danger', 'shadow']);
 }
 
 
 // To show the alert
-const appointmentModal_showAlert = (alertID = 'appointment-multiForm-alert') => {
+const appointmentModal_showAlert = (alertID) => {
   document.getElementById(alertID).classList.add('show');
 }
 
 
 // To hide the alert after 5 seconds
-const appointmentModal_hideAlert = (alertID = 'appointment-multiForm-alert') => {
+const appointmentModal_hideAlert = (alertID) => {
   setTimeout( () => {
     document.getElementById(alertID).classList.remove('show');
-  }, 4000);
+  }, 3000);
 }
 
 
 // To call alert function
-const appointmentModal_callAlert = () => {
-  appointmentModal_showAlert();
-  appointmentModal_hideAlert();
+const appointmentModal_callAlert = (alertID) => {
+  appointmentModal_showAlert(alertID);
+  appointmentModal_hideAlert(alertID);
 }

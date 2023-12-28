@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
       appointmentChart_displayCharts(isAdmin);  // To show or hide the charts
 
     }).catch((err) => {
-      console.log('Error when checking is admin', err);
+      console.log('Error when checking is admin: ', err);
   });
   
   // To get the appointments, display them in charts and calendar
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
     }).catch((err) => {
-      console.log('Error when first initializing data', err);
+      console.log('Error when first initializing data: ', err);
   });
 
 
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
       
     })
     .catch((err) => {
-      console.log('Error fetching user list', err)
+      console.log('Error fetching user list: ', err)
   });
 
   
@@ -90,6 +90,11 @@ document.getElementById('appointment-multiAppointmentModal-saveButton').addEvent
       'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
       break;
     
+    case 'Pending Appointment':
+    case 'Declined Appointment':
+      appointmentForm_appointmentResponse('accepted');
+      break;
+    
     default:
       console.error('Save button: No case matching to the form type');
 
@@ -104,12 +109,28 @@ document.getElementById('appointment-multiAppointmentModal-closeButton').addEven
 
   switch(formType){
     case 'New Appointment':
-      appointmentModal_closeModal();
+      appointmentModal_closeModal();    // Default modal is appointment form modal
+      break;
+    
+    case 'Created Appointment':
+      appointmentModal_closeModal();    // Default modal is appointment form modal
+      appointmentModal_openModal('appointment-comfirmation-modal');   // Open confirmation modal
+      break;
+
+    case 'Pending Appointment':
+    case 'Accepted Appointment':
+      appointmentForm_appointmentResponse('declined');
       break;
     
     default:
       console.error('Close button: No case matching to the form type');
   }
+})
+
+
+// To cancel the appointment when user confirm it
+document.getElementById('appointment-confirmationModal-yes').addEventListener('click', () => {
+  appointmentForm_cancelAppointment();
 })
 
 
@@ -149,4 +170,3 @@ document.getElementById('multiAppointmentModal').addEventListener('hidden.bs.mod
   appointmentForm_resetFormData('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details', 
   'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
 })
-

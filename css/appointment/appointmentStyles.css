@@ -47,6 +47,12 @@
 }
 
 
+/* To add shadow to the button */
+.shadow{
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
 /* Set the color of tooltip */
 .event-tooltip{
   --bs-tooltip-bg: #1C277E;
@@ -94,7 +100,7 @@
 
 
 /* To set the style of the hiding alert */
-#appointment-multiForm-alert{
+.alert{
   display: none;
   opacity: 0;
   transition: opacity 0.1s ease-in-out;
@@ -102,7 +108,7 @@
 
 
 /* To show the alert when adding the class */
-#appointment-multiForm-alert.show{
+.alert.show{
   display: block;
   opacity: 1;
 }

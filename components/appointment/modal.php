@@ -7,16 +7,19 @@
     <!-- Content for the modal -->
     <div class='modal-content'>
 
-      <!-- Header of the modal -->
+      <!-- Header of the appointment modal -->
       <div class='modal-header bg-light'>
         <h1 class='modal-title fs-5' id='appointment-multiAppointmentModal-title'>New Appointment</h1>
         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
       </div>
 
-      <!-- Body content of the modal -->
+      <!-- Body content of the appointment modal -->
       <div class='modal-body'>
 
         <form id='appointment-multiForm'>
+
+          <!-- A always hidden input, just to store the created appointment's id-->
+          <span style='display: none' id='appointment-multiForm-id'></span>
 
           <!-- The title input section -->
           <div class='row mb-3'>
@@ -128,13 +131,17 @@
           
         </form>
 
-        <div class="alert alert-warning" role="alert" id='appointment-multiForm-alert'>
+        <div class="alert alert-warning" role="alert" id='appointment-multiForm-warning-alert'>
           You have not make any changes.
+        </div>
+
+        <div class="alert alert-danger" role="alert" id='appointment-multiForm-danger-alert'>
+          Please ensure all data is valid
         </div>
 
       </div>
 
-      <!-- Footer of the modal -->
+      <!-- Footer of the appointment modal -->
       <div class='modal-footer bg-light'>
         <button type='button' id='appointment-multiAppointmentModal-closeButton' class='btn btn-light'>Close</button>
         <button type='button' id='appointment-multiAppointmentModal-saveButton' class='btn btn-primary'>Save</button>
@@ -144,4 +151,28 @@
 
   </div>
 
+</div>
+
+<!-- Another confirmation modal-->
+<div class="modal fade" id='appointment-comfirmation-modal' data-bs-backdrop="static" data-bs-keyboard="false" tabindex='-1' aria-labelledby='comfirmation modal' aria-hidden='true'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <!-- Header of the confirmation modal -->
+      <div class='modal-header bg-light'>
+        <h1 class='modal-title fs-5'>Confirmation</h1>
+      </div>
+
+      <div class="modal-body">
+        Are you sure you want to cancel this appointment?
+      </div>
+
+      <!-- Footer of the confirmation modal -->
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-light close-button" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger shadow" id='appointment-confirmationModal-yes'>Yes</button>
+      </div>
+
+    </div>
+  </div>
 </div>

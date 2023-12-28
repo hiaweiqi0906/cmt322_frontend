@@ -486,7 +486,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
     }
 
     // Close the modal and showing the loading overlay
-    appointmentModal_closeModal();
+    appointmentModal_closeModal();    // Default modal is appointment form modal
     appointmentLoading_showLoadingOverlay();
 
     appointment = {
@@ -508,7 +508,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
     .then((response) => {
       const { username, isAdmin, appointments } = response.data;
 
-      // If the user is admin, then create the charts and calendar
+      // If the user is admin, update the charts and recreate calendar
       if(isAdmin){
         
         appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
@@ -525,7 +525,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
     })
     .catch((err) => {
       appointmentLoading_hideLoadingOverlay();
-      console.log('Error when initializing data', err);
+      console.log('Error when creating new appointment: ', err);
   });
   }
   // Check the validity of inputs
@@ -541,11 +541,14 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
 
 
 // To display the created appointment's form details
-const appointmentForm_displayCreatedFormData = (titleEl, attendeeSelectEl, locationEl, detailsEl, 
+const appointmentForm_displayCreatedFormData = (idEl, titleEl, attendeeSelectEl, locationEl, detailsEl, 
   startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment, needDisable) => {
 
     // Show the creator name
     appointmentForm_showCreator('You');
+
+    // Put the appointment id in hidden field
+    idEl.innerText = appointment._id;
 
     // Get the title and display in form
     titleEl.value = appointment.title;
@@ -622,11 +625,14 @@ const appointmentForm_displayCreatedFormData = (titleEl, attendeeSelectEl, locat
 
 
 // To display the invited appointment form
-const appointmentForm_displayInvitedFormData = (titleEl, attendeeSelectEl, locationEl, detailsEl, 
+const appointmentForm_displayInvitedFormData = (idEl, titleEl, attendeeSelectEl, locationEl, detailsEl, 
   startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment) => {
 
     // Show the creator name
     appointmentForm_showCreator(appointment.creator);
+
+    // Put the appointment id in hidden field
+    idEl.innerText = appointment._id;
 
     // Get the title and display in form
     titleEl.value = appointment.title;
@@ -711,6 +717,7 @@ const appointmentForm_displayInvitedFormData = (titleEl, attendeeSelectEl, locat
 // Note: This function is used by calendar component in calendar.php
 const appointmentForm_displayAppointmentForm = (eventType, appointment) => {
 
+  const idEl = document.getElementById('appointment-multiForm-id');
   const titleEl = document.getElementById('appointment-multiForm-title');
   const attendeeSelectEl = document.getElementById('appointment-multiForm-attendeesSelect');
   const locationEl = document.getElementById('appointment-multiForm-location');
@@ -737,7 +744,7 @@ const appointmentForm_displayAppointmentForm = (eventType, appointment) => {
     appointmentModal_setCreatedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', needDisable);
 
     // Display the data in the form
-    appointmentForm_displayCreatedFormData(titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment, needDisable);
+    appointmentForm_displayCreatedFormData(idEl, titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment, needDisable);
 
     // Open the modal
     appointmentModal_openModal();
@@ -765,7 +772,7 @@ const appointmentForm_displayAppointmentForm = (eventType, appointment) => {
     }
 
     // Display the data in the form
-    appointmentForm_displayInvitedFormData(titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment);
+    appointmentForm_displayInvitedFormData(idEl, titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment);
     
     // Open the modal
     appointmentModal_openModal();
@@ -774,12 +781,330 @@ const appointmentForm_displayAppointmentForm = (eventType, appointment) => {
 
 
 // To check the title content has changed by user
-const appointmentForm_checkTitleChange = () => {
+const appointmentForm_checkTitleChange = (titleEl, titleData) => {
+  const formTitleValue = titleEl.value.trim();
+
+  if(formTitleValue !== titleData){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+
+// To check array1 have all elements in array2
+function allElementsPresent(arr1, arr2) {
+  // Check if all elements in arr2 are included in arr1
+  return arr2.every(element => arr1.includes(element));
+}
+
+
+// To check the attendee has changed by user
+const appointmentForm_checkAttendeeChange = (attendeeSelectEl, attendeeData) => {
+  const oldAttendeeValue = [];
+  const newAttendeeValue = [];
   
+  // To get each of the attendee from the appointment
+  attendeeData.forEach(attendee => {
+    oldAttendeeValue.push(attendee.name);
+  })
+
+  // Get the attendee from the form
+  for (var i = 0; i < attendeeSelectEl.options.length; i++) {
+    if (attendeeSelectEl.options[i].selected) {
+      newAttendeeValue.push(attendeeSelectEl.options[i].value);
+    }
+  }
+
+  // Check if old attendee list has all the value in new attendee list and vice versa, means no change
+  if(oldAttendeeValue.length == newAttendeeValue.length){
+    if(allElementsPresent(oldAttendeeValue, newAttendeeValue) && allElementsPresent(newAttendeeValue, oldAttendeeValue)){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+  else{
+    return true;
+  }
+}
+
+
+// Check date value are equal or changed
+const appointmentForm_checkDateChange = (dateEl, oldDate) => {
+  const newDate = moment(dateEl.datepicker('getDate')).format('YYYY-MM-DD');
+
+  if(oldDate == newDate){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
+
+// Check time value change
+const appointmentForm_checkTimeChange = (allDaySwitchEl, startTimeEl, endTimeEl, oldStartTime, oldEndTime) => {
+  const switchOn = allDaySwitchEl.checked;
+
+  // If the all day switch is on, time should be no value, but old start time and old end time has value, mean there is change
+  // If the all day switch is off, time should be have value, and the old start time and old end time do not have value, mean there is change
+  if( (switchOn && oldStartTime !== '' && oldEndTime !== '') || (!switchOn && oldStartTime === '' && oldEndTime === '') ){
+    return true;
+  }
+  else{
+    // If the switch is on, old start time and old end time do not have value, don't do comparison, return false
+    if(switchOn){
+      return false;
+    }
+    else{ // Then, compare start time and end time
+      const newStartTime = startTimeEl.value;
+      const newEndTime = endTimeEl.value;
+
+      if(oldStartTime != newStartTime || oldEndTime != newEndTime){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+  }
+}
+
+
+// Check the location change
+const appointmentForm_checkLocationChange = (locationEl, oldLocation) => {
+  const newLocation = locationEl.value.trim();
+
+  if(oldLocation !== newLocation){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+
+// Check the details change
+const appointmentForm_checkDetailsChange = (detailsEl, oldDetails) => {
+  const newDetails = detailsEl.value.trim();
+
+  if(oldDetails !== newDetails){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 
 // To check any data in the form is changed, then send updated data to the server
-const appointmentForm_updateAppointmentForm = () => {
+const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locationID, detailsID, 
+  startDateID, startTimeID, endDateID, endTimeID, allDaySwitchID) => {
 
+    // check the input fields does not have invalid data except date and time
+    const titleEl = document.getElementById(titleID);
+    const titleIsInvalid = titleEl.classList.contains('is-invalid');
+
+    const attendeeSelectEl = document.getElementById(attendeeSelectID);
+    const attendeeSelectIsInvalid = attendeeSelectEl.classList.contains('is-invalid');
+
+    const locationEl = document.getElementById(locationID);
+    const locationIsInvalid = locationEl.classList.contains('is-invalid');
+
+    const detailsEl = document.getElementById(detailsID);
+    const detailsIsInvalid = detailsEl.classList.contains('is-invalid');
+
+    const startDateEl = $('#' + startDateID)
+    const startTimeEl = document.getElementById(startTimeID);
+    const endDateEl = $('#' + endDateID)
+    const endTimeEl = document.getElementById(endTimeID);
+    const allDaySwitchEl = document.getElementById(allDaySwitchID); 
+
+    // If any invalid input, show the error alert
+    if(titleIsInvalid || attendeeSelectIsInvalid || locationIsInvalid || detailsIsInvalid){
+      appointmentModal_callAlert('appointment-multiForm-danger-alert');
+    }
+    // Else check is there any changes
+    else{
+      // Get the appointent id, later used for fetch the appointment from server
+      const appointmentID = document.getElementById('appointment-multiForm-id').innerText;
+
+      // Get the appointment data from server based on the id
+      axios.get(`http://localhost:6500/api/appointments/${appointmentID}`)
+      .then((response) => {
+        const appointment = response.data;
+
+        const titleChanged = appointmentForm_checkTitleChange(titleEl, appointment.title);
+        const attendeeChanged = appointmentForm_checkAttendeeChange(attendeeSelectEl, appointment.attendees);
+        const startDateChanged = appointmentForm_checkDateChange(startDateEl, appointment.dateStart);
+        const endDateChanged = appointmentForm_checkDateChange(endDateEl, appointment.dateEnd)
+        const timeChanged = appointmentForm_checkTimeChange(allDaySwitchEl, startTimeEl, endTimeEl, appointment.timeStart, appointment.timeEnd);
+        const locationChanged = appointmentForm_checkLocationChange(locationEl, appointment.location);
+        const detailsChanged = appointmentForm_checkDetailsChange(detailsEl, appointment.details);
+
+        if(titleChanged || attendeeChanged || startDateChanged || endDateChanged || timeChanged || locationChanged || detailsChanged){
+          if(titleChanged){
+            appointment.title = titleEl.value.trim();
+          }
+
+          if(attendeeChanged){
+            const oldAttendee = [];
+
+            appointment.attendees.forEach(attendee => {
+              oldAttendee.push(attendee.name);
+            })
+
+            const newAttendee = [];
+            for (var i = 0; i < attendeeSelectEl.options.length; i++) {
+              if (attendeeSelectEl.options[i].selected) {
+                newAttendee.push(attendeeSelectEl.options[i].value);
+              }
+            }
+
+            // Update the object's attendees property
+            appointment.attendees = appointment.attendees
+            .filter(attendee => newAttendee.includes(attendee.name)) // Keep only existing names
+            .concat(newAttendee                                      // Add new names with default response
+              .filter(name => !appointment.attendees.some(attendee => attendee.name === name))
+              .map(name => ({ name, response: 'pending' }))
+            );
+          }
+
+          if(startDateChanged){
+            appointment.dateStart = moment(startDateEl.datepicker('getDate')).format('YYYY-MM-DD');
+          }
+
+          if(endDateChanged){
+            appointment.dateEnd = moment(endDateEl.datepicker('getDate')).format('YYYY-MM-DD');
+          }
+
+          if(timeChanged){
+            if(allDaySwitchEl.checked){
+              appointment.timeStart = '';
+              appointment.timeEnd = '';
+            }
+            else{
+              appointment.timeStart = startTimeEl.value;
+              appointment.timeEnd = endTimeEl.value;
+            }
+          }
+
+          if(locationChanged){
+            appointment.location = locationEl.value.trim();
+          }
+
+          if(detailsChanged){
+            appointment.details = detailsEl.value.trim();
+          }
+
+          // Close the modal and showing the loading overlay
+          appointmentModal_closeModal();    // Default modal is appointment form modal
+          appointmentLoading_showLoadingOverlay();
+
+          axios.put(`http://localhost:6500/api/appointments/${appointmentID}`, appointment)
+          .then((response) => {
+            const { username, isAdmin, appointments } = response.data;
+
+            // If the user is admin, then update the charts and recreate calendar
+            if(isAdmin){
+              
+              appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
+              appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
+              appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+            }
+            // Else, only create the calendar
+            else{
+              appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+            }
+          })
+          .then((response)=>{
+            appointmentLoading_hideLoadingOverlay();
+          })
+          .catch((err) => {
+            appointmentLoading_hideLoadingOverlay();
+            console.log('Error when update user\'s created appointment', err);
+          });
+        }
+        else{
+          appointmentModal_callAlert('appointment-multiForm-warning-alert');
+        }
+
+      })
+      .catch((err) => {
+        console.log('Error when updating the appointment', err);
+      });
+    }
+
+}
+
+
+// To cancel the appointment from the database
+const appointmentForm_cancelAppointment = () => {
+  // Get the appointment id, later used it to cancel the appointment
+  const appointmentID = document.getElementById('appointment-multiForm-id').innerText;
+
+  // Close the modal and showing the loading overlay
+  appointmentModal_closeModal('appointment-comfirmation-modal');    // Close the confirmation modal
+  appointmentLoading_showLoadingOverlay();
+
+  axios.delete(`http://localhost:6500/api/appointments/${appointmentID}`)
+  .then((response) => {
+    const { username, isAdmin, appointments } = response.data;
+
+    // If the user is admin, then update the charts and recreate calendar
+    if(isAdmin){
+      
+      appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
+      appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
+      appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+    }
+    // Else, only create the calendar
+    else{
+      appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+    }
+
+  })
+  .then( (response)=>{
+    appointmentLoading_hideLoadingOverlay();
+  })
+  .catch((err) => {
+    appointmentLoading_hideLoadingOverlay();
+    console.log('Error when cancelling the appointment', err);
+  });
+}
+
+
+// To accept the appointment
+const appointmentForm_appointmentResponse = (userResponse) => {
+  // Get the appointment id, later used it to cancel the appointment
+  const appointmentID = document.getElementById('appointment-multiForm-id').innerText;
+
+  // Close the modal and showing the loading overlay
+  appointmentModal_closeModal();    // Default modal is appointment form modal
+  appointmentLoading_showLoadingOverlay();
+
+  axios.put(`http://localhost:6500/api/appointments/response/${appointmentID}`, {response: userResponse})
+  .then((response) => {
+    const { username, isAdmin, appointments } = response.data;
+
+    // If the user is admin, then update the charts and recreate calendar
+    if(isAdmin){
+      appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+    }
+    // Else, only create the calendar
+    else{
+      appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+    }
+
+  })
+  .then( (response)=>{
+    appointmentLoading_hideLoadingOverlay();
+  })
+  .catch((err) => {
+    appointmentLoading_hideLoadingOverlay();
+    console.log('Error when sending user response', err);
+  });
 }

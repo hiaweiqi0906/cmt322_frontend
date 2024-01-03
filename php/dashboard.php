@@ -78,6 +78,7 @@
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
         endLoader();
+        
         // Get statistics data from server
         axios.get('/api/statistics/dashboard', )
             .then(function(response) {
@@ -156,7 +157,7 @@
                     localStorage.clear()
                     window.location.href = baseUrl + 'php/auth/login.php';
                 }
-            });
+        });
     </script>
 </body>
 

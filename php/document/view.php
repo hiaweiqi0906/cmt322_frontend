@@ -12,7 +12,6 @@
 </head>
 
 <body>
-    <!-- Add neccessary components, such as navbars, footer, header, etc.. -->
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
         <h1 class="h1-main-title">Documents</h1>
@@ -20,10 +19,30 @@
         <div class="flex-con">
             <div class="row-1 nested-flex-con-col">
                 <div class="float-card info-float-card row-1" style="min-height: 380px;">
-                    <h3 class="h3-semibold-24">Document Info</h3>
+                    <div class="nested-flex-con-row">
+                        <div style="width: 50%">
+                            <h3 class="h3-semibold-24">Document Info </h3>
+
+                        </div>
+                        <div style="width: 50%">
+                            <button type="button" id="document-icon-delete" style="background-color: #1c277e; width: 20%; display: none; cursor: pointer; margin-left: 1rem; margin-right: 3rem; float: right;" class="btn btn-primary" onclick="editDocument()"><img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/ffffff/design.png" alt="design" style="margin-right: 1rem;" />Edit</button>
+                            <button type="button" id="document-icon-edit" style="border: 1px solid #1c277e; background-color: white; width: 20%; color: #1c277e; display: none; margin-left: 1rem;float: right;cursor: pointer;" class="btn btn-primary" onclick="deleteDocument()"><img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/1c277e/filled-trash.png" alt="design" style="margin-right: 1rem;" />Delete</button>
+                            <button type="button" id="document-icon-cancel" style="background-color: #1c277e; width: 20%; display: none; cursor: pointer; margin-left: 1rem; margin-right: 3rem; float: right;" class="btn btn-primary" onclick="confirmSave()"><img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/ffffff/checkmark--v1.png" alt="design" style="margin-right: 1rem;" />Save</button>
+                            <button type="button" id="document-icon-save" style="border: 1px solid #1c277e; background-color: white; width: 20%; color: #1c277e; display: none; margin-left: 1rem;float: right;cursor: pointer;" class="btn btn-primary" onclick="cancelSave()"><img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/1c277e/multiply.png" alt="design" style="margin-right: 1rem;" />Cancel</button>
+                        </div>
+                    </div>
+
                     <div class="nested-flex-con-row">
                         <div class="col-3">
-                            <div></div>
+                            <div class="hoverable-img" onclick="openClosePdf()">
+                                <div class="img-wrap">
+                                    <img src="" id="document-documentInfo-documentAvatar" alt="" />
+                                </div>
+                                <div class="middle-img-hover img-wrap">
+                                    <div class="view-text img-wrap">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-5">
                             <div class="nested-flex-con-col row-1-statistics">
@@ -32,7 +51,8 @@
                                         <div>
                                             <p style="width: 85px;">Document Name</p>
                                             <div class="">
-                                                <span class="info-text-document">Document1 .pdf asdfdfas </span>
+                                                <span class="info-text-document" id="document-documentInfo-documentName">Document1 .pdf asdfdfas </span>
+                                                <input type="text" style="display: none; width: calc(100% - 3rem);" class="info-text-document" name="document-documentEditInfo-documentName" id="document-documentEditInfo-documentName" value="Document1">
                                             </div>
                                         </div>
                                     </div>
@@ -41,8 +61,9 @@
                                     <div class="two-line-statistics document-info-block">
                                         <div>
                                             <p style="width: 80px;">Document Description</p>
-                                            <div class="info-text-document">
-                                                <span class="info-text-document">Lorem ipsum dolor sit amet consectetur. Sit sit lacus rhoncus amet. Sed elementum convallis convallis amet tellus egestas et scelerisque at. Pretium nec varius posuere duis eget mi adipiscing. Nulla ipsum aliquam massa pulvinar in. Eget nunc semper felis massa sed </span>
+                                            <div class="info-text-document document-desc">
+                                                <span class="info-text-document" id="document-documentInfo-documentDesc">Lorem ipsum dolor sit amet consectetur. Sit sit lacus rhoncus amet. Sed elementum convallis convallis amet tellus egestas et scelerisque at. Pretium nec varius posuere duis eget mi adipiscing. Nulla ipsum aliquam massa pulvinar in. Eget nunc semper felis massa sed </span>
+                                                <textarea name="info-text-document" id="document-documentEditInfo-documentDesc" style="display: none; width: 100%;" rows="6">asfdasf</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -51,9 +72,11 @@
                                 <div class="row-1-statistics mg-between-info">
                                     <div class="two-line-statistics document-info-block">
                                         <div>
-                                            <p>Last Accessed By</p>
+
+                                            <p>Last Accessed By<img width="24" id="document-icon-editAccess" onclick="editDocument()" style="display: none; cursor: pointer; margin-left: 1rem;" height="24" src="https://img.icons8.com/ios-glyphs/30/1c277e/design.png" alt="design" /></p>
                                             <div class="info-text-document">
-                                                <span class="info-text-document"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png" alt="user-male-circle" style="margin-right: 0.5rem;" />Dato Seri Mh Lim Cho</span><span class="last-accessed">1 day ago...</span>
+                                                <span class="info-text-document" id="document-documentInfo-accessedBy"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png" alt="user-male-circle" style="margin-right: 0.5rem;" />Dato Seri Mh Lim Cho</span>
+                                                <span class="last-accessed" id="document-documentInfo-accessedTime">1 day ago...</span>
                                             </div>
                                         </div>
                                     </div>
@@ -68,7 +91,7 @@
                                         <div>
                                             <p style="width: 85px;">Related Case</p>
                                             <div class="">
-                                                <span class="info-text-document">Document1 .pdf asdfdfas </span>
+                                                <span class="info-text-document" id="document-documentInfo-relatedCase">Document1 .pdf asdfdfas </span>
                                             </div>
                                         </div>
                                     </div>
@@ -78,7 +101,7 @@
                                         <div>
                                             <p style="width: 85px;">Document Size</p>
                                             <div>
-                                                <span class="info-text-document">99kB</span>
+                                                <span class="info-text-document" id="document-documentInfo-documentSize">99kB</span>
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +109,8 @@
                                         <div>
                                             <p style="width: 85px;">Document Type</p>
                                             <div>
-                                                <span class="info-text-document">Individual</span>
+                                                <span class="info-text-document" id="document-documentInfo-documentType">Individual</span>
+                                                <input type="text" style="display: none; " class="info-text-document" name="document-documentEditInfo-documentType" id="document-documentEditInfo-documentType">
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +120,7 @@
                                         <div>
                                             <p style="margin-top: 1rem">Uploaded by</p>
                                             <div class="">
-                                                <span class="info-text-document"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png" alt="user-male-circle" style="margin-right: 0.5rem;" />Dato Seri Mh Lim Cho</span>
+                                                <span class="info-text-document" id="document-documentInfo-uploadedBy"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png" alt="user-male-circle" style="margin-right: 0.5rem;" />Dato Seri Mh Lim Cho</span>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +130,7 @@
                                         <div>
                                             <p style="margin-top: 1rem">Uploaded Date</p>
                                             <div class="">
-                                                <span class="info-text-document">08.25 am, 12 November 2023</span>
+                                                <span class="info-text-document" id="document-documentInfo-uploadedAt">08.25 am, 12 November 2023</span>
                                             </div>
                                         </div>
                                     </div>
@@ -117,8 +141,9 @@
                 </div>
             </div>
         </div>
+
         <h3 class="h3-semibold-24 non-float-card">All Documents</h3>
-        <div class="table-section">
+        <div class="table-section" style="height: 39%; width: 100%;overflow-y: scroll;">
             <table id="document-allDocument-table" class="table-general">
                 <thead>
                     <tr>
@@ -146,232 +171,208 @@
                     </tr>
                 </thead>
                 <tbody>
-
-
-                    <!-- <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim Cho</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>12 Nov 2023</td>
-                        <td>13 Nov 2023</td>
-                    </tr>
-                    <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>13 Nov 2023</td>
-                        <td>123 Nov 2023</td>
-                    </tr>
-                    <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim Cho</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>211 Nov 2023</td>
-                        <td>112 Nov 2023</td>
-                    </tr>
-                    <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim Cho</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>9 Nov 2023</td>
-                        <td>3 Nov 2023</td>
-                    </tr>
-                    <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim Cho</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>9 Nov 2023</td>
-                        <td>3 Nov 2023</td>
-                    </tr>
-                    <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim Cho</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>9 Nov 2023</td>
-                        <td>3 Nov 2023</td>
-                    </tr>
-                    <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim Cho</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>9 Nov 2023</td>
-                        <td>3 Nov 2023</td>
-                    </tr>
-                    <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim Cho</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>9 Nov 2023</td>
-                        <td>3 Nov 2023</td>
-                    </tr>
-                    <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim Cho</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>9 Nov 2023</td>
-                        <td>3 Nov 2023</td>
-                    </tr>
-                    <tr>
-                        <td><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</td>
-                        <td>Individual</td>
-                        <td>53.6kB</td>
-                        <td>Dato Seri Mh Lim Cho</td>
-                        <td>Mr Lim Murder Case</td>
-                        <td>9 Nov 2023</td>
-                        <td>3 Nov 2023</td>
-                    </tr> -->
                 </tbody>
             </table>
 
         </div>
     </div>
+    <div class="document-iframe-wrap" onclick="openClosePdf()">
+        <embed id="document-documentInfo-documentIFrame" class="" height="500px">
+        <!-- <p>Unable to display PDF file. <a href="/uploads/media/default/0001/01/540cb75550adf33f281f29132dddd14fded85bfc.pdf">Download</a> instead.</p> -->
+        </embed>
+    </div>
+
     <script>
         $('.h2-user-greeting').text("Document Details")
-        var caseOption = {
-            series: [44, 20, 30],
-            fill: {
-                colors: ['#1A73E8', '#B32824', '#A42824']
-            },
-            labels: ["open", "closed", "pending"],
-            distributed: true,
-            borderWidth: 0,
-            chart: {
-                width: 380,
-                type: 'donut',
-            },
-            dataLabels: {
-                enabled: true
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        show: true
-                    }
-                }
-            }],
-            plotOptions: {
-                pie: {
-                    donut: {
-                        size: '70%', // Adjust the size of the donut
-                    },
-                    customScale: 1, // Adjust the scale to remove the white borders
-                    offsetX: 0,
-                    offsetY: 0,
+        let canAccessList = []
 
-                },
-            },
-            stroke: {
-                show: false,
-            },
-            legend: {
-                position: 'right',
-                offsetY: 0,
-                height: 230,
+        // get the documentID and caseID
+        const urlParams = new URLSearchParams(window.location.search);
+        const docId = urlParams.get('id');
+        const caseId = urlParams.get('cid');
+
+        // Toggle effect for open and close the embed pdf when clicked
+        const openClosePdf = () => {
+            if ($('.document-iframe-wrap').css("visibility") === "hidden") {
+                $('.document-iframe-wrap').css("visibility", "visible")
+            } else {
+                $('.document-iframe-wrap').css("visibility", "hidden")
             }
-        };
+        }
 
-        axios.get('/api/documents/all', )
+        // get document details, and update the UI
+        axios.get(`/api/documents/${docId}/${caseId}`, )
+            .then(function(response) {
+                console.log(response.data);
+                const {
+                    canEdit,
+                    doc_avatar,
+                    doc_type,
+                    doc_title,
+                    doc_description,
+                    doc_link_file,
+                    uploaded_at,
+                    uploaded_by,
+                    doc_case_related,
+                    last_accessed_at,
+                    can_be_access_by,
+                    filesize
+                } = response.data;
+
+                canAccessList = can_be_access_by
+
+                $('#document-documentInfo-uploadedAt').text(uploaded_at)
+                const uploadedByUserInfo = ""
+                $('#document-documentInfo-uploadedBy').html('<img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png" alt="user-male-circle" style="margin-right: 0.5rem;" />' + uploaded_by)
+                $('#document-documentInfo-relatedCase').text(doc_case_related)
+
+                $('#document-documentInfo-documentSize').text(filesize)
+                $('#document-documentInfo-documentType').text(doc_type)
+                $('#document-documentEditInfo-documentType').val(doc_type)
+
+
+                $('#document-documentInfo-documentDesc').text(doc_description)
+                $('#document-documentEditInfo-documentDesc').text(doc_description)
+
+                $('#document-documentEditInfo-documentName').val(doc_title)
+                $('#document-documentInfo-documentName').text(doc_title)
+                const accessedByUserInfo = ""
+                $('#document-documentInfo-accessedBy').html('<img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png" alt="user-male-circle" style="margin-right: 0.5rem;" />' + last_accessed_at[0].userId)
+                $('#document-documentInfo-accessedTime').text(last_accessed_at[0].type)
+                $('#document-documentInfo-documentAvatar').attr("src", doc_avatar)
+                const new_doc_link = `http://docs.google.com/gview?url=${doc_link_file}&embedded=true`
+                $('#document-documentInfo-documentIFrame').attr("src", doc_link_file)
+
+                if (canEdit) {
+                    $('#document-icon-delete').css("display", "block")
+                    $('#document-icon-edit').css("display", "block")
+                }
+
+            })
+            .catch(function(error) {
+                const {
+                    status
+                } = error.response
+                if (status === 401) {
+                    localStorage.clear()
+                    window.location.href = baseUrl + 'php/auth/login.php';
+                }
+            });
+
+        // Change the display properties when clicked edit
+        const editDocument = () => {
+            $('#document-icon-save').css("display", "block")
+            $('#document-icon-cancel').css("display", "block")
+            $('#document-icon-editAccess').css("display", "inline")
+            $('#document-icon-delete').css("display", "none")
+            $('#document-icon-edit').css("display", "none")
+
+            $('#document-documentEditInfo-documentType').css("display", "block")
+            $('#document-documentEditInfo-documentDesc').css("display", "block")
+            $('#document-documentEditInfo-documentName').css("display", "block")
+
+            $('#document-documentInfo-documentType').css("display", "none")
+            $('#document-documentInfo-documentDesc').css("display", "none")
+            $('#document-documentInfo-documentName').css("display", "none")
+        }
+
+        // Send update request to server if requested
+        const sendUpdateRequest = () => {
+            const reqBody = {
+                q: {
+                    q_id: docId,
+                    q_caseId: caseId
+                },
+                doc_type: $('#document-documentEditInfo-documentType').val(),
+                doc_title: $('#document-documentEditInfo-documentName').val(),
+                doc_description: $('#document-documentEditInfo-documentDesc').text(),
+                can_be_access_by: canAccessList
+            }
+            console.log(reqBody);
+            axios.put(`/api/documents/`, reqBody).then(function(response) {
+                if (response.status === 200) {
+                    location.reload()
+                }
+            }).catch(function(error) {
+                console.log(error);
+                const {
+                    status
+                } = error.response
+                if (status === 401) {
+                    localStorage.clear()
+                    window.location.href = baseUrl + 'php/auth/login.php';
+                }
+            })
+        }
+
+        // change the display properties when clicked cancel
+        const cancelSave = () => {
+            $('#document-icon-save').css("display", "none")
+            $('#document-icon-cancel').css("display", "none")
+            $('#document-icon-delete').css("display", "block")
+            $('#document-icon-edit').css("display", "block")
+
+            $('#document-documentEditInfo-documentType').css("display", "none")
+            $('#document-documentEditInfo-documentDesc').css("display", "none")
+            $('#document-documentEditInfo-documentName').css("display", "none")
+
+            $('#document-documentInfo-documentType').css("display", "block")
+            $('#document-documentInfo-documentDesc').css("display", "block")
+            $('#document-documentInfo-documentName').css("display", "block")
+        }
+
+        // Send update request if update button is clicked
+        const confirmSave = () => {
+            sendUpdateRequest()
+        }
+
+        // Send delete request if requested
+        const sendDeleteRequest = () => {
+            axios.delete(`/api/documents/${docId}/${caseId}`).then(function(response) {
+                if (response.status === 200) {
+                    window.location.href = baseUrl + 'php/document';
+                }
+            }).catch(function(error) {
+                console.log(error);
+                const {
+                    status
+                } = error.response
+                if (status === 401) {
+                    localStorage.clear()
+                    window.location.href = baseUrl + 'php/auth/login.php';
+                }
+            })
+        }
+
+        // When onclick delete button, send delete request to backend
+        const deleteDocument = () => {
+            sendDeleteRequest();
+        }
+
+        // get all related case documents
+        axios.get(`/api/documents/all/${caseId}`, )
             .then(function(response) {
                 console.log(response);
 
                 // TODO: Convert into data and render it
                 const documentData = response.data
                 documentData.forEach(doc => {
+                    const docName = `${doc.doc_title}`
+                    const uploadedDate = new Date(parseInt(doc.uploaded_at))
+                    const formatedUploadedDate = `${uploadedDate.getDate()}, ${monthNames[uploadedDate.getMonth()]} ${uploadedDate.getFullYear()}`
                     const markup = '<tr>' +
-                        '<td><a href="' + baseUrl + '/php/document/view.php?id=' + doc._id + '"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />Document1.pdf</a></td>' +
-                        '<td>Individual</td>' +
-                        '<td>53.6kB</td>' +
-                        '<td>Dato Seri Mh Lim Cho</td>' +
-                        '<td>Mr Lim Murder Case</td>' +
-                        '<td>9 Nov 2023</td>' +
-                        '<td>3 Nov 2023</td>' +
+                        '<td><a href="' + baseUrl + '/php/document/view.php?id=' + doc._id + '&cid=' + doc.doc_case_related + '"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />' + docName + '</a></td>' +
+                        '<td>' + doc.doc_type + '</td>' +
+                        '<td>' + formatFileSize(doc.filesize) + '</td>' +
+                        '<td>' + doc.uploadedByUserName.username + '</td>' +
+                        '<td>' + doc.relatedCaseName.case_title + '</td>' +
+                        '<td>' + formatedUploadedDate + '</td>' +
+                        '<td>' + doc.lastAccessedByUserName.username + '</td>' +
                         '</tr>';
                     $('#document-allDocument-table tbody').append(markup);
+                    console.log("object");
                 });
 
-                // var options = {
-                //     chart: {
-                //         type: 'bar'
-                //     },
-                //     series: [{
-                //         name: 'sales',
-                //         data: [30, 40, 45, 50, 49, 60, 70, 91, 125]
-                //     }],
-                //     xaxis: {
-                //         categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-                //     }
-                // }
-                // var caseOption = {
-                //     series: [44, 20, 30],
-                //     fill: {
-                //         colors: ['#1A73E8', '#B32824', '#A42824']
-                //     },
-                //     labels: ["open", "closed", "pending"],
-                //     distributed: true,
-                //     borderWidth: 0,
-                //     // {
-                //     //     "open": 44, "close": 20, "pending": 30
-                //     // },
-                //     chart: {
-                //         width: 380,
-                //         type: 'donut',
-                //     },
-                //     dataLabels: {
-                //         enabled: true
-                //     },
-                //     responsive: [{
-                //         breakpoint: 480,
-                //         options: {
-                //             chart: {
-                //                 width: 200
-                //             },
-                //             legend: {
-                //                 show: true
-                //             }
-                //         }
-                //     }],
-                //     plotOptions: {
-                //         pie: {
-                //             donut: {
-                //                 size: '70%', // Adjust the size of the donut
-                //             },
-                //             customScale: 1, // Adjust the scale to remove the white borders
-                //             offsetX: 0,
-                //             offsetY: 0,
-
-                //         },
-                //     },
-                //     stroke: {
-                //         show: false,
-                //     },
-                //     legend: {
-                //         position: 'right',
-                //         offsetY: 0,
-                //         height: 230,
-                //     }
-                // };
                 $('#document-allDocument-table').tableSort({
                     animation: 'slide',
                     speed: 500
@@ -387,16 +388,6 @@
                 }
             });
 
-        renderChart('document-documentInfo-chart', caseOption)
-        renderChart('document-documentStatus-chart', caseOption)
-
-
-        // $(document).ready(function() {
-        //     $('#document-allDocument-table').tableSort({
-        //         animation: 'slide',
-        //         speed: 500
-        //     });
-        // });
         endLoader();
     </script>
 </body>

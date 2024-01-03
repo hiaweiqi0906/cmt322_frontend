@@ -15,16 +15,15 @@
     <!-- Add neccessary components, such as navbars, footer, header, etc.. -->
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
-        <h1 class="h1-main-title">Documents</h1>
+        <h1 class="h1-main-title">Cases</h1>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
             <div class="col-8 row-1 nested-flex-con-col">
                 <div class="float-card row-1" style="min-height: 380px;">
-                    <h3 class="h3-semibold-24">Document Info</h3>
+                    <h3 class="h3-semibold-24">Case Info</h3>
                     <div class="nested-flex-con-row">
                         <div class="col-7">
                             <div class="chart-div" id="document-documentInfo-chart">
-
                             </div>
                         </div>
                         <div class="col-5">
@@ -81,25 +80,22 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-
                 </div>
             </div>
             <div class="col-4 row-1" style="">
                 <!-- Overall Analytics for Documents -->
                 <div class="float-card row-only-one-col">
-                    <h3 class="h3-semibold-24">Document Status</h3>
+                    <h3 class="h3-semibold-24">Case Status</h3>
                     <div class="chart-div" id="document-documentStatus-chart">
 
                     </div>
                 </div>
             </div>
         </div>
-        <h3 class="h3-semibold-24 non-float-card">All Documents</h3>
+        <h3 class="h3-semibold-24 non-float-card">All Cases</h3>
         <div class="table-section">
-            <table id="document-allDocument-table" class="table-general">
+            <table id="case-allCase-table" class="table-general">
                 <thead>
                     <tr>
                         <th class="col-2">Name </th>
@@ -112,18 +108,18 @@
                     </tr>
                 </thead>
                 <tbody>
+
                 </tbody>
             </table>
-
         </div>
     </div>
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
+        // Options for statistics graph later
         var caseOption = {
             series: [44, 20, 30],
-            colors: graphColors.slice(0, 3),
             fill: {
-                colors: graphColors.slice(0, 3)
+                colors: ['#1A73E8', '#B32824', '#A42824']
             },
             labels: ["open", "closed", "pending"],
             distributed: true,
@@ -133,7 +129,6 @@
                 type: 'donut',
             },
             dataLabels: {
-                colors: graphColors.slice(0, 3),
                 enabled: true
             },
             responsive: [{
@@ -147,13 +142,6 @@
                     }
                 }
             }],
-            states: {
-                hover: {
-                    filter: {
-                        type: 'none'
-                    }
-                }
-            },
             plotOptions: {
                 pie: {
                     donut: {
@@ -162,12 +150,7 @@
                     customScale: 1, // Adjust the scale to remove the white borders
                     offsetX: 0,
                     offsetY: 0,
-                    dataLabels: {
-                        style: {
-                            colors: graphColors.slice(0, 3)
 
-                        }
-                    }
                 },
             },
             stroke: {
@@ -177,43 +160,33 @@
                 position: 'right',
                 offsetY: 0,
                 height: 230,
-                labels: {
-                    colors: graphColors.slice(0, 3)
-                },
-                markers: {
-                    fillColors: graphColors.slice(0, 3)
-                }
-            },
-            tooltip: {
-                fillSeriesColor: true
             }
         };
 
-        // Get all documents
-        axios.get('/api/documents/all', )
+        // Get cases from backend and display as table
+        axios.get(`/api/cases/`, )
             .then(function(response) {
-
                 // TODO: Convert into data and render it
-                const documentData = response.data
-                documentData.forEach(doc => {
-                    const docName = `${doc.doc_title}`
-                    const uploadedDate = new Date(parseInt(doc.uploaded_at))
-                    const formatedUploadedDate = `${uploadedDate.getDate()}, ${monthNames[uploadedDate.getMonth()]} ${uploadedDate.getFullYear()}`
+                const caseData = response.data
+                console.log(caseData);
+                caseData.forEach(c => {
+                    console.log(c);
+                    // Convert every cases into rows 
+                    // TODO: This is dummy data. Change the dummy data into real data rows to be shown.
                     const markup = '<tr>' +
-                        '<td><a href="' + baseUrl + '/php/document/view.php?id=' + doc._id + '&cid=' + doc.doc_case_related + '"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />' + docName + '</a></td>' +
-                        '<td>' + doc.doc_type + '</td>' +
-                        '<td>' + formatFileSize(doc.filesize) + '</td>' +
-                        '<td>' + doc.uploadedByUserName.username + '</td>' +
-                        '<td>' + doc.relatedCaseName.case_title + '</td>' +
-                        '<td>' + formatedUploadedDate + '</td>' +
-                        '<td>' + doc.lastAccessedByUserName.username + '</td>' +
+                        '<td><a href="' + baseUrl + '/php/case/view.php?cid=' + c._id + '"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />NULL</a></td>' +
+                        '<td>null</td>' +
+                        '<td>null</td>' +
+                        '<td>null</td>' +
+                        '<td>null</td>' +
+                        '<td>null</td>' +
+                        '<td>null</td>' +
                         '</tr>';
-
-                    console.log(markup);
-                    $('#document-allDocument-table tbody').append(markup);
+                    $('#case-allCase-table tbody').append(markup);
                 });
 
-                $('#document-allDocument-table').tableSort({
+                // prepare table so that it can be sorted
+                $('#case-allCase-table').tableSort({
                     animation: 'slide',
                     speed: 500
                 });

@@ -66,6 +66,16 @@ li.navbar-v a:hover:not(.active) {
     height: 100vh;
 }
 
+.float-card {
+    filter: drop-shadow(0px 1.5px 2px #00000075);
+    background-color: white;
+    border-radius: 1rem;
+    padding: 0.75rem;
+}
+
+.inner-float-card {
+    margin-top: 0px !important;
+}
 
 /* -------------------------------------------------------------------------- */
 /*                              Columns and Rows                              */
@@ -74,14 +84,7 @@ li.navbar-v a:hover:not(.active) {
     display: flex;
     flex-direction: row;
     width: 100%;
-    /* flex-wrap: wrap;
-    padding: 0px;
-    margin: 0px; */
 }
-
-/* .margin-between-flex {
-    margin-right: 0.625rem !important;
-} */
 
 .col-3,
 .col-4,
@@ -104,17 +107,8 @@ li.navbar-v a:hover:not(.active) {
 .col-9>div,
 .col-10>div,
 .col-12>div {
-    /* flex: 1; */
-
     margin: 0.625em 0.625em 0px 0px;
     height: 100%;
-}
-
-.float-card {
-    filter: drop-shadow(0px 1.5px 2px #00000075);
-    background-color: white;
-    border-radius: 1.875rem;
-    padding: 0.75rem;
 }
 
 .col-6 {
@@ -149,10 +143,6 @@ li.navbar-v a:hover:not(.active) {
     height: 23.75rem;
 }
 
-.inner-float-card {
-    margin-top: 0px !important;
-}
-
 .flex-con {
     display: flex;
     flex-flow: row;
@@ -172,7 +162,7 @@ li.navbar-v a:hover:not(.active) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                   Charts                                   */
+/*                             Charts, Statistics                             */
 /* -------------------------------------------------------------------------- */
 .chart-div {
     display: flex;
@@ -219,7 +209,6 @@ li.navbar-v a:hover:not(.active) {
     font-style: italic;
     font-weight: 100;
     line-height: 90%;
-    /* 14.4px */
 }
 
 .big-number-statistics {
@@ -242,11 +231,11 @@ li.navbar-v a:hover:not(.active) {
     margin-right: 3rem;
 }
 
-.mg-between-info{
+.mg-between-info {
     margin-top: 1rem;
 }
 
-.info-float-card{
+.info-float-card {
     filter: none;
 }
 
@@ -256,6 +245,83 @@ li.navbar-v a:hover:not(.active) {
     font-size: 1rem;
     font-style: normal;
     font-weight: 800;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                              Document Specific                             */
+/* -------------------------------------------------------------------------- */
+
+img#document-documentInfo-documentAvatar {
+    width: 18.75rem;
+    height: 18.75rem;
+    object-fit: contain;
+    opacity: 1;
+    display: block;
+    margin: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+.middle-img-hover {
+    transition: .5s ease;
+    opacity: 0;
+    position: relative;
+    height: 100%;
+    background-color: #f6f6f6;
+    transform: translate(0%, -100%);
+    -ms-transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+#document-documentInfo-documentIFrame {
+    display: block;
+    width: 50%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.document-iframe-wrap {
+    position: absolute;
+    top: 0;
+    margin-left: 8.33%;
+    width: calc(100% - 8.33%);
+    padding: 3rem;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(0.1rem);
+    -webkit-backdrop-filter: blur(0.1rem);
+    visibility: hidden;
+}
+
+.view-text {
+    text-align: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.img-wrap {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.document-desc {
+    min-height: 7rem;
+}
+
+.hoverable-img {
+    background-color: #f6f6f6;
+    margin-right: 2rem !important;
+}
+
+.hoverable-img:hover #document-documentInfo-documentAvatar {
+    opacity: 0.3;
+}
+
+.hoverable-img:hover .middle-img-hover {
+    opacity: 0.3;
 }
 
 .big-number-statistics-block {
@@ -283,12 +349,15 @@ li.navbar-v a:hover:not(.active) {
 /*                                Table, TR, TD                               */
 /* -------------------------------------------------------------------------- */
 .table-general {
-    width: 100%;
+    width: 95%;
 }
 
 .table-general {
     margin-top: 1rem;
+}
 
+.table-general-case {
+    width: 66.67%;
 }
 
 table.table-general tr td {
@@ -360,6 +429,7 @@ table.table-general td a {
 table.table-general tbody tr:hover {
     filter: drop-shadow(0px 1.5px 2px #00000075);
     background-color: white;
+    width: 80%;
     transition: all .2s ease-in-out;
     border-radius: 1rem;
 }
@@ -469,4 +539,322 @@ table.table-general tbody tr:hover {
     100% {
         background-color: transparent;
     }
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                    Chat                                    */
+/* -------------------------------------------------------------------------- */
+@import "https://fonts.googleapis.com/css?family=Noto+Sans";
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(221, 229, 255, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(25, 147, 147, 0.2);
+}
+
+.chat-thread {
+    margin: 24px auto 0 auto;
+    padding: 0 20px 0 0;
+    list-style: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.chat-thread li {
+    position: relative;
+    clear: both;
+    display: inline-block;
+    padding: 16px 40px 16px 20px;
+    margin: 0 0 20px 0;
+    font: 16px/20px "Noto Sans", sans-serif;
+    border-radius: 10px;
+    background-color: rgba(221, 229, 255, 0.8);
+    
+}
+
+.chat-thread li .timestamp {
+    position: absolute;
+    right: 1rem;
+    bottom: -1rem;
+    font-size: 9px;
+    color: black;
+}
+
+.chat-thread li {
+    min-width: 7rem;
+}
+
+.chat-thread li .sender-name {
+    position: absolute;
+    left: 0.5rem;
+    font-style: italic;
+    top: -0.05rem;
+    font-size: 12px;
+    color: #1c277e;
+    margin-bottom: 0.5rem;
+}
+
+/* Chat - Avatar */
+.chat-thread li:before {
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    content: "";
+}
+
+/* Chat - Speech Bubble Arrow */
+.chat-thread li:after {
+    position: absolute;
+    top: 15px;
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 15px solid rgba(221, 229, 255, 0.8);
+}
+
+.chat-thread li.self {
+    animation: show-chat-odd 0.15s 1 ease-in;
+    -moz-animation: show-chat-odd 0.15s 1 ease-in;
+    -webkit-animation: show-chat-odd 0.15s 1 ease-in;
+    float: right;
+    margin-right: 80px;
+    color: black;
+}
+
+.chat-thread li.self:before {
+    right: -80px;
+    background-image: url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QBoRXhpZgAATU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAAExAAIAAAASAAAATgAAAAAAAABgAAAAAQAAAGAAAAABUGFpbnQuTkVUIHYzLjUuMTAA/9sAQwAHBQUGBQQHBgUGCAcHCAoRCwoJCQoVDxAMERgVGhkYFRgXGx4nIRsdJR0XGCIuIiUoKSssKxogLzMvKjInKisq/9sAQwEHCAgKCQoUCwsUKhwYHCoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq/8AAEQgAMgAyAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A8wre0/w55qLLqM62ysMrEWAdh+PSl8M6fFLMbu5K7YziNT3b1/CqniRLq98UA2SlhHGobnA55FdbajHmZwxTnLlRtm78NabDGhs/tEwchmVfMGD0znvn0pqahoN3fCH+z0RcHcWiKY4745/KuUVtTtdSFtJCvmxHmN+317Gp5dTthGZXUSXPJJVsh1PUH1rP2rZt7GKOi1LwxHIv2jRg20jPks4b64b+h/OuZZWRyrqVZTggjBBrZ0PWftFwkA8xImTpu7gVJr1kpX7UhzJ0cZ5I9a0umtDJxcWYVFFFBJ1WlKkOmQASYyoYjZnk81aukuLHTP7YFtDeW6zJEFmyu4555H8PQemaz9NmR9PhO45C7T+HFa1rrk9iwSZ3vLJU+WyaVUCsDncMjJI64H41riYRVHmS7E4KbliOWT7nPePtPvbm8j1trWSyF3GpkgkYEbl4BBHTjHBrn49GkfRLnUpn2tBgtFj76k4GD/e749K63xb4gtdTtp4LeRismGVyOmDnpWBq2pXd74ZsdPjG2GCTdHDEnzSN/ebHLH+VeXBuyR7E4wu35EXhKKObVCRnMKMwY+hwAPz5rrJ7bzYXTfu3Ag5yKwfC+nNZvcPPJHvdQDGnJjOehPTPsOlb0zLFA8m/hVJ/SvXo0oundnhV6slU5UcjRRRXPY3Luk3giYwSHCscqfetfULXOlR3TXIhZ2ZYfLILHHDkjsO3PJPSuXqeC5aPzd5ZjIQdxOcEDFa+0fJyEKmvac5myyQWJlRZnkkTHytjoeuPepLaa9vi4ib7LbOMyFG5KjtnrVMabPd30gcrCjMSZGPQf1NbF0i29pHBAUlbABVT8pPqSOwrljDW53c+lrl/RWxvymyDAWPjsPSpdVnVF8iNsk8tz0HpVFLloowEYvJjBkIwB7AdhUGSxJJyT1JrpU2o8py1IwlJS6hRS0VAiKiiikUKKUUUUxC0ooooAKKKKQH/2Q==);
+}
+
+.chat-thread li.self:after {
+    border-right: 15px solid transparent;
+    right: -15px;
+}
+
+.chat-thread li.other-people {
+    animation: show-chat-even 0.15s 1 ease-in;
+    -moz-animation: show-chat-even 0.15s 1 ease-in;
+    -webkit-animation: show-chat-even 0.15s 1 ease-in;
+    float: left;
+    margin-left: 80px;
+    color: black;
+}
+
+.chat-thread li.other-people:before {
+    left: -80px;
+    background-image: url(data:image/jpeg;base64,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);
+}
+
+.chat-thread li.other-people:after {
+    border-left: 15px solid transparent;
+    left: -15px;
+}
+
+.chat-window-message {
+    width: calc(100% - 5rem);
+    background: none;
+}
+
+form#chat-form {
+    width: -webkit-calc(100% - 12px);
+    width: calc(100% - 12px);
+    position: relative;
+}
+
+.chat-form-btn-send,
+.chat-form-btn-more {
+    width: 2rem;
+    height: 2rem;
+    background: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+/* Small screens */
+@media all and (max-width: 767px) {
+    .chat-thread {
+        width: 90%;
+    }
+}
+
+/* Medium and large screens */
+@media all and (min-width: 768px) {
+    .chat-thread {
+        width: 100%;
+    }
+}
+
+@keyframes show-chat-even {
+    0% {
+        margin-left: -480px;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+}
+
+@-moz-keyframes show-chat-even {
+    0% {
+        margin-left: -480px;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+}
+
+@-webkit-keyframes show-chat-even {
+    0% {
+        margin-left: -480px;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+}
+
+@keyframes show-chat-odd {
+    0% {
+        margin-right: -480px;
+    }
+
+    100% {
+        margin-right: 0;
+    }
+}
+
+@-moz-keyframes show-chat-odd {
+    0% {
+        margin-right: -480px;
+    }
+
+    100% {
+        margin-right: 0;
+    }
+}
+
+@-webkit-keyframes show-chat-odd {
+    0% {
+        margin-right: -480px;
+    }
+
+    100% {
+        margin-right: 0;
+    }
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                         Upload Document Form Modal                         */
+/* -------------------------------------------------------------------------- */
+
+/* 
+form {
+    box-sizing: border-box;
+    width: 260px;
+    margin: 100px auto 0;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+    padding-bottom: 40px;
+    border-radius: 3px;
+} */
+
+form h1 {
+    padding: 20px;
+}
+
+form.form-uploadDocument-popUpDialog1 {
+    width: 100%;
+    padding: 1em;
+}
+
+form.form-uploadDocument-popUpDialog1 .group {
+    position: relative;
+    padding-bottom: 1em;
+}
+
+form.form-uploadDocument-popUpDialog1 .group label {
+    position: absolute;
+    pointer-events: none;
+    left: 0.5em;
+    top: 1em;
+    transition: 0.2s ease all;
+    color: #ccc;
+}
+
+form.form-uploadDocument-popUpDialog1 .group input[type=text],
+form.form-uploadDocument-popUpDialog1 .group textarea {
+    background-color: transparent;
+    padding: 0.75em 1.5em;
+    line-height: 1.5em;
+    border: 0;
+    display: block;
+    width: 100%;
+    margin-top: 2em;
+    border-bottom: 1px solid #1c277e;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1c277e 4%);
+    background-position: -100em 0;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding-left: 0.5em;
+    transition: 0.3s cubic-bezier(0.64, 0.09, 0.08, 1) all;
+}
+
+form.form-uploadDocument-popUpDialog1 .group input[type=text]:focus,
+form.form-uploadDocument-popUpDialog1 .group input[type=text]:valid,
+form.form-uploadDocument-popUpDialog1 .group textarea:focus,
+form.form-uploadDocument-popUpDialog1 .group textarea:valid {
+    background-position: 0 0;
+}
+
+form.form-uploadDocument-popUpDialog1 .group input[type=text]:focus~label,
+form.form-uploadDocument-popUpDialog1 .group input[type=text]:valid~label,
+form.form-uploadDocument-popUpDialog1 .group .entered,
+form.form-uploadDocument-popUpDialog1 .group textarea:focus~label,
+form.form-uploadDocument-popUpDialog1 .group textarea:valid~label {
+    color: #1c277e;
+    font-size: 0.875em;
+    top: -1.5em;
+}
+
+form.form-uploadDocument-popUpDialog1 .group input[type=text]:focus,
+form.form-uploadDocument-popUpDialog1 .group textarea:focus {
+    outline: none;
+}
+
+form.form-uploadDocument-popUpDialog1 input[type=file] {
+    position: absolute;
+    height: 10rem;
+    width: 100%;
+    border: #000;
+    opacity: 0;
+    z-index: 1;
+}
+
+.file-input-div {
+    width: 100%;
+    height: 10rem;
+    position: relative;
+    border: 4px dashed #1c277e;
+}
+
+.file-input-div p {
+    width: 100%;
+    height: 10rem;
+    position: relative;
+    text-align: center;
+    line-height: 10rem;
 }

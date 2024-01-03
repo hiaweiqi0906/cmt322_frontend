@@ -25,6 +25,8 @@
     <script>
         $("#auth-login-loginForm").submit(function(e) {
             e.preventDefault();
+
+            // Get email and password entered, using jQuery
             const email = $('#auth-login-loginForm-email').val()
             const password = $('#auth-login-loginForm-password').val()
 
@@ -33,10 +35,8 @@
                     password
                 })
                 .then(function(response) {
-                    console.log(response);
                     // Store the token in localStorage
                     if(response.data.token && response.data.type){
-                        // console.log(document.cookie)
                         localStorage.setItem('authToken', response.data.token);
                         localStorage.setItem('type', response.data.type);
                         localStorage.setItem('name', response.data.name);

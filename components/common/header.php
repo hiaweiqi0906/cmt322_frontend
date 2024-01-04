@@ -7,8 +7,7 @@
 <!-- Bootstrap icon CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
-<!-- Tempus Dominus Styles (Date and Time Picker) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.19/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
+<!-- Fontawesome CDN -->
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">

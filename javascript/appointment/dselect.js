@@ -78,7 +78,7 @@ function dselectClear(button, classElement) {
   Array.from(target.options).forEach((option) => option.selected = false);
   target.dispatchEvent(new Event("change"));
 }
-function dselect(el, option = {}) {
+function dselect(el, option = {}, isDisabled=false) {
   el.style.display = "none";
   const classElement = "dselect-wrapper";
   const classNoResults = "dselect-no-results";
@@ -115,24 +115,36 @@ function dselect(el, option = {}) {
   function isPlaceholder(option2) {
     return option2.getAttribute("value") === "";
   }
-  function selectedTag(options, multiple) {
+  function selectedTag(options, multiple, isDisabled) {
     if (multiple) {
       const selectedOptions = Array.from(options).filter((option2) => option2.selected && !isPlaceholder(option2));
       const placeholderOption = Array.from(options).filter((option2) => isPlaceholder(option2));
       let tag = [];
+  
       if (selectedOptions.length === 0) {
         const text = placeholderOption.length ? placeholderOption[0].textContent : "&nbsp;";
         tag.push(`<span class="${classPlaceholder}">${text}</span>`);
       } else {
         for (const option2 of selectedOptions) {
+          const removeButton = isDisabled ? "" : `
+            <svg onclick="dselectRemoveTag(this, '${classElement}', '${classToggler}')" class="${classTagRemove}" width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+            </svg>
+          `;
+    
+          // Adjust the left padding based on the presence of the removeButton
+          const paddingLeft = isDisabled ? 'calc(0.5rem)' : 'calc(0.5rem + 14px)';
+          
           tag.push(`
-            <div class="${classTag}" data-dselect-value="${option2.value}">
+            <div class="${classTag}" data-dselect-value="${option2.value}" style="padding-left: ${paddingLeft}">
               ${option2.text}
-              <svg onclick="dselectRemoveTag(this, '${classElement}', '${classToggler}')" class="${classTagRemove}" width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+              ${removeButton}
             </div>
           `);
         }
       }
+  
       return tag.join("");
     } else {
       const selectedOption = options[options.selectedIndex];
@@ -173,10 +185,17 @@ function dselect(el, option = {}) {
       </svg>
     </button>
     ` : "";
+    // Add the disabled attribute based on the disabled state
+    const isDisabledAttribute = isDisabled ? 'disabled' : '';
+
     const template = `
     <div class="dropdown ${classElement} ${additionalClass}">
-      <button class="${classToggler} ${!el.multiple && clearable ? classTogglerClearable : ""}" data-dselect-text="${!el.multiple && selectedText(el.options)}" type="button" data-bs-toggle="dropdown" aria-expanded="false"${autoclose}>
-        ${selectedTag(el.options, el.multiple)}
+      <button class="${classToggler} ${!el.multiple && clearable ? classTogglerClearable : ""}" 
+        data-dselect-text="${!el.multiple && selectedText(el.options)}" 
+        type="button" 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false"${autoclose} ${isDisabledAttribute}>
+        ${selectedTag(el.options, el.multiple, isDisabled)}
       </button>
       <div class="dropdown-menu">
         <div class="d-flex flex-column">
@@ -192,13 +211,36 @@ function dselect(el, option = {}) {
     `;
     removePrev();
     el.insertAdjacentHTML("afterend", template);
+
+    // Add event listener to handle scrolling to the selected option on dropdown open
+    const toggler = el.nextElementSibling.querySelector(`.${classToggler}`);
+    toggler.addEventListener('click', () => {
+      // Add this line to scroll to the selected option
+      scrollToSelectedOption(el);
+    });
   }
   createDom();
+
+  // To ensure the select options list is scrolled down to the selected option
+  function scrollToSelectedOption(selectElement) {
+    const selectedOptions = Array.from(selectElement.options).filter(option => option.selected);
+    if (selectedOptions.length > 0) {
+      const firstSelectedOption = selectedOptions[0];
+      const selectedOptionIndex = Array.from(selectElement.options).indexOf(firstSelectedOption);
+      const itemContainer = selectElement.nextElementSibling.querySelector('.dselect-items');
+      const selectedItem = itemContainer.children[selectedOptionIndex];
+      if (selectedItem) {
+        // Scroll to the first selected option
+        itemContainer.scrollTop = selectedItem.offsetTop - itemContainer.offsetTop;
+      }
+    }
+  }
+
   function updateDom() {
     const dropdown = el.nextElementSibling;
     const toggler = dropdown.getElementsByClassName(classToggler)[0];
     const dSelectItems = dropdown.getElementsByClassName("dselect-items")[0];
-    toggler.innerHTML = selectedTag(el.options, el.multiple);
+    toggler.innerHTML = selectedTag(el.options, el.multiple, isDisabled);
     dSelectItems.innerHTML = itemTags(el.querySelectorAll("*"));
     if (!el.multiple) {
       toggler.dataset.dselectText = selectedText(el.options);

@@ -117,16 +117,17 @@ const appointmentCalendar_createEvents = (appointments, username) => {
           break;
         case 'pending':
           if (isBeforeCurrentTime) {
-            backgroundColor = '#007BFF4D';
-            borderColor = '#007BFF80';
+            backgroundColor = '#FFD7004D';
+            borderColor = '#FFD70080';
             textColor = '#00000066';
             classNames = ['fc-event-transparent'];
 
             appointmentEventStatus = 'past';
           }
           else {
-            backgroundColor = '#007BFF';
-            borderColor = '#007BFFB3';
+            backgroundColor = '#FFD700';
+            borderColor = '#FFD700B3';
+            textColor = '#000000';
 
             appointmentEventStatus = 'active';
           }
@@ -212,7 +213,7 @@ const appointmentCalendar_createCalendar = (id, appointments, username, needFilt
     //hiddenDays: [0, 6],               // To make the calendar only show Monday to Friday in time grid week
     slotMinTime: '07:00:00',            // To set the start time
     slotMaxTime: '19:00:00',            // To set the end time
-    aspectRatio: 1.55,                  // The ratio of width to height (high ratio means smaller height)
+    aspectRatio: 1.65,                  // The ratio of width to height (high ratio means smaller height)
     timeZone: 'UTC',
     nowIndicator: true,                 // To mark the current time
     now: moment().format('YYYY-MM-DDTHH:mm'),   // Used for current time indicator

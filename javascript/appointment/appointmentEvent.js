@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
         appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Create calendar
       }
 
+      endLoader();
+
     }).catch((err) => {
       console.log('Error when first initializing data: ', err);
   });

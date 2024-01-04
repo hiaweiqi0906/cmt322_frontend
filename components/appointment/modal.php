@@ -54,11 +54,11 @@
           <div class='row mb-3'>
             <label class='col-sm-2 col-form-label'>Start</label>
 
-            <div class='col-lg-3 col-md-4 col-sm-4 col-4'>
+            <div class='col-lg-3 col-md-4 col-sm-4'>
               <input type='text' class='form-control' id='appointment-multiForm-startDate' name='start-date'>
             </div>
 
-            <div class='col-lg-2 col-md-3 col-sm-3 col-3 px-1' id='appointment-multiForm-startTimeDiv'>
+            <div class='col-lg-2 col-md-3 col-sm-3 px-1' id='appointment-multiForm-startTimeDiv'>
               <select  class='form-select' id='appointment-multiForm-startTime' name='start-time'>
               </select>
             </div>
@@ -69,17 +69,17 @@
           <div class='row mb-3'>
             <label class='col-sm-2 col-form-label'>End</label>
 
-            <div class='col-lg-3 col-md-4 col-sm-4 col-4'>
+            <div class='col-lg-3 col-md-4 col-sm-4'>
               <input type='text' class='form-control' id='appointment-multiForm-endDate' name='end-date'>
             </div>
 
-            <div class='col-lg-2 col-md-3 col-sm-3 col-3 px-1' id='appointment-multiForm-endTimeDiv'>
+            <div class='col-lg-2 col-md-3 col-sm-3 px-1' id='appointment-multiForm-endTimeDiv'>
               <select  class='form-select' id='appointment-multiForm-endTime' name='end-time'>
               </select>
             </div>
 
             <!-- The All day switch-->
-            <div class='col-lg-2 col-md-3 col-sm-3 col-3 d-flex align-items-center' id='appointment-multiForm-switchDiv'>
+            <div class='col-lg-2 col-md-3 col-sm-3 d-flex align-items-center' id='appointment-multiForm-switchDiv'>
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="appointment-multiForm-allDaySwitch">
                 <label class="form-check-label" for="appointment-multiForm-allDaySwitch">All day</label>

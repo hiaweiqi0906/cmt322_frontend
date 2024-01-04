@@ -6,5 +6,3 @@
 
 <!-- Link to the dselect, select component css -->
 <link rel="stylesheet" href="../../css/appointment/dselect.css" >
-
-<title>Appointments</title>

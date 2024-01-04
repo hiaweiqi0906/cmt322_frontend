@@ -487,7 +487,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
 
     // Close the modal and showing the loading overlay
     appointmentModal_closeModal();    // Default modal is appointment form modal
-    appointmentLoading_showLoadingOverlay();
+    startLoader();
 
     appointment = {
       creator: '',
@@ -521,10 +521,10 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
       }
     })
     .then(() => {
-      appointmentLoading_hideLoadingOverlay();
+      endLoader();
     })
     .catch((err) => {
-      appointmentLoading_hideLoadingOverlay();
+      endLoader();
       console.log('Error when creating new appointment: ', err);
   });
   }
@@ -1002,7 +1002,7 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
 
           // Close the modal and showing the loading overlay
           appointmentModal_closeModal();    // Default modal is appointment form modal
-          appointmentLoading_showLoadingOverlay();
+          startLoader();
 
           axios.put(`http://localhost:6500/api/appointments/${appointmentID}`, appointment)
           .then((response) => {
@@ -1021,10 +1021,10 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
             }
           })
           .then((response)=>{
-            appointmentLoading_hideLoadingOverlay();
+            endLoader();
           })
           .catch((err) => {
-            appointmentLoading_hideLoadingOverlay();
+            endLoader();
             console.log('Error when update user\'s created appointment', err);
           });
         }
@@ -1048,7 +1048,7 @@ const appointmentForm_cancelAppointment = () => {
 
   // Close the modal and showing the loading overlay
   appointmentModal_closeModal('appointment-comfirmation-modal');    // Close the confirmation modal
-  appointmentLoading_showLoadingOverlay();
+  startLoader();
 
   axios.delete(`http://localhost:6500/api/appointments/${appointmentID}`)
   .then((response) => {
@@ -1068,10 +1068,10 @@ const appointmentForm_cancelAppointment = () => {
 
   })
   .then( (response)=>{
-    appointmentLoading_hideLoadingOverlay();
+    endLoader();
   })
   .catch((err) => {
-    appointmentLoading_hideLoadingOverlay();
+    endLoader();
     console.log('Error when cancelling the appointment', err);
   });
 }
@@ -1084,7 +1084,7 @@ const appointmentForm_appointmentResponse = (userResponse) => {
 
   // Close the modal and showing the loading overlay
   appointmentModal_closeModal();    // Default modal is appointment form modal
-  appointmentLoading_showLoadingOverlay();
+  startLoader();
 
   axios.put(`http://localhost:6500/api/appointments/response/${appointmentID}`, {response: userResponse})
   .then((response) => {
@@ -1101,10 +1101,10 @@ const appointmentForm_appointmentResponse = (userResponse) => {
 
   })
   .then( (response)=>{
-    appointmentLoading_hideLoadingOverlay();
+    endLoader();
   })
   .catch((err) => {
-    appointmentLoading_hideLoadingOverlay();
+    endLoader();
     console.log('Error when sending user response', err);
   });
 }

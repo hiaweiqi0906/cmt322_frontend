@@ -23,7 +23,7 @@ const appointmentChart_createPieChart = (id, appointments) => {
       type: 'donut',      // Use donut chart
       height: '90%',      // The height of the chart
     },
-    colors: ['#1C277E', '#3480DF'],
+    colors: ['#1C277E', '#003554'],
     plotOptions: {
       pie: {
         donut: {
@@ -119,7 +119,7 @@ const appointmentChart_createAreaChart = (id, appointments) => {
         enabled: false  // Disable the zoom functionality
       }
     },
-    colors: ['#14529E'],
+    colors: ['#1C277E'],
     dataLabels: {
       enabled: false    // Disable the label for each data's value
     },

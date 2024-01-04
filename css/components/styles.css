@@ -13,14 +13,15 @@ body {
 
 .h1-main-title {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 3rem;
+    font-weight: 700;
+    font-size: 2.4rem;
+    margin-bottom: 0.8rem;
 }
 
 .h2-user-greeting {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-size: 2rem;
+    font-weight: 400;
+    font-size: 1.75rem;
 }
 
 
@@ -31,39 +32,76 @@ body {
 ul.navbar-v {
     list-style-type: none;
     margin: 0;
-    padding: 0;
-    width: 8.33%;
-    background-color: #f1f1f1;
+    padding: 1rem;
+    width: 15%;
+    background-color: #1c277e;
     position: fixed;
     height: 100%;
+    z-index: 2;
     overflow: auto;
+}
+
+li.nb-setting {
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 2rem);
+}
+
+li.nb-notifications {
+    position: absolute;
+    bottom: 4rem;
+    width: calc(100% - 2rem);
+}
+
+div.navbar-bg {
+    z-index: 3;
+}
+
+ul.navbar-v img {
+    margin-right: 6px;
 }
 
 li.navbar-v a {
     display: block;
-    color: #000;
+    color: #959595;
     padding: 8px 16px;
     text-decoration: none;
+    border-radius: 10px;
+}
+
+li.navbar-v {
+    margin-bottom: 1rem;
 }
 
 li.navbar-v a.active {
-    background-color: #04AA6D;
-    color: white;
+    background-color: #2838b4;
+    color: #ffffff;
 }
 
 li.navbar-v a:hover:not(.active) {
-    background-color: #555;
+    background-color: #ffffff80;
+    color: #1c277e;
+}
+
+li.navbar-logo{
     color: white;
+    text-align: center;
+    font-family: Cinzel serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                Main Content                                */
 /* -------------------------------------------------------------------------- */
 .main-content {
-    margin-left: 8.33%;
+    margin-left: 15%;
     padding: 0px 50px;
     padding-top: 1rem;
     height: 100vh;
+    background-color: #fafafa;
+
 }
 
 .float-card {
@@ -262,6 +300,7 @@ img#document-documentInfo-documentAvatar {
     transition: .5s ease;
     backface-visibility: hidden;
 }
+
 .middle-img-hover {
     transition: .5s ease;
     opacity: 0;
@@ -441,13 +480,13 @@ table.table-general tbody tr:hover {
 .loader-div {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 0%;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 1;
 }
 
 .loader {
@@ -486,40 +525,56 @@ table.table-general tbody tr:hover {
     animation-delay: 400ms;
 }
 
+.cell.d-1 {
+    animation-delay: 100ms;
+}
+
+.cell.d-2 {
+    animation-delay: 200ms;
+}
+
+.cell.d-3 {
+    animation-delay: 300ms;
+}
+
+.cell.d-4 {
+    animation-delay: 400ms;
+}
+
 .cell:nth-child(1) {
-    --cell-color: #00FF87;
+    --cell-color: #00C3FF;
 }
 
 .cell:nth-child(2) {
-    --cell-color: #0CFD95;
+    --cell-color: #04B0EF;
 }
 
 .cell:nth-child(3) {
-    --cell-color: #17FBA2;
+    --cell-color: #079CDF;
 }
 
 .cell:nth-child(4) {
-    --cell-color: #23F9B2;
+    --cell-color: #0B89CF;
 }
 
 .cell:nth-child(5) {
-    --cell-color: #30F7C3;
+    --cell-color: #0E75BF;
 }
 
 .cell:nth-child(6) {
-    --cell-color: #3DF5D4;
+    --cell-color: #1262AE;
 }
 
 .cell:nth-child(7) {
-    --cell-color: #45F4DE;
+    --cell-color: #154E9E;
 }
 
 .cell:nth-child(8) {
-    --cell-color: #53F1F0;
+    --cell-color: #193B8E;
 }
 
 .cell:nth-child(9) {
-    --cell-color: #60EFFF;
+    --cell-color: #1c277e;
 }
 
 /*Animation*/
@@ -578,7 +633,7 @@ table.table-general tbody tr:hover {
     font: 16px/20px "Noto Sans", sans-serif;
     border-radius: 10px;
     background-color: rgba(221, 229, 255, 0.8);
-    
+
 }
 
 .chat-thread li .timestamp {

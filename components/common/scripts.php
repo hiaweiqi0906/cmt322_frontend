@@ -117,13 +117,14 @@
 
   // Start loader animation
   const startLoader = () => {
-    document.querySelector("body").style.visibility = "hidden";
+    // document.querySelector("body").style.visibility = "hidden";
+    document.querySelector(".main-content").style.filter = "blur(4px)";
     document.querySelector(".loader-div").style.visibility = "visible";
   }
 
   // End loader animation
   const endLoader = () => {
-    document.querySelector("body").style.visibility = "visible";
+    // document.querySelector("body").style.visibility = "visible";
     document.querySelector(".loader-div").style.visibility = "hidden";
   }
 

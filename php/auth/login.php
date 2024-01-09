@@ -12,11 +12,11 @@
 
 <body>
     <form method="post" id="auth-login-loginForm">
-        <label for="email">Email:</label>
+        <label for="auth-login-loginForm-email">Email:</label>
         <input type="email" name="email" id="auth-login-loginForm-email">
         <br>
 
-        <label for="password">Password:</label>
+        <label for="auth-login-loginForm-password">Password:</label>
         <input type="password" name="login_password" id="auth-login-loginForm-password">
         <br>
 

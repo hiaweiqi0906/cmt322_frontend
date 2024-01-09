@@ -283,7 +283,7 @@
                     q_id: docId,
                     q_caseId: caseId
                 },
-                doc_type: $('#document-documentEditInfo-documentType').val(),
+                doc_type: $('#umentEditInfo-documentType').val(),
                 doc_title: $('#document-documentEditInfo-documentName').val(),
                 doc_description: $('#document-documentEditInfo-documentDesc').text(),
                 can_be_access_by: canAccessList

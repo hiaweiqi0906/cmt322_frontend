@@ -504,7 +504,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
 
     // Send axios post request to store the new appointment and 
     // fetch all appointments to redraw charts and calendar
-    axios.post('http://localhost:6500/api/appointments', appointment)
+    axios.post('/api/appointments', appointment)
     .then((response) => {
       const { username, isAdmin, appointments } = response.data;
 
@@ -933,7 +933,7 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
       const appointmentID = document.getElementById('appointment-multiForm-id').innerText;
 
       // Get the appointment data from server based on the id
-      axios.get(`http://localhost:6500/api/appointments/${appointmentID}`)
+      axios.get(`/api/appointments/${appointmentID}`)
       .then((response) => {
         const appointment = response.data;
 
@@ -1004,7 +1004,7 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
           appointmentModal_closeModal();    // Default modal is appointment form modal
           startLoader();
 
-          axios.put(`http://localhost:6500/api/appointments/${appointmentID}`, appointment)
+          axios.put(`/api/appointments/${appointmentID}`, appointment)
           .then((response) => {
             const { username, isAdmin, appointments } = response.data;
 
@@ -1050,7 +1050,7 @@ const appointmentForm_cancelAppointment = () => {
   appointmentModal_closeModal('appointment-comfirmation-modal');    // Close the confirmation modal
   startLoader();
 
-  axios.delete(`http://localhost:6500/api/appointments/${appointmentID}`)
+  axios.delete(`/api/appointments/${appointmentID}`)
   .then((response) => {
     const { username, isAdmin, appointments } = response.data;
 
@@ -1086,7 +1086,7 @@ const appointmentForm_appointmentResponse = (userResponse) => {
   appointmentModal_closeModal();    // Default modal is appointment form modal
   startLoader();
 
-  axios.put(`http://localhost:6500/api/appointments/response/${appointmentID}`, {response: userResponse})
+  axios.put(`/api/appointments/response/${appointmentID}`, {response: userResponse})
   .then((response) => {
     const { username, isAdmin, appointments } = response.data;
 

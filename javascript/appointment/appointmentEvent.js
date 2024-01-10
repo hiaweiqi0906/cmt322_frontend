@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // To check the user's role, then decide want to display or hide the charts
-  axios.get('http://localhost:6500/api/appointments/isAdmin')
+  axios.get('/api/appointments/isAdmin')
     .then((response) => {
       const isAdmin = response.data;
 
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   
   // To get the appointments, display them in charts and calendar
-  axios.get('http://localhost:6500/api/appointments')
+  axios.get('/api/appointments')
     .then((response) => {
       const { username, isAdmin, appointments } = response.data;
 
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // To send get request to get the attendee options list from server except the user himself/herself
-  axios.get('http://localhost:6500/api/appointments/userlist')
+  axios.get('/api/appointments/userlist')
     .then((response) => {
       const userList = response.data;
 

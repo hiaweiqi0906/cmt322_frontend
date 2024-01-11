@@ -22,8 +22,6 @@
 <!-- axios CDN -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<!-- Tempus Dominus JavaScript (Date and Time Picker) -->
-<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.19/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
 
 <!-- fontawesome icons it -->
 <script src="https://kit.fontawesome.com/b30c3ea7ee.js" crossorigin="anonymous"></script>

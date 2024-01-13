@@ -137,4 +137,10 @@
       i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
+
+  function changeToReadableFormat(datestring) {
+    const requestDate = new Date(parseInt(datestring))
+    const formatedUploadedDate = `${requestDate.getDate()}, ${monthNames[requestDate.getMonth()]} ${requestDate.getFullYear()}`
+    return formatedUploadedDate
+  }
 </script>

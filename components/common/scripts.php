@@ -117,13 +117,14 @@
 
   // Start loader animation
   const startLoader = () => {
-    document.querySelector("body").style.visibility = "hidden";
+    // document.querySelector("body").style.visibility = "hidden";
+    document.querySelector(".main-content").style.filter = "blur(4px)";
     document.querySelector(".loader-div").style.visibility = "visible";
   }
 
   // End loader animation
   const endLoader = () => {
-    document.querySelector("body").style.visibility = "visible";
+    // document.querySelector("body").style.visibility = "visible";
     document.querySelector(".loader-div").style.visibility = "hidden";
   }
 
@@ -135,5 +136,11 @@
       sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
       i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  function changeToReadableFormat(datestring) {
+    const requestDate = new Date(parseInt(datestring))
+    const formatedUploadedDate = `${requestDate.getDate()}, ${monthNames[requestDate.getMonth()]} ${requestDate.getFullYear()}`
+    return formatedUploadedDate
   }
 </script>

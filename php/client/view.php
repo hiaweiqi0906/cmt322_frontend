@@ -14,14 +14,14 @@
 <body>
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
-        <h1 class="h1-main-title">Clients</h1>
-        <h2 class="h2">Client Details</h2>
+        <h1 class="h1-main-title">User</h1>
+        <h2 class="h2"> User Details</h2>
         <div class="flex-con">
             <div class="row-1 nested-flex-con-col">
                 <div class="float-card info-float-card row-1" style="min-height: 380px;">
                     <div class="nested-flex-con-row">
                         <div style="width: 50%">
-                            <h3 class="h3-semibold-24">Client Info </h3>
+                            <h3 class="h3-semibold-24">User Info </h3>
 
                         </div>
                         <div style="width: 50%">
@@ -144,7 +144,7 @@
             </div>
         </div>
 
-        <h3 class="h3-semibold-24 non-float-card">All Clients</h3>
+        <h3 class="h3-semibold-24 non-float-card">All Users</h3>
         <div class="table-section" style="height: 39%; width: 100%;overflow-y: scroll;">
             <table id="client-allClient-table" class="table-general">
                 <thead>
@@ -273,6 +273,7 @@
             $('#client-clientEditInfo-clientNumber').css("display", "block")
             $('#client-clientEditInfo-clientAddress').css("display", "block")
             $('#client-clientEditInfo-clientHistory').css("display", "block")
+            $('#client-clientEditInfo-clientAvatar').css("display", "block")
 
             $('#client-clientInfo-clientType').css("display", "none")
             $('#client-clientInfo-clientEmail').css("display", "none")
@@ -280,6 +281,8 @@
             $('#client-clientInfo-clientNumber').css("display", "none")
             $('#client-clientInfo-clientAddress').css("display", "none")
             $('#client-clientInfo-clientHistory').css("display", "none")
+            
+            
         }
 
         // Send update request to server if requested
@@ -321,6 +324,7 @@
             $('#client-clientEditInfo-clientNumber').css("display", "none")
             $('#client-clientEditInfo-clientAddress').css("display", "none")
             $('#client-clientEditInfo-clientEmail').css("display", "none")
+            $('#client-clientEditInfo-clientAvatar').css("display", "none")
 
             $('#client-clientInfo-clientHistory').css("display", "block")
             $('#client-clientInfo-clientName').css("display", "block")

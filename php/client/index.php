@@ -15,12 +15,12 @@
     <!-- Add neccessary components, such as navbars, footer, header, etc.. -->
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
-        <h1 class="h1-main-title">Client</h1>
+        <h1 class="h1-main-title">User</h1>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
             <div class="col-8 row-1 nested-flex-con-col">
                 <div class="float-card row-1" style="min-height: 380px;">
-                    <h3 class="h3-semibold-24">Client Info</h3>
+                    <h3 class="h3-semibold-24">User Info</h3>
                     <div class="nested-flex-con-row">
                         <div class="col-7">
                             <div class="chart-div" id="client-clientInfo-chart">
@@ -32,7 +32,7 @@
                                 <div class="nested-flex-con-row row-1-statistics">
                                     <div class="col-4 two-line-statistics">
                                         <div style="width: 85px;">
-                                            <p>Total Clients</p>
+                                            <p>Total Users</p>
                                             <div class="big-number-statistics-block">
                                                 <span class="big-number-statistics">99</span>
                                             </div>
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <h3 class="h3-semibold-24 non-float-card">All Clients</h3>
+        <h3 class="h3-semibold-24 non-float-card">All Users</h3>
         <div class="table-section">
             <table id="client-allClient-table" class="table-general">
                 <thead>

@@ -31,12 +31,6 @@
 
         <label for="auth-register-registerForm-address"><b>Address</b></label>
         <input type="text" placeholder="Enter Address" name="address" id="auth-register-registerForm-address" required>
-
-        <label for="auth-register-registerForm-type"><b>Type</b></label>
-        <input type="text" placeholder="Enter Type" name="type" id="auth-register-registerForm-type" required>
-
-        <label for="auth-register-registerForm-url"><b>URL</b></label>
-        <input type="text" placeholder="Enter URL" name="type" id="auth-register-registerForm-url" required>
         <hr>
 
         <button type="submit" class="registerbtn">Register</button>
@@ -64,9 +58,8 @@
                     username,
                     number,
                     address,
-                    type,
-                    avatar_url
                 })
+                
                 .then(function(response) {
                     // Redirect to the protected page
                     window.location.href = baseUrl + 'php/dashboard.php';

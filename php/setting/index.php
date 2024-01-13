@@ -138,17 +138,17 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    </div>
-    <div class="document-iframe-wrap">
-        <embed id="document-documentInfo-documentIFrame" class="" height="500px">
-        <!-- <p>Unable to display PDF file. <a href="/uploads/media/default/0001/01/540cb75550adf33f281f29132dddd14fded85bfc.pdf">Download</a> instead.</p> -->
-        </embed>
+        <!-- <button style="display: none;float: left;margin-left: 1rem;margin-top: 1rem; background-color: #1c277e;" data-bs-toggle="modal" data-bs-target="#uploadAvatarModal" type="button" class="btn btn-primary" id="client-clientEditInfo-clientAvatar"><img width="18" height="18" style="margin-right: 1rem;" src="https://img.icons8.com/ios-glyphs/60/ffffff/xbox-cross.png" alt="xbox-cross" />Add Avatar</button> -->
+        <div class="file-input-div" id ="document-documentInfo-documentIFrameWrap" style="display:none">
+            <input type="file" name="client-clientEditInfo-clientAvatar" id="client-clientEditInfo-clientAvatar" multiple>
+            <p id="client-clientEditInfo-clientAvatarText">Upload Profile Picture</p>
+        </div>
     </div>
 
     <script>
@@ -169,6 +169,13 @@
             }
         }
 
+        $(document).ready(function() {
+            $('#client-clientEditInfo-clientAvatar').change(function() {
+                var filename = $('#client-clientEditInfo-clientAvatar').val().split('\\').pop();
+                $('#client-clientEditInfo-clientAvatarText').text(filename);
+            });
+        });
+
         // get client details, and update the UI
 
         axios.get(`/api/crm/self`, )
@@ -181,6 +188,7 @@
                     address,
                     avatar_url,
                     type,
+                    password,
                 } = response.data;
 
                 $('#client-clientInfo-clientName').text(username)
@@ -198,14 +206,19 @@
                 $('#client-clientInfo-clientAddress').text(address)
                 $('#client-clientEditInfo-clientAddress').val(address)
 
+
                 $('#client-clientInfo-nextDate').text()
                 const uploadedByUserInfo = ""
                 $('#client-clientInfo-lastDate').text()
 
                 $('#client-clientInfo-clientAvatar').attr("src", avatar_url)
+                $('#client-clientEditInfo-clientAvatar').attr("src", avatar_url)
 
                 $('#client-clientEditInfo-clientType').val(type)
                 $('#client-clientInfo-clientType').text(type)
+
+                $('#client-clientEditInfo-clientPassword').val(password)
+                $('#client-clientInfo-clientPassword').text(password)
                 
                 console.log("here");
                 $('#client-icon-delete').css("display", "block")
@@ -237,39 +250,90 @@
             $('#client-clientEditInfo-clientNumber').css("display", "block")
             $('#client-clientEditInfo-clientAddress').css("display", "block")
             $('#client-clientEditInfo-clientHistory').css("display", "block")
-
+            $('#client-clientEditInfo-clientAvatar').css("display", "block")
+            $('#client-clientEditInfo-clientPassword').css("display", "block")
+            $('#client-clientEditInfo-clientAvatar').css("display", "block")
+            $('#document-documentInfo-documentIFrameWrap').css("display", "block")
+            
             $('#client-clientInfo-clientType').css("display", "none")
             $('#client-clientInfo-clientEmail').css("display", "none")
             $('#client-clientInfo-clientName').css("display", "none")
             $('#client-clientInfo-clientNumber').css("display", "none")
             $('#client-clientInfo-clientAddress').css("display", "none")
             $('#client-clientInfo-clientHistory').css("display", "none")
+            $('#client-clientInfo-clientPassword').css("display", "none")
         }
 
         // Send update request to server if requested
         const sendUpdateRequest = () => {
+
+            var formData = new FormData()
+            formData.append("username", $('#client-clientEditInfo-clientName').val())
+            formData.append("email", $('#client-clientEditInfo-clientEmail').val())
+            formData.append("type", $('#client-clientEditInfo-clientType').val())
+            formData.append("number", $('#client-clientEditInfo-clientNumber').val())
+            formData.append("address", $('#client-clientEditInfo-clientAddress').val())
+            formData.append("password", $('#client-clientEditInfo-clientPassword').val())
+            formData.append("avatar_url", document.querySelector("#client-clientEditInfo-clientAvatar").files[0])
+
             const reqBody = {
                 username: $('#client-clientEditInfo-clientName').val(),
                 email: $('#client-clientEditInfo-clientEmail').val(),
                 type: $('#client-clientEditInfo-clientType').val(),
                 number: $('#client-clientEditInfo-clientNumber').val(),
                 address: $('#client-clientEditInfo-clientAddress').val(),
+                password: $('#client-clientEditInfo-clientPassword').val(),
+                avatar_url: document.querySelector("#client-clientEditInfo-clientAvatar").files[0],
             }
-            console.log(reqBody);
-            axios.put(`/api/crm/self`, reqBody).then(function(response) {
+            // console.log(reqBody);
+
+            let axiosupdateLink = document.querySelector("#client-clientEditInfo-clientAvatar").files[0] ?
+            "/api/crm/u/self":"/api/crm/self"
+
+            if(document.querySelector("#client-clientEditInfo-clientAvatar").files[0]){
+                axios.put(axiosupdateLink, formData,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function(response) {
+
                 if (response.status === 200) {
                     location.reload()
                 }
-            }).catch(function(error) {
-                console.log(error);
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
+                
+                    console.log(response);
+                }).catch(function(error) {
+                    console.log(error);
+                    const {
+                        status
+                    } = error.response
+                    if (status === 401) {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }
+                })
+            }else{
+                axios.put(axiosupdateLink, reqBody
+                ).then(function(response) {
+
+                if (response.status === 200) {
+                    location.reload()
                 }
-            })
+                
+                console.log(response);
+                }).catch(function(error) {
+                    console.log(error);
+                    const {
+                        status
+                    } = error.response
+                    if (status === 401) {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }
+                })
+            }
+            
+            console.log(axiosupdateLink);
         }
 
         // change the display properties when clicked cancel
@@ -285,6 +349,10 @@
             $('#client-clientEditInfo-clientNumber').css("display", "none")
             $('#client-clientEditInfo-clientAddress').css("display", "none")
             $('#client-clientEditInfo-clientEmail').css("display", "none")
+            $('#client-clientEditInfo-clientAvatar').css("display", "none")
+            $('#client-clientEditInfo-clientPassword').css("display", "none")
+            $('#client-clientEditInfo-clientAvatar').css("display", "none")
+            $('#document-documentInfo-documentIFrameWrap').css("display", "none")
 
             $('#client-clientInfo-clientHistory').css("display", "block")
             $('#client-clientInfo-clientName').css("display", "block")
@@ -292,6 +360,8 @@
             $('#client-clientInfo-clientAddress').css("display", "block")
             $('#client-clientInfo-clientEmail').css("display", "block")
             $('#client-clientInfo-clientType').css("display", "block")
+            $('#client-clientInfo-clientAvatar').css("display", "block")
+            $('#client-clientInfo-clientPassword').css("display", "block")
         }
 
         // Send update request if update button is clicked

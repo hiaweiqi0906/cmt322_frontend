@@ -11,6 +11,7 @@
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-task" href="http://localhost:3000/php/task">Task</a></li>
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-user-roles" href="http://localhost:3000/php/user-roles">User Roles</a></li>
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-setting" href="http://localhost:3000/php/setting">Setting</a></li>
+            <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-psw" href="http://localhost:3000/php/changePassword">Change Password</a></li>
         </ul>
     </div>
     <div class="paralegal-navbar" style="display: none">
@@ -21,6 +22,7 @@
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-appointment" href="http://localhost:3000/php/appointment">Appointment</a></li>
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-task" href="http://localhost:3000/php/task">Task</a></li>
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-setting" href="http://localhost:3000/php/setting">Setting</a></li>
+            <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-psw" href="http://localhost:3000/php/changePassword">Change Password</a></li>
         </ul>
     </div>
 
@@ -31,6 +33,7 @@
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-document" href="http://localhost:3000/php/document">Document</a></li>
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-appointment" href="http://localhost:3000/php/appointment">Appointment</a></li>
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-setting" href="http://localhost:3000/php/setting">Setting</a></li>
+            <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-psw" href="http://localhost:3000/php/changePassword">Change Password</a></li>
         </ul>
     </div>
 </div>

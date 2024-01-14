@@ -109,12 +109,9 @@
                 <!-- Overall Analytics for Documents -->
                 <div class="float-card row-only-one-col" style="min-height: 85vh; display: flex; flex-direction: column;">
                     <h3 class="h3-semibold-24">Case Messages</h3>
-                    <div id="case-caseMessages-div" style="max-height: 90%; overflow: auto;">
+                    <div id="case-caseMessages-div" style="height: 90%; overflow: auto;">
                         <ul class="chat-thread" id="chat-thread">
-                            <li class="self">
-                                <p class="sender-name">Client 2</p>Are we meeting today? <p class="timestamp">5.13PM</p>
-                            </li>
-                            <li class="other-people">I was thinking after lunch, I have a meeting in the morning</li>
+                            
                         </ul>
                     </div>
 
@@ -155,8 +152,11 @@
                                 <label for="input-documentTitle">Document Title</label>
                             </p>
                             <p class="group">
-                                <input id="input-documentType" type="text" required>
+                                <input id="input-documentType" type="text" required type="text" list="documentTypeList-req" oninput="suggestDocumentTypes('request')" >
                                 <label for="input-documentType">Document Type</label>
+                                <datalist id="documentTypeList-req">
+                                    <!-- Options will be dynamically populated here -->
+                                </datalist>
                             </p>
                             <p class="group">
                                 <textarea id="input-documentDesc" type="text" required></textarea>
@@ -188,7 +188,20 @@
                                 <label for="input-documentTitle">Document Title</label>
                             </p>
                             <p class="group">
-                                <input id="input-documentType" type="text" required>
+                                <input id="input-documentType" type="text" list="documentTypeList-upl" oninput="suggestDocumentTypes('upload')" required>
+                                <datalist id="documentTypeList-upl">
+                                    <!-- Options will be dynamically populated here -->
+                                </datalist>
+                                <!-- <select id="input-documentType" onchange="populateSecondaryOptions()">
+                                    <option value="" disabled selected>Select a Document Type</option>
+                                    <option value="individuals">Individuals</option>
+                                    <option value="legal">Legal Documents</option>
+                                    <option value="business">Business Documents</option>
+                                    <option value="education">Educational Documents</option>
+                                    <option value="realEstate">Real Estate Documents</option>
+                                    <option value="medical">Medical Documents</option>
+                                    <option value="technology">Technology and IT Documents</option>
+                                </select> -->
                                 <label for="input-documentType">Document Type</label>
                             </p>
                             <p class="group">
@@ -447,13 +460,28 @@
                     const docName = `${doc.doc_title}`
                     const uploadedDate = new Date(parseInt(doc.uploaded_at))
                     const formatedUploadedDate = `${uploadedDate.getDate()}, ${monthNames[uploadedDate.getMonth()]} ${uploadedDate.getFullYear()}`
+                    const uploadedByUserAvatarImg =
+                        doc.uploadedByUserName.avatar_url !== "" &&
+                        doc.uploadedByUserName.avatar_url &&
+                        doc.uploadedByUserName.avatar_url !== "undefined" ?
+                        doc.uploadedByUserName.avatar_url :
+                        "https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png"
+
+                    const accessedByUserAvatarImg =
+                        doc.lastAccessedByUserName.avatar_url !== "" &&
+                        doc.lastAccessedByUserName.avatar_url &&
+                        doc.lastAccessedByUserName.avatar_url !== "undefined" ?
+                        doc.lastAccessedByUserName.avatar_url :
+                        "https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png"
+
+
                     const markup = '<tr>' +
                         '<td><a href="' + baseUrl + '/php/document/view.php?id=' + doc._id + '&cid=' + doc.doc_case_related + '"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />' + docName + '</a></td>' +
                         '<td>' + doc.doc_type + '</td>' +
                         '<td>' + formatFileSize(doc.filesize) + '</td>' +
-                        '<td>' + doc.uploadedByUserName.username + '</td>' +
+                        `<td><img width="20" height="20" src="${uploadedByUserAvatarImg}" alt="user-male-circle" style="margin-right: 0.5rem;" />` + doc.uploadedByUserName.username + '</td>' +
                         '<td>' + formatedUploadedDate + '</td>' +
-                        '<td>' + doc.lastAccessedByUserName.username + '</td>' +
+                        `<td><img width="20" height="20" src="${accessedByUserAvatarImg}" alt="user-male-circle" style="margin-right: 0.5rem;" />` + doc.lastAccessedByUserName.username + '</td>' +
                         '</tr>';
 
                     $('#document-allDocument-table tbody').append(markup);
@@ -516,6 +544,53 @@
                 .catch(function(error) {
                     console.log(error);
                 });
+        }
+
+        const documentTypes = {
+            individuals: ['Passport', 'Driver\'s License', 'National ID Card', 'Bank Statements', 'Tax Returns', 'Pay Stubs', 'Birth Certificate', 'Marriage Certificate', 'Divorce Decree', 'Medical History', 'Health Insurance Documents'],
+            legal: ['Employment Contracts', 'Rental Agreements', 'Sales Contracts', 'Lawsuits', 'Legal Briefs', 'Court Orders', 'Patents', 'Trademarks', 'Copyrights', 'Letters of Agreement', 'Legal Notices'],
+            business: ['Financial Statements', 'Invoices', 'Receipts', 'Partnership Agreements', 'Vendor Contracts', 'Client Agreements', 'Articles of Incorporation', 'Bylaws', 'Meeting Minutes', 'Employee Handbook', 'Job Descriptions', 'Performance Reviews'],
+            education: ['Transcripts', 'Diplomas', 'Certificates', 'Enrollment Contracts', 'Student Agreements', 'Research Proposals'],
+            realEstate: ['Deeds', 'Mortgages', 'Lease Agreements', 'Property Surveys', 'Title Documents', 'Homeowners Association (HOA) Documents'],
+            medical: ['Medical Charts', 'Prescriptions', 'Lab Reports', 'Informed Consent Forms', 'Healthcare Directives', 'Medical Power of Attorney'],
+            technology: ['End User License Agreements (EULAs)', 'Service Level Agreements (SLAs)', 'User Manuals', 'Technical Specifications', 'System Documentation']
+        };
+
+        function suggestDocumentTypes(type) {
+            let currentFormId = ""
+            let datalistElement;
+            switch(type){
+                case "upload": {
+                    currentFormId = "#form-uploadDocument-popUpDialog2"
+                    datalistElement = $(currentFormId + " #documentTypeList-upl")
+                    break;
+                }
+                case "request": {
+                    currentFormId = "#form-uploadDocument-popUpDialog"
+                    datalistElement = $(currentFormId + " #documentTypeList-req")
+                    break;
+                }
+            }
+            const inputElement = $(currentFormId + " #input-documentType").val()
+            const inputValue = inputElement.toLowerCase();
+            console.log(inputValue);
+
+            // Clear previous options
+            datalistElement.html("");
+            const relevantList = []
+
+            // Populate options based on the input value
+            for (const category in documentTypes) {
+                documentTypes[category].forEach(option => {
+                    if (option.toLowerCase().includes(inputValue) && !relevantList.includes(option)) {
+                        relevantList.push(option)
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option;
+                        console.log(optionElement);
+                        datalistElement.append(optionElement);
+                    }
+                });
+            }
         }
 
         // Form action for uploading new document

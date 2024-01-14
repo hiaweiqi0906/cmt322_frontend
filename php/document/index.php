@@ -192,10 +192,25 @@
         // Get all documents
         axios.get('/api/documents/all', )
             .then(function(response) {
+                console.log(response);
 
                 // TODO: Convert into data and render it
                 const documentData = response.data
                 documentData.forEach(doc => {
+                    const uploadedByUserAvatarImg =
+                        doc.uploadedByUserName.avatar_url !== "" &&
+                        doc.uploadedByUserName.avatar_url &&
+                        doc.uploadedByUserName.avatar_url !== "undefined" ?
+                        doc.uploadedByUserName.avatar_url :
+                        "https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png"
+
+                    const accessedByUserAvatarImg =
+                        doc.lastAccessedByUserName.avatar_url !== "" &&
+                        doc.lastAccessedByUserName.avatar_url &&
+                        doc.lastAccessedByUserName.avatar_url !== "undefined" ?
+                        doc.lastAccessedByUserName.avatar_url :
+                        "https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png"
+                        
                     const docName = `${doc.doc_title}`
                     const uploadedDate = new Date(parseInt(doc.uploaded_at))
                     const formatedUploadedDate = `${uploadedDate.getDate()}, ${monthNames[uploadedDate.getMonth()]} ${uploadedDate.getFullYear()}`
@@ -203,10 +218,10 @@
                         '<td><a href="' + baseUrl + '/php/document/view.php?id=' + doc._id + '&cid=' + doc.doc_case_related + '"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />' + docName + '</a></td>' +
                         '<td>' + doc.doc_type + '</td>' +
                         '<td>' + formatFileSize(doc.filesize) + '</td>' +
-                        '<td>' + doc.uploadedByUserName.username + '</td>' +
+                        `<td><img width="20" height="20" src="${uploadedByUserAvatarImg}" alt="user-male-circle" style="margin-right: 0.5rem;" />` + doc.uploadedByUserName.username + '</td>' +
                         '<td>' + doc.relatedCaseName.case_title + '</td>' +
                         '<td>' + formatedUploadedDate + '</td>' +
-                        '<td>' + doc.lastAccessedByUserName.username + '</td>' +
+                        `<td><img width="20" height="20" src="${accessedByUserAvatarImg}" alt="user-male-circle" style="margin-right: 0.5rem;" />` + doc.lastAccessedByUserName.username + '</td>' +
                         '</tr>';
 
                     console.log(markup);

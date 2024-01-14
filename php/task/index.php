@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <?php include "../../components/common/header.php"; ?>      <!-- Common header file-->
-    <?php include "../../components/task/header.php" ?>  <!-- Task specific header file -->
+    <!-- <?php //include "../../components/task/header.php" ?>  Task specific header file -->
     <?php include "../../components/common/scripts.php"; ?>     <!-- Common script -->
     <title>Tasks</title>
 
@@ -35,7 +35,7 @@
 
       <!-- The charts and calendar place-->
       <?php include "../../components/task/charts.php"; ?>
-      <?php include "../../components/task/calendar.php"; ?>
+      <?php //include "../../components/task/taskcalendar.php"; ?>
         
       
     </div>

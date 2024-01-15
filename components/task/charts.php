@@ -6,7 +6,7 @@
 
       <div class='card-body'>
         <!-- Title -->
-        <h5 class='card-title'>Total Appointment Info</h5>
+        <h5 class='card-title'>Total Task Info</h5>
 
         <div id='appointment-admin-pieChart'></div>
       
@@ -21,7 +21,7 @@
 
       <div class='card-body'>
         <!-- Title -->
-        <h5 class='card-title'>Weekly Scheduled Appointment</h5>
+        <h5 class='card-title'>Weekly Assigned Tasks</h5>
 
         <div id='appointment-admin-areaChart'></div>
         

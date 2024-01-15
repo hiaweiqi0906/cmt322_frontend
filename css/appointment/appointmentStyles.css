@@ -1,6 +1,6 @@
 /* To make the container holding the charts and calendar at the center of the webpage */
 #appointment-mainContainer {
-  margin-left: 8.33%;
+  margin-left: 15%;
   padding: 0px 50px;
   padding-top: 1rem;
 }

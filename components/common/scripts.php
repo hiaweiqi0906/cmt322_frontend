@@ -100,7 +100,7 @@
   // Get correct user type. To show correct UI
   const getUserType = () => {
     console.log(localStorage.getItem("type"));
-    return ['client', 'paralegal', 'admin'].includes(localStorage.getItem("type")) ? localStorage.getItem("type") : null
+    return ['client', 'paralegal', 'admin', 'partner', 'associates'].includes(localStorage.getItem("type")) ? localStorage.getItem("type") : null
   }
 
   // Truncate too long text into ...

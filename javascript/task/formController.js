@@ -21,7 +21,7 @@ const appointmentForm_initAttendeesOptions = (id, userList) => {
 
   userList.forEach(attendee => {
     // Add the options to the select
-    const option = new Option(attendee, attendee);
+    const option = new Option(attendee.username, attendee._id);
     selectElement.add(option);
   })
 
@@ -286,19 +286,19 @@ const appointmentForm_timePickerSwitch = (isChecked, startTimeDiv, endTimeDiv) =
 
 
 // To hide the creator div
-const appointementForm_hideCreator = (divID = 'appointment-multiForm-creatorDisplayDiv') => {
+const appointementForm_hideCreator = (divID = 'task-multiForm-creatorDisplayDiv') => {
   document.getElementById(divID).style.display = 'none';
 }
 
 // Show creator div and give value
-const appointmentForm_showCreator = (creatorName, divID = 'appointment-multiForm-creatorDisplayDiv', spanID = 'appointment-multiForm-creator') => {
+const appointmentForm_showCreator = (creatorName, divID = 'task-multiForm-creatorDisplayDiv', spanID = 'task-multiForm-creator') => {
   document.getElementById(divID).style.display = 'block';
   document.getElementById(spanID).innerText = creatorName;
 }
 
 
 // To remove the current user in the attendee list
-const appointmentForm_removeUserAttendee = (attendeeSelectID = 'appointment-multiForm-attendeesSelect') => {
+const appointmentForm_removeUserAttendee = (attendeeSelectID = 'task-multiForm-attendeesSelect') => {
   const attendeeSelectEl = document.getElementById(attendeeSelectID);
 
   for (let i = attendeeSelectEl.options.length - 1; i >= 0; i--) {
@@ -353,6 +353,7 @@ const appointmentForm_resetFormData = (titleID, attendeeSelectID, locationID, de
 // To enable all the input fields except the attendee select and time select, they can recreate and enable back
 const appointmentForm_enableFormInput = (inputIDs) => {
   inputIDs.forEach(inputID => {
+    console.log(inputID, document.getElementById(inputID).disabled);
     document.getElementById(inputID).disabled = false;
   })
 }
@@ -450,6 +451,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
   const attendeeSelectElement = document.getElementById(attendeeSelectID);
   const attendeeSelectIsValid = attendeeSelectElement.classList.contains('is-valid');
 
+  // acceptance criteria
   const locationElement = document.getElementById(locationID);
   const locationIsValid = locationElement.classList.contains('is-valid');
 
@@ -460,6 +462,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
   const startTimeElement = document.getElementById(startTimeID);
   const endDateElement = $('#' + endDateID)
   const endTimeElement = document.getElementById(endTimeID);
+
   const allDaySwitchElement = document.getElementById(allDaySwitchID);
 
   // If the inputs are valid, then extract the data and send to backend
@@ -474,7 +477,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
     const dateEnd = moment(endDateElement.datepicker('getDate')).format('YYYY-MM-DD');
     const timeEnd = switchIsChecked ? '' : endTimeElement.value;
     const details = detailsElement.value.trim();
-    const status = 'scheduled';
+    const status = 'todo';
 
     for (var i = 0; i < attendeeSelectElement.options.length; i++) {
       if (attendeeSelectElement.options[i].selected) {
@@ -490,42 +493,37 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
     // startLoader();
 
     appointment = {
-      creator: '',
-      title: title,
-      attendees: attendees,
-      location: location,
-      dateStart: dateStart,
-      timeStart: timeStart,
-      dateEnd: dateEnd,
-      timeEnd: timeEnd,
-      details: details,
-      status: status
+      title,
+      description: details,
+      status: status,
+      assignedTo: attendees,
+      deadline: dateStart,
+      acceptanceCriteria: location,
     }
 
     // Send axios post request to store the new appointment and 
     // fetch all appointments to redraw charts and calendar
-    axios.post('/api/appointments', appointment)
+    axios.post('/api/tasks', appointment)
       .then((response) => {
-        const { username, isAdmin, appointments } = response.data;
+        console.log(response);
+        // const { username, isAdmin, appointments } = response.data;
 
-        // If the user is admin, update the charts and recreate calendar
-        if (isAdmin) {
+        // // If the user is admin, update the charts and recreate calendar
+        // if(isAdmin){
 
-          appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
-          appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
-          appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
-        }
-        // Else, only create the calendar
-        else {
-          appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
-        }
+        //   appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
+        //   appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
+        //   appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+        // }
+        // // Else, only create the calendar
+        // else{
+        //   appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+        // }
       })
       .then(() => {
         endLoader();
       })
       .catch((err) => {
-        endLoader();
-        console.log('Error when creating new appointment: ', err);
         const {
           status
         } = error.response
@@ -533,6 +531,8 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
           localStorage.clear()
           window.location.href = baseUrl + 'php/auth/login.php';
         }
+        endLoader();
+        console.log('Error when creating new appointment: ', err);
       });
   }
   // Check the validity of inputs
@@ -567,7 +567,8 @@ const appointmentForm_displayCreatedFormData = (idEl, titleEl, attendeeSelectEl,
   // Get the attendee object and match with the options, mark as selected
   for (let j = 0; j < appointment.attendees.length; j++) {
     for (let i = 0; i < attendeeSelectEl.options.length; i++) {
-      if (attendeeSelectEl.options[i].value === appointment.attendees[j].name) {
+      console.log(attendeeSelectEl.options[i].value, appointment.attendees[j]);
+      if (attendeeSelectEl.options[i].value === appointment.attendees[j]) {
         attendeeSelectEl.options[i].selected = true;
       }
     }
@@ -718,68 +719,77 @@ const appointmentForm_displayInvitedFormData = (idEl, titleEl, attendeeSelectEl,
 
 // To display the form when user clicking an event, there will different type of forms based on the event types
 // Note: This function is used by calendar component in calendar.php
-const appointmentForm_displayAppointmentForm = (eventType, appointment) => {
+const appointmentForm_displayAppointmentForm = (task) => {
 
-  const idEl = document.getElementById('appointment-multiForm-id');
-  const titleEl = document.getElementById('appointment-multiForm-title');
-  const attendeeSelectEl = document.getElementById('appointment-multiForm-attendeesSelect');
-  const locationEl = document.getElementById('appointment-multiForm-location');
-  const detailsEl = document.getElementById('appointment-multiForm-details');
-  const startDateID = 'appointment-multiForm-startDate';
-  const startTimeEl = document.getElementById('appointment-multiForm-startTime');
-  const endDateID = 'appointment-multiForm-endDate';
-  const endTimeEl = document.getElementById('appointment-multiForm-endTime');
-  const allDaySwitchEl = document.getElementById('appointment-multiForm-allDaySwitch');
+  const idEl = document.getElementById('task-multiForm-id');
+  const titleEl = document.getElementById('task-multiForm-title');
+  const attendeeSelectEl = document.getElementById('task-multiForm-attendeesSelect');
+  const locationEl = document.getElementById('task-multiForm-location');
+  const detailsEl = document.getElementById('task-multiForm-details');
+  const startDateID = 'task-multiForm-startDate';
+  const startTimeEl = document.getElementById('task-multiForm-startTime');
+  const endDateID = 'task-multiForm-endDate';
+  const endTimeEl = document.getElementById('task-multiForm-endTime');
+  const allDaySwitchEl = document.getElementById('task-multiForm-allDaySwitch');
 
-  let needDisable;
+  let needDisable = true;
 
-  // If the appointment is created by the user, the displayed can be edited and cancelled
-  if (eventType.role === 'creator') {
+  // Set the form to created form
+  appointmentModal_setCreatedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', false);
 
-    // If the appointment is already past, then all the form inputs are disabled and cannot do changes to the appointment
-    if (eventType.status === 'past') {
-      needDisable = true;
-    }
-    else {
-      needDisable = false;
-    }
-    // Set the form to created form
-    appointmentModal_setCreatedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', needDisable);
+  // Display the data in the form
+  appointmentForm_displayCreatedFormData(idEl, titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, task, false);
 
-    // Display the data in the form
-    appointmentForm_displayCreatedFormData(idEl, titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment, needDisable);
+  // Open the modal
+  appointmentModal_openModal();
 
-    // Open the modal
-    appointmentModal_openModal();
-  }
-  // Else, the user can only respond to the appointment by accepting or declining the appointment
-  else {
+  // // If the appointment is created by the user, the displayed can be edited and cancelled
+  // if(eventType.role === 'creator'){
 
-    // If the appointment is already past, user cannot do respond to the invited appointment
-    if (eventType.status === 'past') {
-      const modalTitle = eventType.response.charAt(0).toUpperCase() + eventType.response.slice(1);
+  //   // If the appointment is already past, then all the form inputs are disabled and cannot do changes to the appointment
+  //   if(eventType.status === 'past'){
+  //     needDisable = true;
+  //   }
+  //   else{
+  //     needDisable = false;
+  //   }
+  //   // Set the form to created form
+  //   appointmentModal_setCreatedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', needDisable);
 
-      // Set the form to invited form, both buttons are disabled
-      appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', modalTitle + ' Appointment', true, true);
-    }
-    else {
-      if (eventType.response === 'accepted') {
-        appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', 'Accepted Appointment', true, false);
-      }
-      else if (eventType.response === 'pending') {
-        appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', 'Pending Appointment', false, false);
-      }
-      else {
-        appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', 'Declined Appointment', false, true);
-      }
-    }
+  //   // Display the data in the form
+  //   appointmentForm_displayCreatedFormData(idEl, titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment, needDisable);
 
-    // Display the data in the form
-    appointmentForm_displayInvitedFormData(idEl, titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment);
+  //   // Open the modal
+  //   appointmentModal_openModal();
+  // }
+  // // Else, the user can only respond to the appointment by accepting or declining the appointment
+  // else{
 
-    // Open the modal
-    appointmentModal_openModal();
-  }
+  //   // If the appointment is already past, user cannot do respond to the invited appointment
+  //   if(eventType.status === 'past'){
+  //     const modalTitle = eventType.response.charAt(0).toUpperCase() + eventType.response.slice(1);
+
+  //     // Set the form to invited form, both buttons are disabled
+  //     appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', modalTitle + ' Appointment', true, true);
+  //   }
+  //   else{
+  //     if(eventType.response === 'accepted'){
+  //       appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', 'Accepted Appointment', true, false);
+  //     }
+  //     else if(eventType.response === 'pending'){
+  //       appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', 'Pending Appointment', false, false);
+  //     }
+  //     else{
+  //       appointmentModal_setInvitedAppointmentModal('appointment-multiAppointmentModal-title', 'appointment-multiAppointmentModal-saveButton', 'appointment-multiAppointmentModal-closeButton', 'Declined Appointment', false, true);
+  //     }
+  //   }
+
+  //   // Display the data in the form
+  //   appointmentForm_displayInvitedFormData(idEl, titleEl, attendeeSelectEl, locationEl, detailsEl, startDateID, startTimeEl, endDateID, endTimeEl, allDaySwitchEl, appointment);
+
+  //   // Open the modal
+  //   appointmentModal_openModal();
+  // }
 }
 
 
@@ -810,13 +820,13 @@ const appointmentForm_checkAttendeeChange = (attendeeSelectEl, attendeeData) => 
 
   // To get each of the attendee from the appointment
   attendeeData.forEach(attendee => {
-    oldAttendeeValue.push(attendee.name);
+    oldAttendeeValue.push(attendee.username);
   })
 
   // Get the attendee from the form
   for (var i = 0; i < attendeeSelectEl.options.length; i++) {
     if (attendeeSelectEl.options[i].selected) {
-      newAttendeeValue.push(attendeeSelectEl.options[i].value);
+      newAttendeeValue.push(attendeeSelectEl.options[i].name);
     }
   }
 
@@ -928,27 +938,28 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
 
   // If any invalid input, show the error alert
   if (titleIsInvalid || attendeeSelectIsInvalid || locationIsInvalid || detailsIsInvalid) {
-    appointmentModal_callAlert('appointment-multiForm-danger-alert');
+    appointmentModal_callAlert('task-multiForm-danger-alert');
   }
   // Else check is there any changes
   else {
     // Get the appointent id, later used for fetch the appointment from server
-    const appointmentID = document.getElementById('appointment-multiForm-id').innerText;
+    const appointmentID = document.getElementById('task-multiForm-id').innerText;
 
     // Get the appointment data from server based on the id
-    axios.get(`/api/appointments/${appointmentID}`)
+    axios.get(`/api/tasks/${appointmentID}`)
       .then((response) => {
         const appointment = response.data;
+        console.log(appointment);
 
         const titleChanged = appointmentForm_checkTitleChange(titleEl, appointment.title);
-        const attendeeChanged = appointmentForm_checkAttendeeChange(attendeeSelectEl, appointment.attendees);
-        const startDateChanged = appointmentForm_checkDateChange(startDateEl, appointment.dateStart);
-        const endDateChanged = appointmentForm_checkDateChange(endDateEl, appointment.dateEnd)
-        const timeChanged = appointmentForm_checkTimeChange(allDaySwitchEl, startTimeEl, endTimeEl, appointment.timeStart, appointment.timeEnd);
-        const locationChanged = appointmentForm_checkLocationChange(locationEl, appointment.location);
-        const detailsChanged = appointmentForm_checkDetailsChange(detailsEl, appointment.details);
+        const attendeeChanged = appointmentForm_checkAttendeeChange(attendeeSelectEl, appointment.assignedToUsers);
+        const startDateChanged = appointmentForm_checkDateChange(startDateEl, appointment.deadline);
+        // const endDateChanged = appointmentForm_checkDateChange(endDateEl, appointment.deadline)
+        // const timeChanged = appointmentForm_checkTimeChange(allDaySwitchEl, startTimeEl, endTimeEl, appointment.timeStart, appointment.timeEnd);
+        const locationChanged = appointmentForm_checkLocationChange(locationEl, appointment.acceptanceCriteria);
+        const detailsChanged = appointmentForm_checkDetailsChange(detailsEl, appointment.description);
 
-        if (titleChanged || attendeeChanged || startDateChanged || endDateChanged || timeChanged || locationChanged || detailsChanged) {
+        if (titleChanged || attendeeChanged || startDateChanged || locationChanged || detailsChanged) {
           if (titleChanged) {
             appointment.title = titleEl.value.trim();
           }
@@ -956,8 +967,8 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
           if (attendeeChanged) {
             const oldAttendee = [];
 
-            appointment.attendees.forEach(attendee => {
-              oldAttendee.push(attendee.name);
+            appointment.assignedToUsers.forEach(attendee => {
+              oldAttendee.push(attendee.userId);
             })
 
             const newAttendee = [];
@@ -968,10 +979,10 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
             }
 
             // Update the object's attendees property
-            appointment.attendees = appointment.attendees
-              .filter(attendee => newAttendee.includes(attendee.name)) // Keep only existing names
+            appointment.assignedToUsers = appointment.assignedToUsers
+              .filter(attendee => newAttendee.includes(attendee.userId)) // Keep only existing names
               .concat(newAttendee                                      // Add new names with default response
-                .filter(name => !appointment.attendees.some(attendee => attendee.name === name))
+                .filter(name => !appointment.assignedToUsers.some(attendee => attendee.userId === name))
                 .map(name => ({ name, response: 'pending' }))
               );
           }
@@ -980,20 +991,20 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
             appointment.dateStart = moment(startDateEl.datepicker('getDate')).format('YYYY-MM-DD');
           }
 
-          if (endDateChanged) {
-            appointment.dateEnd = moment(endDateEl.datepicker('getDate')).format('YYYY-MM-DD');
-          }
+          // if(endDateChanged){
+          //   appointment.dateEnd = moment(endDateEl.datepicker('getDate')).format('YYYY-MM-DD');
+          // }
 
-          if (timeChanged) {
-            if (allDaySwitchEl.checked) {
-              appointment.timeStart = '';
-              appointment.timeEnd = '';
-            }
-            else {
-              appointment.timeStart = startTimeEl.value;
-              appointment.timeEnd = endTimeEl.value;
-            }
-          }
+          // if(timeChanged){
+          //   if(allDaySwitchEl.checked){
+          //     appointment.timeStart = '';
+          //     appointment.timeEnd = '';
+          //   }
+          //   else{
+          //     appointment.timeStart = startTimeEl.value;
+          //     appointment.timeEnd = endTimeEl.value;
+          //   }
+          // }
 
           if (locationChanged) {
             appointment.location = locationEl.value.trim();
@@ -1005,30 +1016,29 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
 
           // Close the modal and showing the loading overlay
           appointmentModal_closeModal();    // Default modal is appointment form modal
-          startLoader();
+          // startLoader();
 
-          axios.put(`/api/appointments/${appointmentID}`, appointment)
+          console.log("new", appointment.assignedToUsers);
+
+          axios.put(`/api/tasks/${appointmentID}`, appointment)
             .then((response) => {
-              const { username, isAdmin, appointments } = response.data;
-
+              // const { username, isAdmin, appointments } = response.data;
               // If the user is admin, then update the charts and recreate calendar
-              if (isAdmin) {
+              // if(isAdmin){
 
-                appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
-                appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
-                appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
-              }
-              // Else, only create the calendar
-              else {
-                appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
-              }
+              //   appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
+              //   appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
+              //   appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+              // }
+              // // Else, only create the calendar
+              // else{
+              //   appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+              // }
+              location.reload()
+
             })
-            .then((response) => {
-              endLoader();
-            })
+
             .catch((err) => {
-              endLoader();
-              console.log('Error when update user\'s created appointment', err);
               const {
                 status
               } = error.response
@@ -1036,15 +1046,16 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
                 localStorage.clear()
                 window.location.href = baseUrl + 'php/auth/login.php';
               }
+              endLoader();
+              console.log('Error when update user\'s created appointment', err);
             });
         }
         else {
-          appointmentModal_callAlert('appointment-multiForm-warning-alert');
+          appointmentModal_callAlert('task-multiForm-warning-alert');
         }
 
       })
       .catch((err) => {
-        console.log('Error when updating the appointment', err);
         const {
           status
         } = error.response
@@ -1052,6 +1063,7 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
           localStorage.clear()
           window.location.href = baseUrl + 'php/auth/login.php';
         }
+        console.log('Error when updating the appointment', err);
       });
   }
 
@@ -1061,35 +1073,34 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
 // To cancel the appointment from the database
 const appointmentForm_cancelAppointment = () => {
   // Get the appointment id, later used it to cancel the appointment
-  const appointmentID = document.getElementById('appointment-multiForm-id').innerText;
+  const appointmentID = document.getElementById('task-multiForm-id').innerText;
 
   // Close the modal and showing the loading overlay
   appointmentModal_closeModal('appointment-comfirmation-modal');    // Close the confirmation modal
   startLoader();
 
-  axios.delete(`/api/appointments/${appointmentID}`)
+  axios.delete(`/api/tasks/${appointmentID}`)
     .then((response) => {
-      const { username, isAdmin, appointments } = response.data;
+      location.reload()
+      // const { username, isAdmin, appointments } = response.data;
 
       // If the user is admin, then update the charts and recreate calendar
-      if (isAdmin) {
+      // if(isAdmin){
 
-        appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
-        appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
-        appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
-      }
-      // Else, only create the calendar
-      else {
-        appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
-      }
+      //   appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
+      //   appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
+      //   appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+      // }
+      // // Else, only create the calendar
+      // else{
+      //   appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
+      // }
 
     })
     .then((response) => {
       endLoader();
     })
     .catch((err) => {
-      endLoader();
-      console.log('Error when cancelling the appointment', err);
       const {
         status
       } = error.response
@@ -1097,6 +1108,8 @@ const appointmentForm_cancelAppointment = () => {
         localStorage.clear()
         window.location.href = baseUrl + 'php/auth/login.php';
       }
+      endLoader();
+      console.log('Error when cancelling the appointment', err);
     });
 }
 
@@ -1104,7 +1117,7 @@ const appointmentForm_cancelAppointment = () => {
 // To accept the appointment
 const appointmentForm_appointmentResponse = (userResponse) => {
   // Get the appointment id, later used it to cancel the appointment
-  const appointmentID = document.getElementById('appointment-multiForm-id').innerText;
+  const appointmentID = document.getElementById('task-multiForm-id').innerText;
 
   // Close the modal and showing the loading overlay
   appointmentModal_closeModal();    // Default modal is appointment form modal
@@ -1128,8 +1141,6 @@ const appointmentForm_appointmentResponse = (userResponse) => {
       endLoader();
     })
     .catch((err) => {
-      endLoader();
-      console.log('Error when sending user response', err);
       const {
         status
       } = error.response
@@ -1137,5 +1148,7 @@ const appointmentForm_appointmentResponse = (userResponse) => {
         localStorage.clear()
         window.location.href = baseUrl + 'php/auth/login.php';
       }
+      endLoader();
+      console.log('Error when sending user response', err);
     });
 }

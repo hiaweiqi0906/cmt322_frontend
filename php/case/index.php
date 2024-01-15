@@ -17,7 +17,7 @@
     <div class="main-content">
         <h1 class="h1-main-title">Cases</h1>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
-        <div class="flex-con">
+        <div class="flex-con" id="adminOnly-case-stats">
             <div class="col-8 row-1 nested-flex-con-col">
                 <div class="float-card row-1" style="min-height: 380px;">
                     <h3 class="h3-semibold-24">Case Info</h3>
@@ -111,10 +111,16 @@
 
                 </tbody>
             </table>
+            <div id="record-not-found-div" style="display: block">
+            <img src="../../assets/no_record_found.png" style="width:30rem;display:block; margin-left: auto; margin-right: auto; margin-top: 6rem; border-radius: 20px;" alt="" >
+            <h3 style="width:30rem;display:block; margin-left: auto; margin-right: auto;margin-top: 0.5rem; text-align: center; color: #959595;" >No Record found yet..</h3>
+
+            </div>
         </div>
     </div>
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
+        if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#adminOnly-case-stats').css("display", "none")
         // Options for statistics graph later
         var caseOption = {
             series: [44, 20, 30],
@@ -166,11 +172,14 @@
         // Get cases from backend and display as table
         axios.get(`/api/cases/`, )
             .then(function(response) {
+                console.log("caseData", response.data);
                 // TODO: Convert into data and render it
                 const caseData = response.data
-                console.log(caseData);
+                if(caseData.length===0) 
+                    $('#record-not-found-div').css("display", "block")
+                else 
+                    $('#record-not-found-div').css("display", "none")
                 caseData.forEach(c => {
-                    console.log(c);
                     // Convert every cases into rows 
                     // TODO: This is dummy data. Change the dummy data into real data rows to be shown.
                     const markup = '<tr>' +
@@ -199,6 +208,7 @@
                     localStorage.clear()
                     window.location.href = baseUrl + 'php/auth/login.php';
                 }
+                $('#record-not-found-div').css("display", "block")
             });
 
         renderChart('document-documentInfo-chart', caseOption)

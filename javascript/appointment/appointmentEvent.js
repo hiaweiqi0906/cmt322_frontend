@@ -10,21 +10,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }).catch((err) => {
       console.log('Error when checking is admin: ', err);
-  });
-  
+      const {
+        status
+      } = error.response
+      if (status === 401) {
+        localStorage.clear()
+        window.location.href = baseUrl + 'php/auth/login.php';
+      }
+    });
+
   // To get the appointments, display them in charts and calendar
   axios.get('/api/appointments')
     .then((response) => {
       const { username, isAdmin, appointments } = response.data;
 
       // If the user is admin, then create the charts and calendar
-      if(isAdmin){
+      if (isAdmin) {
         appointmentChart_createPieChart('appointment-admin-pieChart', appointments);                    // Create pie chart
         appointmentChart_createAreaChart('appointment-admin-areaChart', appointments);                  // Create area chart
         appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Create calendar
       }
       // Else, only create the calendar
-      else{
+      else {
         appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Create calendar
       }
 
@@ -32,7 +39,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }).catch((err) => {
       console.log('Error when first initializing data: ', err);
-  });
+      const {
+        status
+      } = error.response
+      if (status === 401) {
+        localStorage.clear()
+        window.location.href = baseUrl + 'php/auth/login.php';
+      }
+    });
 
 
   // To send get request to get the attendee options list from server except the user himself/herself
@@ -41,13 +55,20 @@ document.addEventListener('DOMContentLoaded', function () {
       const userList = response.data;
 
       appointmentForm_initAttendeesOptions('appointment-multiForm-attendeesSelect', userList); // Initialize select options
-      
+
     })
     .catch((err) => {
       console.log('Error fetching user list: ', err)
-  });
+      const {
+        status
+      } = error.response
+      if (status === 401) {
+        localStorage.clear()
+        window.location.href = baseUrl + 'php/auth/login.php';
+      }
+    });
 
-  
+
   // Initialize the Bootstrap tooltip before using it
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -80,23 +101,23 @@ document.getElementById('appointment-multiForm-allDaySwitch').addEventListener('
 document.getElementById('appointment-multiAppointmentModal-saveButton').addEventListener('click', () => {
   formType = document.getElementById('appointment-multiAppointmentModal-title').innerText
 
-  switch(formType){
+  switch (formType) {
 
     case 'New Appointment':
-      appointmentForm_submitAppointmentForm('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details', 
-      'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
+      appointmentForm_submitAppointmentForm('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details',
+        'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
       break;
 
     case 'Created Appointment':
-      appointmentForm_updateAppointmentForm('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details', 
-      'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
+      appointmentForm_updateAppointmentForm('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details',
+        'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
       break;
-    
+
     case 'Pending Appointment':
     case 'Declined Appointment':
       appointmentForm_appointmentResponse('accepted');
       break;
-    
+
     default:
       console.error('Save button: No case matching to the form type');
 
@@ -109,11 +130,11 @@ document.getElementById('appointment-multiAppointmentModal-saveButton').addEvent
 document.getElementById('appointment-multiAppointmentModal-closeButton').addEventListener('click', () => {
   formType = document.getElementById('appointment-multiAppointmentModal-title').innerText
 
-  switch(formType){
+  switch (formType) {
     case 'New Appointment':
       appointmentModal_closeModal();    // Default modal is appointment form modal
       break;
-    
+
     case 'Created Appointment':
       appointmentModal_closeModal();    // Default modal is appointment form modal
       appointmentModal_openModal('appointment-comfirmation-modal');   // Open confirmation modal
@@ -123,7 +144,7 @@ document.getElementById('appointment-multiAppointmentModal-closeButton').addEven
     case 'Accepted Appointment':
       appointmentForm_appointmentResponse('declined');
       break;
-    
+
     default:
       console.error('Close button: No case matching to the form type');
   }
@@ -169,6 +190,6 @@ document.getElementById('multiAppointmentModal').addEventListener('hidden.bs.mod
   appointmentForm_removeUserAttendee();
   appointmentForm_clearFormValidation(['appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details']);
   appointmentForm_enableFormInput(['appointment-multiForm-title', 'appointment-multiForm-startDate', 'appointment-multiForm-endDate', 'appointment-multiForm-allDaySwitch', 'appointment-multiForm-location', 'appointment-multiForm-details']);
-  appointmentForm_resetFormData('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details', 
-  'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
+  appointmentForm_resetFormData('appointment-multiForm-title', 'appointment-multiForm-attendeesSelect', 'appointment-multiForm-location', 'appointment-multiForm-details',
+    'appointment-multiForm-startDate', 'appointment-multiForm-startTime', 'appointment-multiForm-endDate', 'appointment-multiForm-endTime', 'appointment-multiForm-allDaySwitch');
 })

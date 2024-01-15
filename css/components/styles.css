@@ -3,6 +3,7 @@
 /* -------------------------------------------------------------------------- */
 body {
     margin: 0;
+    --fc-today-bg-color: #7e8dff20;
 }
 
 .h3-semibold-24 {
@@ -240,6 +241,14 @@ li.navbar-logo{
     margin: 0px;
 }
 
+.big-number-statistics-block-notification{
+    height: 2px;
+}
+
+.row-1-statistics-notification{
+    height: 5rem;
+}
+
 .last-accessed {
     color: #000;
     font-family: Lato;
@@ -256,6 +265,11 @@ li.navbar-logo{
     font-style: normal;
     font-weight: 800;
     line-height: normal;
+}
+
+.notifications{
+    font-size: 1rem !important; 
+    font-weight: 300;
 }
 
 .document-info-block p, .two-line-statistics p ,.three-line-statistics p {

@@ -9,6 +9,7 @@
     <script>
         // Choose whether protected or unprotected
         checkProtectedRoutes();
+        if(getUserType() !== 'admin' && getUserType() !== 'partner') window.location.href = baseUrl + 'php/case';
     </script>
 </head>
 
@@ -76,6 +77,7 @@
     </div>
 
     <script>
+        
         $('.h2-user-greeting').text(renderUserGreeting())
         endLoader();
         

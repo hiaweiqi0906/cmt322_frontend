@@ -57,7 +57,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row-1-statistics  mg-between-info">
+                                <!-- <div class="row-1-statistics  mg-between-info">
                                     <div class="two-line-statistics document-info-block">
                                         <div>
                                             <p style="width: 100px;">Case History</p>
@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
 
-                                </div>
+                                </div> -->
                                 <div class="row-1-statistics mg-between-info">
                                     <div class="two-line-statistics document-info-block">
                                         <div>
@@ -117,7 +117,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nested-flex-con-row row-1-statistics">
+                                <!-- <div class="nested-flex-con-row row-1-statistics">
                                     <div class="two-line-statistics mg-between-info">
                                         <div>
                                             <p style="margin-top: 1rem">Last Comm. Date</p>
@@ -126,8 +126,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="nested-flex-con-row row-1-statistics">
+                                </div> -->
+                                <!-- <div class="nested-flex-con-row row-1-statistics">
                                     <div class="two-line-statistics mg-between-info">
                                         <div>
                                             <p style="margin-top: 1rem">Next Follow Up Date</p>
@@ -136,7 +136,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                         <th class="col-2">Email
 
                         </th>
-                        <th class="col-2">Case Involved
+                        <th class="col-2">Address
 
                         </th>
                         <th class="col-2">Last Comm. Date
@@ -374,7 +374,7 @@
                         '<td>'+client.type+'</td>' +
                         '<td>'+client.number+'</td>' +
                         '<td>'+client.email+'</td>' +
-                        '<td>aaa</td>' +
+                        '<td>'+client.address+'</td>' +
                         '<td>aaa</td>' +
                         '<td>aaa</td>' +
                         '</tr>';

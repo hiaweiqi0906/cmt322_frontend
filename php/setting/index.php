@@ -18,7 +18,7 @@
         <h2 class="h2">My Details</h2>
         <div class="flex-con">
             <div class="row-1 nested-flex-con-col">
-                <div class="float-card info-float-card row-1" style="min-height: 380px;">
+                <div class="float-card info-float-card row-1" style="min-height: 600px;">
                     <div class="nested-flex-con-row">
                         <div style="width: 50%">
                             <h3 class="h3-semibold-24">My Info </h3>
@@ -117,7 +117,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nested-flex-con-row row-1-statistics">
+                                <!-- <div class="nested-flex-con-row row-1-statistics">
                                     <div class="two-line-statistics mg-between-info">
                                         <div>
                                             <p style="margin-top: 1rem">Last Comm. Date</p>
@@ -126,8 +126,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="nested-flex-con-row row-1-statistics">
+                                </div> -->
+                                <!-- <div class="nested-flex-con-row row-1-statistics">
                                     <div class="two-line-statistics mg-between-info">
                                         <div>
                                             <p style="margin-top: 1rem">Next Follow Up Date</p>
@@ -136,7 +136,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             
                         </div>

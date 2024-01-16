@@ -106,7 +106,7 @@
                         <th class="col-1">Type </th>
                         <th class="col-2">Contact Number </th>
                         <th class="col-2">Email </th>
-                        <th class="col-2">Case Involved </th>
+                        <th class="col-2">Address </th>
                         <th class="col-2">Last Comm. Date </th>
                         <th class="col-2">Next Follow-up Date </th>
                     </tr>
@@ -201,7 +201,7 @@
                         '<td>'+client.type+'</td>' +
                         '<td>'+client.number+'</td>' +
                         '<td>'+client.email+'</td>' +
-                        '<td>aaa</td>' +
+                        '<td>'+client.address+'</td>' +
                         '<td>aaa</td>' +
                         '<td>aaa</td>' +
                         '</tr>';

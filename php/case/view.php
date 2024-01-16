@@ -127,12 +127,7 @@
                             </table>
             
                         </div>
-                    <!-- </div> -->
                 </div>
-                </div>
-
-                </div>                
-
             </div>
             <div class="col-4 row-1" style="">
                 <!-- Overall Analytics for Documents -->

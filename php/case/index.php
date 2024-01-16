@@ -15,7 +15,10 @@
     <!-- Add neccessary components, such as navbars, footer, header, etc.. -->
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
-        <h1 class="h1-main-title">Cases</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h1-main-title">Cases</h1>
+            <a href="http://localhost/php/case/createNewCase" class="btn btn-primary">Create New Case</a>
+        </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con" id="adminOnly-case-stats">
             <div class="col-8 row-1 nested-flex-con-col">

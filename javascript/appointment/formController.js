@@ -487,7 +487,6 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
 
     // Close the modal and showing the loading overlay
     appointmentModal_closeModal();    // Default modal is appointment form modal
-    // startLoader();
 
     appointment = {
       creator: '',
@@ -520,11 +519,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
           appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
         }
       })
-      .then(() => {
-        endLoader();
-      })
       .catch((err) => {
-        endLoader();
         console.log('Error when creating new appointment: ', err);
         const {
           status
@@ -608,8 +603,7 @@ const appointmentForm_displayCreatedFormData = (idEl, titleEl, attendeeSelectEl,
     appointmentForm_timeDselect(startTimeEl, true);
     appointmentForm_timeDselect(endTimeEl, true);
 
-    // Need to set the start date of datepicker so the past date can be shown, and disable the datepickers
-    appointmentForm_setStartDate(startDateID, appointment.dateStart);
+    // Disable the datepickers
     document.getElementById(startDateID).disabled = true;
     document.getElementById(endDateID).disabled = true;
   }
@@ -620,7 +614,8 @@ const appointmentForm_displayCreatedFormData = (idEl, titleEl, attendeeSelectEl,
     appointmentForm_timeDselect(endTimeEl);
   }
 
-  // Now, can display the start date and end date using id attribute
+  // Need to set the start date of datepicker so the past date can be shown
+  appointmentForm_setStartDate(startDateID, appointment.dateStart);
   appointmentForm_setDate(startDateID, appointment.dateStart);
   appointmentForm_setDate(endDateID, appointment.dateEnd);
 
@@ -1005,7 +1000,6 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
 
           // Close the modal and showing the loading overlay
           appointmentModal_closeModal();    // Default modal is appointment form modal
-          startLoader();
 
           axios.put(`/api/appointments/${appointmentID}`, appointment)
             .then((response) => {
@@ -1023,11 +1017,7 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
                 appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
               }
             })
-            .then((response) => {
-              endLoader();
-            })
             .catch((err) => {
-              endLoader();
               console.log('Error when update user\'s created appointment', err);
               const {
                 status
@@ -1065,7 +1055,6 @@ const appointmentForm_cancelAppointment = () => {
 
   // Close the modal and showing the loading overlay
   appointmentModal_closeModal('appointment-comfirmation-modal');    // Close the confirmation modal
-  startLoader();
 
   axios.delete(`/api/appointments/${appointmentID}`)
     .then((response) => {
@@ -1084,11 +1073,7 @@ const appointmentForm_cancelAppointment = () => {
       }
 
     })
-    .then((response) => {
-      endLoader();
-    })
     .catch((err) => {
-      endLoader();
       console.log('Error when cancelling the appointment', err);
       const {
         status
@@ -1108,7 +1093,6 @@ const appointmentForm_appointmentResponse = (userResponse) => {
 
   // Close the modal and showing the loading overlay
   appointmentModal_closeModal();    // Default modal is appointment form modal
-  startLoader();
 
   axios.put(`/api/appointments/response/${appointmentID}`, { response: userResponse })
     .then((response) => {
@@ -1124,11 +1108,7 @@ const appointmentForm_appointmentResponse = (userResponse) => {
       }
 
     })
-    .then((response) => {
-      endLoader();
-    })
     .catch((err) => {
-      endLoader();
       console.log('Error when sending user response', err);
       const {
         status

@@ -9,13 +9,15 @@ document.addEventListener('DOMContentLoaded', function () {
       appointmentChart_displayCharts(isAdmin);  // To show or hide the charts
 
     }).catch((err) => {
-      console.log('Error when checking is admin: ', err);
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
     });
 
@@ -38,13 +40,15 @@ document.addEventListener('DOMContentLoaded', function () {
       endLoader();
 
     }).catch((err) => {
-      console.log('Error when first initializing data: ', err);
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
     });
 
@@ -58,13 +62,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     })
     .catch((err) => {
-      console.log('Error fetching user list: ', err)
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
     });
 

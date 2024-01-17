@@ -57,7 +57,6 @@
     const type = ['client', 'paralegal', 'admin'].includes(localStorage.getItem("type")) ? localStorage.getItem("type") : null
     // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
     if (token && type) {
-      console.log("now its ok")
       axios.defaults.headers.common['Authorization'] = token;
     }
 
@@ -99,7 +98,6 @@
 
   // Get correct user type. To show correct UI
   const getUserType = () => {
-    console.log(localStorage.getItem("type"));
     return ['client', 'paralegal', 'admin', 'partner', 'associates'].includes(localStorage.getItem("type")) ? localStorage.getItem("type") : null
   }
 
@@ -142,5 +140,34 @@
     const requestDate = new Date(parseInt(datestring))
     const formatedUploadedDate = `${requestDate.getDate()}, ${monthNames[requestDate.getMonth()]} ${requestDate.getFullYear()}`
     return formatedUploadedDate
+  }
+
+  const launchErrorModal = (errorMsg = "Server Error :(", redirectUrl = baseUrl) => {
+    const errorModal = `<!-- Button trigger modal -->
+    <button type="button" style="display: none;" class="btn btn-primary btn-alert-error-msg" data-bs-toggle="modal" data-bs-target="#exampleModalCenter_error_msg">
+        Launch
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter_error_msg" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Encountered Issue..</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ${errorMsg}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="window.location = '${redirectUrl}'">Go to Dashboard</button>
+      </div>
+    </div>
+  </div>
+      </div>`
+
+      $('body').prepend(errorModal)
+      $('.btn-alert-error-msg').trigger("click")
   }
 </script>

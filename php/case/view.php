@@ -111,7 +111,7 @@
                     <h3 class="h3-semibold-24">Case Messages</h3>
                     <div id="case-caseMessages-div" style="height: 90%; overflow: auto;">
                         <ul class="chat-thread" id="chat-thread">
-                            
+
                         </ul>
                     </div>
 
@@ -152,7 +152,7 @@
                                 <label for="input-documentTitle">Document Title</label>
                             </p>
                             <p class="group">
-                                <input id="input-documentType" type="text" required type="text" list="documentTypeList-req" oninput="suggestDocumentTypes('request')" >
+                                <input id="input-documentType" type="text" required type="text" list="documentTypeList-req" oninput="suggestDocumentTypes('request')">
                                 <label for="input-documentType">Document Type</label>
                                 <datalist id="documentTypeList-req">
                                     <!-- Options will be dynamically populated here -->
@@ -435,13 +435,16 @@
                 chatDiv.scrollTop = chatDiv.scrollHeight;
             })
             .catch(function(error) {
-                console.log(error);
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
+
+                if (error.response.status === 401) {
+                    launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                    setTimeout(function() {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }, 1000);
+                } else {
+                    launchErrorModal(error.response.data.message)
                 }
             });
 
@@ -494,13 +497,16 @@
                 });
             })
             .catch(function(error) {
-                console.log(error);
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
+
+                if (error.response.status === 401) {
+                    launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                    setTimeout(function() {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }, 1000);
+                } else {
+                    launchErrorModal(error.response.data.message)
                 }
             });
 
@@ -542,7 +548,17 @@
                     endLoader()
                 })
                 .catch(function(error) {
-                    console.log(error);
+
+                    if (error.response.status === 401) {
+                        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                        setTimeout(function() {
+                            localStorage.clear()
+                            window.location.href = baseUrl + 'php/auth/login.php';
+                        }, 1000);
+                    } else {
+                        launchErrorModal(error.response.data.message)
+                    }
                 });
         }
 
@@ -559,7 +575,7 @@
         function suggestDocumentTypes(type) {
             let currentFormId = ""
             let datalistElement;
-            switch(type){
+            switch (type) {
                 case "upload": {
                     currentFormId = "#form-uploadDocument-popUpDialog2"
                     datalistElement = $(currentFormId + " #documentTypeList-upl")
@@ -573,7 +589,6 @@
             }
             const inputElement = $(currentFormId + " #input-documentType").val()
             const inputValue = inputElement.toLowerCase();
-            console.log(inputValue);
 
             // Clear previous options
             datalistElement.html("");
@@ -586,7 +601,6 @@
                         relevantList.push(option)
                         const optionElement = document.createElement('option');
                         optionElement.value = option;
-                        console.log(optionElement);
                         datalistElement.append(optionElement);
                     }
                 });
@@ -623,7 +637,17 @@
                     endLoader()
                 })
                 .catch(function(error) {
-                    console.log(error);
+
+                    if (error.response.status === 401) {
+                        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                        setTimeout(function() {
+                            localStorage.clear()
+                            window.location.href = baseUrl + 'php/auth/login.php';
+                        }, 1000);
+                    } else {
+                        launchErrorModal(error.response.data.message)
+                    }
                 });
         }
     </script>
@@ -704,7 +728,6 @@
                 correctMessageAccordingToType = data.message
             } else if (data.type === "request" || data.type === "requested_and_uploaded") {
                 const splittedRequest = data.message.split(";;")
-                console.log(data);
                 let reqDocTitle = splittedRequest[0]
                 let reqDocType = splittedRequest[1]
                 let reqDocDesc = splittedRequest[2]

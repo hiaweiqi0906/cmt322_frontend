@@ -18,60 +18,14 @@
         <h1 class="h1-main-title">Notifications</h1>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
-        <div class="row-1 nested-flex-con-col" id="notification-rows">
+            <div class="row-1 nested-flex-con-col" id="notification-rows">
 
-        </div>
+            </div>
         </div>
     </div>
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
         // Options for statistics graph later
-        var caseOption = {
-            series: [44, 20, 30],
-            fill: {
-                colors: ['#1A73E8', '#B32824', '#A42824']
-            },
-            labels: ["open", "closed", "pending"],
-            distributed: true,
-            borderWidth: 0,
-            chart: {
-                width: 380,
-                type: 'donut',
-            },
-            dataLabels: {
-                enabled: true
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        show: true
-                    }
-                }
-            }],
-            plotOptions: {
-                pie: {
-                    donut: {
-                        size: '70%', // Adjust the size of the donut
-                    },
-                    customScale: 1, // Adjust the scale to remove the white borders
-                    offsetX: 0,
-                    offsetY: 0,
-
-                },
-            },
-            stroke: {
-                show: false,
-            },
-            legend: {
-                position: 'right',
-                offsetY: 0,
-                height: 230,
-            }
-        };
 
         const getImage = (c) => {
             switch (c.notification_type) {
@@ -87,6 +41,18 @@
                     return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/agreement-delete.png" alt="agreement-delete"/>'
                     break;
                 }
+                case "assignedTask": {
+                    return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/clipboard.png" alt="agreement-delete"/>'
+                    break;
+                }
+                case "finishedTask": {
+                    return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/task-completed.png" alt="agreement-delete"/>'
+                    break;
+                }
+                default: {
+                    return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/push-notifications.png" alt="agreement-delete"/>'
+                    break;
+                }
             }
         }
 
@@ -95,14 +61,13 @@
             .then(function(response) {
                 // TODO: Convert into data and render it
                 const notifications = response.data
-                console.log(notifications);
                 notifications.forEach(c => {
                     let img = getImage(c)
-                    console.log(c);
+                    let background_c = c.read ? "e4e4e4" : "ffffff"
                     // Convert every cases into rows 
                     // TODO: This is dummy data. Change the dummy data into real data rows to be shown.
                     const markup = `
-                        <div class="float-card row-1" style="height: 6rem; margin-bottom: 1rem;">
+                        <div class="float-card row-1" style="height: 6rem; margin-bottom: 1rem; background-color: #${background_c};">
                         <a style="text-decoration: none;" href="${baseUrl}${c.notification_clicklink}">
                             <div class="nested-flex-con-row">
                                 <div class="col-1">
@@ -146,17 +111,18 @@
                 });
             })
             .catch(function(error) {
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
+
+                if (error.response.status === 401) {
+                    launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                    setTimeout(function() {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }, 1000);
+                } else {
+                    launchErrorModal(error.response.data.message)
                 }
             });
-
-        renderChart('document-documentInfo-chart', caseOption)
-        renderChart('document-documentStatus-chart', caseOption)
 
         endLoader();
     </script>

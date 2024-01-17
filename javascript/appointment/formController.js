@@ -520,13 +520,15 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
         }
       })
       .catch((err) => {
-        console.log('Error when creating new appointment: ', err);
-        const {
-          status
-        } = error.response
-        if (status === 401) {
-          localStorage.clear()
-          window.location.href = baseUrl + 'php/auth/login.php';
+        if (err.response.status === 401) {
+          launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+  
+          setTimeout(function () {
+            localStorage.clear()
+            window.location.href = baseUrl + 'php/auth/login.php';
+          }, 1000);
+        } else {
+          launchErrorModal(err.response.data.message)
         }
       });
   }
@@ -1018,13 +1020,15 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
               }
             })
             .catch((err) => {
-              console.log('Error when update user\'s created appointment', err);
-              const {
-                status
-              } = error.response
-              if (status === 401) {
-                localStorage.clear()
-                window.location.href = baseUrl + 'php/auth/login.php';
+              if (err.response.status === 401) {
+                launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+        
+                setTimeout(function () {
+                  localStorage.clear()
+                  window.location.href = baseUrl + 'php/auth/login.php';
+                }, 1000);
+              } else {
+                launchErrorModal(err.response.data.message)
               }
             });
         }
@@ -1034,13 +1038,15 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
 
       })
       .catch((err) => {
-        console.log('Error when updating the appointment', err);
-        const {
-          status
-        } = error.response
-        if (status === 401) {
-          localStorage.clear()
-          window.location.href = baseUrl + 'php/auth/login.php';
+        if (err.response.status === 401) {
+          launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+  
+          setTimeout(function () {
+            localStorage.clear()
+            window.location.href = baseUrl + 'php/auth/login.php';
+          }, 1000);
+        } else {
+          launchErrorModal(err.response.data.message)
         }
       });
   }
@@ -1074,13 +1080,15 @@ const appointmentForm_cancelAppointment = () => {
 
     })
     .catch((err) => {
-      console.log('Error when cancelling the appointment', err);
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
     });
 }
@@ -1109,13 +1117,15 @@ const appointmentForm_appointmentResponse = (userResponse) => {
 
     })
     .catch((err) => {
-      console.log('Error when sending user response', err);
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
     });
 }

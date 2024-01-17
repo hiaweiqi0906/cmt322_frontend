@@ -31,49 +31,49 @@
                                 <div class="nested-flex-con-row row-1-statistics">
                                     <div class="col-4 two-line-statistics">
                                         <div style="width: 85px;">
-                                            <p>Total Documents</p>
+                                            <p>Total Num of Cases</p>
                                             <div class="big-number-statistics-block">
-                                                <span class="big-number-statistics">99</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4 two-line-statistics">
-                                        <div style="width: 85px;">
-                                            <p>Average Filesize</p>
-                                            <div class="big-number-statistics-block">
-
-                                                <span class="big-number-statistics">99</span>
+                                                <span class="big-number-statistics">36</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4 three-line-statistics">
-                                        <div style="width: 70px;">
-                                            <p>Document Opened Rate</p>
+                                        <div style="width: 85px;">
+                                            <p>Number of High-Priority Cases</p>
                                             <div class="big-number-statistics-block">
 
-                                                <span class="big-number-statistics">99</span>
+                                                <span class="big-number-statistics">19</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 two-line-statistics">
+                                        <div style="width: 70px;">
+                                            <p>Archived Cases</p>
+                                            <div class="big-number-statistics-block">
+
+                                                <span class="big-number-statistics">12</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nested-flex-con-row row-1-statistics">
-                                    <div class="col-6 two-line-statistics">
+                                    <div class="col-6 three-line-statistics">
                                         <div style="width: 80px;">
-                                            <p>Document Uploaded</p>
+                                            <p>Resolution Time (in Weeks)</p>
                                             <div class="big-number-statistics-block">
 
-                                                <span class="big-number-statistics">99</span>
+                                                <span class="big-number-statistics">2.4</span>
                                                 <span class="small-number-statistics">/case</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 two-line-statistics">
                                         <div style="width: 80px;">
-                                            <p>Document Uploaded</p>
+                                            <p>Cases Assigned</p>
                                             <div class="big-number-statistics-block">
 
-                                                <span class="big-number-statistics">99</span>
-                                                <span class="small-number-statistics">/case</span>
+                                                <span class="big-number-statistics">2.3</span>
+                                                <span class="small-number-statistics">/lawyer</span>
                                             </div>
                                         </div>
                                     </div>
@@ -112,15 +112,15 @@
                 </tbody>
             </table>
             <div id="record-not-found-div" style="display: block">
-            <img src="../../assets/no_record_found.png" style="width:30rem;display:block; margin-left: auto; margin-right: auto; margin-top: 6rem; border-radius: 20px;" alt="" >
-            <h3 style="width:30rem;display:block; margin-left: auto; margin-right: auto;margin-top: 0.5rem; text-align: center; color: #959595;" >No Record found yet..</h3>
+                <img src="../../assets/no_record_found.png" style="width:30rem;display:block; margin-left: auto; margin-right: auto; margin-top: 6rem; border-radius: 20px;" alt="">
+                <h3 style="width:30rem;display:block; margin-left: auto; margin-right: auto;margin-top: 0.5rem; text-align: center; color: #959595;">No Record found yet..</h3>
 
             </div>
         </div>
     </div>
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
-        if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#adminOnly-case-stats').css("display", "none")
+        if (getUserType() !== 'admin' && getUserType() !== 'partner') $('#adminOnly-case-stats').css("display", "none")
         // Options for statistics graph later
         var caseOption = {
             series: [44, 20, 30],
@@ -169,15 +169,314 @@
             }
         };
 
+        axios.get('/api/statistics/dashboard', )
+            .then(function(response) {
+                const {
+                    caseStatistic,
+                    userStatistic,
+                    clientStatistic
+                } = response.data
+                var options = {
+                    chart: {
+                        type: 'bar'
+                    },
+                    series: [{
+                        name: 'sales',
+                        data: [30, 40, 45, 50, 49, 60, 70, 91, 125]
+                    }],
+                    xaxis: {
+                        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+                    }
+                }
+                var caseOption = {
+                    series: [caseStatistic.open, caseStatistic.close, caseStatistic.pending],
+                    colors: graphColors.slice(0, 3),
+                    fill: {
+                        colors: graphColors.slice(0, 3)
+                    },
+                    labels: ["Open Case", "Closed Case", "Pending Case"],
+                    distributed: true,
+                    borderWidth: 0,
+                    chart: {
+                        width: 380,
+                        type: 'donut',
+                    },
+                    dataLabels: {
+                        colors: graphColors.slice(0, 3),
+                        enabled: true
+                    },
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200
+                            },
+                            legend: {
+                                show: true
+                            }
+                        }
+                    }],
+                    states: {
+                        hover: {
+                            filter: {
+                                type: 'none'
+                            }
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '70%', // Adjust the size of the donut
+                            },
+                            customScale: 1, // Adjust the scale to remove the white borders
+                            offsetX: 0,
+                            offsetY: 0,
+                            dataLabels: {
+                                style: {
+                                    colors: graphColors.slice(0, 3)
+
+                                }
+                            }
+                        },
+                    },
+                    stroke: {
+                        show: false,
+                    },
+                    legend: {
+                        position: 'right',
+                        offsetY: 0,
+                        height: 230,
+                        labels: {
+                            colors: graphColors.slice(0, 3)
+                        },
+                        markers: {
+                            fillColors: graphColors.slice(0, 3)
+                        }
+                    },
+                    tooltip: {
+                        fillSeriesColor: true
+                    }
+                };
+                var userOption = {
+                    series: [userStatistic.admins, userStatistic.paralegals, userStatistic.clients, userStatistic.partners, userStatistic.associates],
+                    colors: graphColors.slice(0, 5),
+                    fill: {
+                        colors: graphColors.slice(0, 5)
+                    },
+                    labels: ["Admins", "Paralegals", "Clients", "Partners", "Associates"],
+                    distributed: true,
+                    borderWidth: 0,
+                    chart: {
+                        width: 380,
+                        type: 'donut',
+                    },
+                    dataLabels: {
+                        colors: graphColors.slice(0, 5),
+                        enabled: true
+                    },
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200
+                            },
+                            legend: {
+                                show: true
+                            }
+                        }
+                    }],
+                    states: {
+                        hover: {
+                            filter: {
+                                type: 'none'
+                            }
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '70%', // Adjust the size of the donut
+                            },
+                            customScale: 1, // Adjust the scale to remove the white borders
+                            offsetX: 0,
+                            offsetY: 0,
+                            dataLabels: {
+                                style: {
+                                    colors: graphColors.slice(0, 5)
+
+                                }
+                            }
+                        },
+                    },
+                    stroke: {
+                        show: false,
+                    },
+                    legend: {
+                        position: 'right',
+                        offsetY: 0,
+                        height: 230,
+                        labels: {
+                            colors: graphColors.slice(0, 5)
+                        },
+                        markers: {
+                            fillColors: graphColors.slice(0, 5)
+                        }
+                    },
+                    tooltip: {
+                        fillSeriesColor: true
+                    }
+                };
+
+                console.log(clientStatistic);
+                var clientOption = {
+                    series: [{
+                        // name: 'Customer Scores',
+                        data: [clientStatistic.clientOverallSatisfactoryRating,
+                            clientStatistic.communication,
+                            clientStatistic.professionalism,
+                            clientStatistic.serviceQuality,
+                            clientStatistic.performance,
+                        ],
+                    }],
+                    chart: {
+                        height: 350,
+                        type: 'radar',
+                        toolbar: {
+                            show: false
+                        }
+                    },
+                    xaxis: {
+                        categories: ['Overall Satisfactory', 'Communication', 'Professionalism', 'Service Quality', 'Performance'],
+                        labels: {
+                            show: true,
+                            style: {
+                                colors: ["#a8a8a8"],
+                                fontSize: "11px",
+                                fontFamily: 'Arial',
+                            }
+                        }
+                    },
+                    // title: {
+                    //     text: 'Customer Scores Chart'
+                    // },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: graphColors.slice(0, 1),
+                        dashArray: 0
+                    },
+                    fill: {
+                        opacity: 0.7,
+                        colors: graphColors.slice(0, 1)
+                    },
+
+                };
+
+                const docOption = {
+                    chart: {
+                        type: 'bar',
+                        height: '80%',
+                        toolbar: {
+                            show: false
+                        }
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: true
+                        }
+                    },
+                    series: [{
+                        data: [{
+                            x: 'category A',
+                            y: 10
+                        }, {
+                            x: 'category B',
+                            y: 18
+                        }, {
+                            x: 'category C',
+                            y: 13
+                        }, {
+                            x: 'category D',
+                            y: 11
+                        }, {
+                            x: 'category E',
+                            y: 13
+                        }, {
+                            x: 'category F',
+                            y: 12
+                        }, {
+                            x: 'category G',
+                            y: 9
+                        }]
+                    }],
+                    fill: {
+                        opacity: 0.7,
+                        colors: graphColors.slice(0, 1)
+                    },
+                }
+
+                var userActOption = {
+                    series: [{
+                        name: "Number of Visits",
+                        data: [31, 41, 35, 51, 49, 32, 39]
+                    }],
+                    chart: {
+                        height: 250,
+                        type: 'line',
+                        zoom: {
+                            enabled: false
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        colors: graphColors.slice(0, 1),
+                        curve: 'straight'
+                    },
+                    title: {
+                        text: 'User Activities by Days',
+                        align: 'left'
+                    },
+                    grid: {
+                        row: {
+                            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                            opacity: 0.5
+                        },
+                    },
+                    xaxis: {
+                        categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    },
+                    yaxis: {
+                        min:0,
+                        max:60
+                    }
+                };
+
+                renderChart('document-documentInfo-chart', caseOption)
+                renderChart('document-documentStatus-chart', userActOption)
+            })
+            .catch(function(error) {
+                if (error.response.status === 401) {
+                    launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                    setTimeout(function() {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }, 1000);
+                } else {
+                    launchErrorModal(error.response.data.message)
+                }
+            });
+    
+
         // Get cases from backend and display as table
         axios.get(`/api/cases/`, )
             .then(function(response) {
-                console.log("caseData", response.data);
-                // TODO: Convert into data and render it
                 const caseData = response.data
-                if(caseData.length===0) 
+                if (caseData.length === 0)
                     $('#record-not-found-div').css("display", "block")
-                else 
+                else
                     $('#record-not-found-div').css("display", "none")
                 caseData.forEach(c => {
                     // Convert every cases into rows 
@@ -201,18 +500,20 @@
                 });
             })
             .catch(function(error) {
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
+
+                if (error.response.status === 401) {
+                    $('#record-not-found-div').css("display", "block")
+                    launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                    setTimeout(function() {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }, 1000);
+                } else {
+                    launchErrorModal(error.response.data.message)
                 }
-                $('#record-not-found-div').css("display", "block")
             });
 
-        renderChart('document-documentInfo-chart', caseOption)
-        renderChart('document-documentStatus-chart', caseOption)
 
         endLoader();
     </script>

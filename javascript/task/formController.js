@@ -353,7 +353,6 @@ const appointmentForm_resetFormData = (titleID, attendeeSelectID, locationID, de
 // To enable all the input fields except the attendee select and time select, they can recreate and enable back
 const appointmentForm_enableFormInput = (inputIDs) => {
   inputIDs.forEach(inputID => {
-    console.log(inputID, document.getElementById(inputID).disabled);
     document.getElementById(inputID).disabled = false;
   })
 }
@@ -504,35 +503,21 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
     // Send axios post request to store the new appointment and 
     // fetch all appointments to redraw charts and calendar
     axios.post('/api/tasks', appointment)
-      .then((response) => {
-        console.log(response);
-        // const { username, isAdmin, appointments } = response.data;
-
-        // // If the user is admin, update the charts and recreate calendar
-        // if(isAdmin){
-
-        //   appointmentChart_updatePieChart('appointment-admin-pieChart', appointments);                    // Update pie chart
-        //   appointmentChart_updateAreaChart('appointment-admin-areaChart', appointments);                  // Update area chart
-        //   appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
-        // }
-        // // Else, only create the calendar
-        // else{
-        //   appointmentCalendar_createCalendar('appointment-admin-calendar', appointments, username, isAdmin);  // Recreate calendar
-        // }
-      })
-      .then(() => {
-        endLoader();
+      .then((res) => {
+        if(res.data)
+        window.location.reload();
       })
       .catch((err) => {
-        const {
-          status
-        } = error.response
-        if (status === 401) {
-          localStorage.clear()
-          window.location.href = baseUrl + 'php/auth/login.php';
+        if (err.response.status === 401) {
+          launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+  
+          setTimeout(function () {
+            localStorage.clear()
+            window.location.href = baseUrl + 'php/auth/login.php';
+          }, 1000);
+        } else {
+          launchErrorModal(err.response.data.message)
         }
-        endLoader();
-        console.log('Error when creating new appointment: ', err);
       });
   }
   // Check the validity of inputs
@@ -542,7 +527,7 @@ const appointmentForm_submitAppointmentForm = (titleID, attendeeSelectID, locati
     appointmentForm_checkLocation(locationElement);
     appointmentForm_checkDetails(detailsElement);
   }
-
+  // 
 }
 
 // To display the created appointment's form details
@@ -567,7 +552,6 @@ const appointmentForm_displayCreatedFormData = (idEl, titleEl, attendeeSelectEl,
   // Get the attendee object and match with the options, mark as selected
   for (let j = 0; j < appointment.attendees.length; j++) {
     for (let i = 0; i < attendeeSelectEl.options.length; i++) {
-      console.log(attendeeSelectEl.options[i].value, appointment.attendees[j]);
       if (attendeeSelectEl.options[i].value === appointment.attendees[j]) {
         attendeeSelectEl.options[i].selected = true;
       }
@@ -610,7 +594,6 @@ const appointmentForm_displayCreatedFormData = (idEl, titleEl, attendeeSelectEl,
     appointmentForm_timeDselect(endTimeEl, true);
 
     // Need to set the start date of datepicker so the past date can be shown, and disable the datepickers
-    appointmentForm_setStartDate(startDateID, appointment.dateStart);
     document.getElementById(startDateID).disabled = true;
     document.getElementById(endDateID).disabled = true;
   }
@@ -620,10 +603,10 @@ const appointmentForm_displayCreatedFormData = (idEl, titleEl, attendeeSelectEl,
     appointmentForm_timeDselect(startTimeEl);
     appointmentForm_timeDselect(endTimeEl);
   }
-
   // Now, can display the start date and end date using id attribute
-  appointmentForm_setDate(startDateID, appointment.dateStart);
-  appointmentForm_setDate(endDateID, appointment.dateEnd);
+  appointmentForm_setStartDate(startDateID, appointment.task_deadline);
+  appointmentForm_setDate(startDateID, appointment.task_deadline);
+  appointmentForm_setDate(endDateID, appointment.task_deadline);
 
   // To call the switch change event listener
   allDaySwitchEl.dispatchEvent(new Event('change'));
@@ -949,7 +932,6 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
     axios.get(`/api/tasks/${appointmentID}`)
       .then((response) => {
         const appointment = response.data;
-        console.log(appointment);
 
         const titleChanged = appointmentForm_checkTitleChange(titleEl, appointment.title);
         const attendeeChanged = appointmentForm_checkAttendeeChange(attendeeSelectEl, appointment.assignedToUsers);
@@ -1018,8 +1000,6 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
           appointmentModal_closeModal();    // Default modal is appointment form modal
           // startLoader();
 
-          console.log("new", appointment.assignedToUsers);
-
           axios.put(`/api/tasks/${appointmentID}`, appointment)
             .then((response) => {
               // const { username, isAdmin, appointments } = response.data;
@@ -1039,15 +1019,16 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
             })
 
             .catch((err) => {
-              const {
-                status
-              } = error.response
-              if (status === 401) {
-                localStorage.clear()
-                window.location.href = baseUrl + 'php/auth/login.php';
+              if (err.response.status === 401) {
+                launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+        
+                setTimeout(function () {
+                  localStorage.clear()
+                  window.location.href = baseUrl + 'php/auth/login.php';
+                }, 1000);
+              } else {
+                launchErrorModal(err.response.data.message)
               }
-              endLoader();
-              console.log('Error when update user\'s created appointment', err);
             });
         }
         else {
@@ -1056,14 +1037,16 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
 
       })
       .catch((err) => {
-        const {
-          status
-        } = error.response
-        if (status === 401) {
-          localStorage.clear()
-          window.location.href = baseUrl + 'php/auth/login.php';
+        if (err.response.status === 401) {
+          launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+  
+          setTimeout(function () {
+            localStorage.clear()
+            window.location.href = baseUrl + 'php/auth/login.php';
+          }, 1000);
+        } else {
+          launchErrorModal(err.response.data.message)
         }
-        console.log('Error when updating the appointment', err);
       });
   }
 
@@ -1101,15 +1084,16 @@ const appointmentForm_cancelAppointment = () => {
       endLoader();
     })
     .catch((err) => {
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
-      endLoader();
-      console.log('Error when cancelling the appointment', err);
     });
 }
 
@@ -1141,14 +1125,15 @@ const appointmentForm_appointmentResponse = (userResponse) => {
       endLoader();
     })
     .catch((err) => {
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
-      endLoader();
-      console.log('Error when sending user response', err);
     });
 }

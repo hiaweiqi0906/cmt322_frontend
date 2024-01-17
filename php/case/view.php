@@ -353,8 +353,14 @@
 
                 // document.querySelector('.case-client-name0').textContent = caseData.case_client_list[0].case_member_id;
 
-                for (let i = 0; i < caseData.case_client_list.length; i++) {
-                    axios.get('/api/crm/' + caseData.case_client_list[i].case_member_id, )
+                const caseClientList = caseData.case_member_list.filter(user => user.case_member_type === 'client');
+
+                const caseStaffList = caseData.case_member_list.filter(user => user.case_member_type !== 'client');
+
+                console.log(caseClientList);
+
+                for (let i = 0; i < caseClientList.length; i++) {
+                    axios.get('/api/crm/' + caseClientList[i].case_member_id, )
                     .then(function(response) {
                         const avatar_url = response.data.avatar_url;
                         if(avatar_url === ""){
@@ -380,8 +386,8 @@
                     });
                 }
 
-                for (let i = 0; i < caseData.case_member_list.length; i++) {
-                    axios.get('/api/crm/' + caseData.case_member_list[i].case_member_id, )
+                for (let i = 0; i < caseStaffList.length; i++) {
+                    axios.get('/api/crm/' + caseStaffList[i].case_member_id, )
                     .then(function(response) {
                         const avatar_url = response.data.avatar_url;
                         if(avatar_url === ""){

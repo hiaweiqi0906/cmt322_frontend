@@ -17,7 +17,7 @@
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="h1-main-title">Cases</h1>
-            <a href="http://localhost/php/case/createNewCase" class="btn btn-primary">Create New Case</a>
+            <a href="http://localhost/php/case/createNewCase.php" class="btn btn-primary" id="create-case-button">Create New Case</a>
         </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con" id="adminOnly-case-stats">
@@ -124,6 +124,7 @@
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
         if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#adminOnly-case-stats').css("display", "none")
+        if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#create-case-button').css("display", "none")
         // Options for statistics graph later
         var caseOption = {
             series: [44, 20, 30],

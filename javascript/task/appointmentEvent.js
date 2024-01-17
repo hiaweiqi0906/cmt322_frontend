@@ -9,14 +9,16 @@ document.addEventListener('DOMContentLoaded', function () {
       appointmentChart_displayCharts(isAdmin);  // To show or hide the charts
 
     }).catch((err) => {
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
-      console.log('Error when checking is admin: ', err);
     });
 
   // To get the appointments, display them in charts and calendar
@@ -38,23 +40,23 @@ document.addEventListener('DOMContentLoaded', function () {
       endLoader();
 
     }).catch((err) => {
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
-      console.log('Error when first initializing data: ', err);
     });
 
   // To get the appointments, display them in charts and calendar
   axios.get('/api/tasks/user')
     .then((response) => {
       const allTasks = (response.data);
-      console.log(response.data);
       allTasks.forEach((task) => {
-        console.log(task);
         let divToAppend;
         let assignees = ""
         task.assignedTo.forEach((a) => {
@@ -82,11 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (task.status === 'done') {
           divToAppend = "#done-tasks .board-column-content"
         }
-
-
-
-        console.log($(divToAppend));
-
         $(divToAppend).append(newTaskHTML)
       })
 
@@ -109,14 +106,16 @@ document.addEventListener('DOMContentLoaded', function () {
       endLoader();
 
     }).catch((err) => {
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
-      console.log('Error when first initializing data: ', err);
     });
 
 
@@ -128,14 +127,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     })
     .catch((err) => {
-      const {
-        status
-      } = error.response
-      if (status === 401) {
-        localStorage.clear()
-        window.location.href = baseUrl + 'php/auth/login.php';
+      if (err.response.status === 401) {
+        launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+        setTimeout(function () {
+          localStorage.clear()
+          window.location.href = baseUrl + 'php/auth/login.php';
+        }, 1000);
+      } else {
+        launchErrorModal(err.response.data.message)
       }
-      console.log('Error fetching user list: ', err)
     });
 
 

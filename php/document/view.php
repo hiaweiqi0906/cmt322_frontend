@@ -213,7 +213,7 @@
                                 <label for="input-documentType">Document Type</label>
                             </p>
                             <p class="group">
-                                <textarea id="input-documentDesc" type="text" required onchange="(e) => { console.log(e.target.value)}"></textarea>
+                                <textarea id="input-documentDesc" type="text" required ></textarea>
                                 <label for="input-documentDesc">Document Description</label>
                             </p>
                             <div class="file-input-div" style="border: 4px dashed #1c277e80; color: #1c277e80">
@@ -280,7 +280,6 @@
             }
             const inputElement = $(currentFormId + " #input-documentType").val()
             const inputValue = inputElement.toLowerCase();
-            console.log(inputValue);
 
             // Clear previous options
             datalistElement.html("");
@@ -293,7 +292,6 @@
                         relevantList.push(option)
                         const optionElement = document.createElement('option');
                         optionElement.value = option;
-                        console.log(optionElement);
                         datalistElement.append(optionElement);
                     }
                 });
@@ -303,7 +301,6 @@
         // get document details, and update the UI
         axios.get(`/api/documents/${docId}/${caseId}`, )
             .then(function(response) {
-                console.log(response.data);
                 const {
                     canEdit,
                     doc_avatar,
@@ -370,12 +367,16 @@
 
             })
             .catch(function(error) {
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
+
+                if (error.response.status === 401) {
+                    launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                    setTimeout(function() {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }, 1000);
+                } else {
+                    launchErrorModal(error.response.data.message)
                 }
             });
 
@@ -410,21 +411,23 @@
                 doc_description: t.textContent,
                 can_be_access_by: canAccessList
             }
-            console.log(reqBody);
             axios.put(`/api/documents/`, reqBody).then(function(response) {
                 if (response.status === 200) {
                     location.reload()
                 }
             }).catch(function(error) {
-                console.log(error);
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
+
+                if (error.response.status === 401) {
+                    launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                    setTimeout(function() {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }, 1000);
+                } else {
+                    launchErrorModal(error.response.data.message)
                 }
-            })
+            });
         }
 
         // change the display properties when clicked cancel
@@ -458,15 +461,18 @@
                     window.location.href = baseUrl + 'php/document';
                 }
             }).catch(function(error) {
-                console.log(error);
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
+
+                if (error.response.status === 401) {
+                    launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                    setTimeout(function() {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }, 1000);
+                } else {
+                    launchErrorModal(error.response.data.message)
                 }
-            })
+            });
         }
 
         // When onclick delete button, send delete request to backend
@@ -477,7 +483,6 @@
         // get all related case documents
         axios.get(`/api/documents/all/${caseId}`, )
             .then(function(response) {
-                console.log(response);
 
                 // TODO: Convert into data and render it
                 const documentData = response.data
@@ -509,7 +514,6 @@
                         `<td><img width="20" height="20" src="${accessedByUserAvatarImg}" alt="user-male-circle" style="margin-right: 0.5rem;" />` + doc.lastAccessedByUserName.username + '</td>' +
                         '</tr>';
                     $('#document-allDocument-table tbody').append(markup);
-                    console.log("object");
                 });
 
                 $('#document-allDocument-table').tableSort({
@@ -518,12 +522,16 @@
                 });
             })
             .catch(function(error) {
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
+
+                if (error.response.status === 401) {
+                    launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                    setTimeout(function() {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }, 1000);
+                } else {
+                    launchErrorModal(error.response.data.message)
                 }
             });
 

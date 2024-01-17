@@ -15,15 +15,15 @@
     <!-- Add neccessary components, such as navbars, footer, header, etc.. -->
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
-        <h1 class="h1-main-title">Documents</h1>
+        <h1 class="h1-main-title">Employee</h1>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
-        <div class="flex-con" id="adminOnly-document-stats">
+        <div class="flex-con">
             <div class="col-8 row-1 nested-flex-con-col">
                 <div class="float-card row-1" style="min-height: 380px;">
-                    <h3 class="h3-semibold-24">Document Info</h3>
+                    <h3 class="h3-semibold-24">Employee Info</h3>
                     <div class="nested-flex-con-row">
                         <div class="col-7">
-                            <div class="chart-div" id="document-documentInfo-chart">
+                            <div class="chart-div" id="client-clientInfo-chart">
 
                             </div>
                         </div>
@@ -32,29 +32,27 @@
                                 <div class="nested-flex-con-row row-1-statistics">
                                     <div class="col-4 two-line-statistics">
                                         <div style="width: 85px;">
-                                            <p>Total Documents</p>
+                                            <p>Total Num Users</p>
                                             <div class="big-number-statistics-block">
-                                                <span class="big-number-statistics">15</span>
+                                                <span class="big-number-statistics">45</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4 two-line-statistics">
                                         <div style="width: 85px;">
-                                            <p>Average Filesize</p>
+                                            <p>Number of Employees</p>
                                             <div class="big-number-statistics-block">
 
-                                                <span class="big-number-statistics">2.3</span>
-                                                <span class="small-number-statistics">Mb</span>
+                                                <span class="big-number-statistics">23</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4 three-line-statistics">
                                         <div style="width: 70px;">
-                                            <p>Document Opened Rate</p>
+                                            <p>Total Number of Paralegals</p>
                                             <div class="big-number-statistics-block">
 
-                                                <span class="big-number-statistics">97</span>
-                                                <span class="small-number-statistics">%</span>
+                                                <span class="big-number-statistics">15</span>
                                             </div>
                                         </div>
                                     </div>
@@ -62,21 +60,21 @@
                                 <div class="nested-flex-con-row row-1-statistics">
                                     <div class="col-6 two-line-statistics">
                                         <div style="width: 80px;">
-                                            <p>Document Uploaded</p>
+                                            <p>Paralegals / Lawyer</p>
                                             <div class="big-number-statistics-block">
 
-                                                <span class="big-number-statistics">4.1</span>
-                                                <span class="small-number-statistics">/case</span>
+                                                <span class="big-number-statistics">4.78</span>
+                                                <span class="small-number-statistics">/lawyer</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 two-line-statistics">
                                         <div style="width: 80px;">
-                                            <p>Document Uploaded</p>
+                                            <p>Active Cases</p>
                                             <div class="big-number-statistics-block">
 
                                                 <span class="big-number-statistics">2.3</span>
-                                                <span class="small-number-statistics">/user</span>
+                                                <span class="small-number-statistics">/employee</span>
                                             </div>
                                         </div>
                                     </div>
@@ -92,48 +90,42 @@
             <div class="col-4 row-1" style="">
                 <!-- Overall Analytics for Documents -->
                 <div class="float-card row-only-one-col">
-                    <h3 class="h3-semibold-24">Document Status</h3>
-                    <div class="chart-div" id="document-documentStatus-chart">
+                    <h3 class="h3-semibold-24">User Status</h3>
+                    <div class="chart-div" id="client-clientStatus-chart">
 
                     </div>
                 </div>
             </div>
         </div>
-        <h3 class="h3-semibold-24 non-float-card">All Documents</h3>
+        <h3 class="h3-semibold-24 non-float-card">All Users</h3>
         <div class="table-section">
-            <table id="document-allDocument-table" class="table-general">
+            <table id="client-allClient-table" class="table-general">
                 <thead>
                     <tr>
-                        <th class="col-2">Name </th>
+                        <th class="col-1">Name </th>
                         <th class="col-1">Type </th>
-                        <th class="col-1">File Size </th>
-                        <th class="col-2">Uploaded By </th>
-                        <th class="col-2">Case Involved </th>
-                        <th class="col-2">Updated Date </th>
-                        <th class="col-2">Last Accessed </th>
+                        <th class="col-2">Contact Number </th>
+                        <th class="col-2">Email </th>
+                        <th class="col-2">Address </th>
+                        <th class="col-2">Last Comm. Date </th>
+                        <th class="col-2">Next Follow-up Date </th>
                     </tr>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
-            <div id="record-not-found-div" style="display: none">
-                <img src="../../assets/no_record_found.png" style="width:30rem;display:block; margin-left: auto; margin-right: auto; margin-top: 6rem; border-radius: 20px;" alt="">
-                <h3 style="width:30rem;display:block; margin-left: auto; margin-right: auto;margin-top: 0.5rem; text-align: center; color: #959595;">No Record found yet..</h3>
 
-            </div>
         </div>
     </div>
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
-        if (getUserType() !== 'admin' && getUserType() !== 'partner') $('#adminOnly-document-stats').css("display", "none")
-
         var caseOption = {
             series: [44, 20, 30],
             colors: graphColors.slice(0, 3),
             fill: {
                 colors: graphColors.slice(0, 3)
             },
-            labels: ["open", "closed", "pending"],
+            labels: ["halo", "closed", "pending"],
             distributed: true,
             borderWidth: 0,
             chart: {
@@ -425,7 +417,16 @@
                             y: 13
                         }, {
                             x: 'category D',
-                            y: 10
+                            y: 11
+                        }, {
+                            x: 'category E',
+                            y: 13
+                        }, {
+                            x: 'category F',
+                            y: 12
+                        }, {
+                            x: 'category G',
+                            y: 9
                         }]
                     }],
                     fill: {
@@ -472,8 +473,8 @@
                     }
                 };
 
-                renderChart('document-documentInfo-chart', caseOption)
-                renderChart('document-documentStatus-chart', docOption)
+                renderChart('client-clientInfo-chart', userOption)
+                renderChart('client-clientStatus-chart', userActOption)
             })
             .catch(function(error) {
                 if (error.response.status === 401) {
@@ -490,53 +491,32 @@
     
 
         // Get all documents
-        axios.get('/api/documents/all', )
+        axios.get('/api/crm/employee', )
             .then(function(response) {
 
                 // TODO: Convert into data and render it
-                const documentData = response.data
-                if (documentData.length === 0) $('#record-not-found-div').css("display", "block")
-                else $('#record-not-found-div').css("display", "none")
-
-                documentData.forEach(doc => {
-                    const uploadedByUserAvatarImg =
-                        doc.uploadedByUserName.avatar_url !== "" &&
-                        doc.uploadedByUserName.avatar_url &&
-                        doc.uploadedByUserName.avatar_url !== "undefined" ?
-                        doc.uploadedByUserName.avatar_url :
-                        "https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png"
-
-                    const accessedByUserAvatarImg =
-                        doc.lastAccessedByUserName.avatar_url !== "" &&
-                        doc.lastAccessedByUserName.avatar_url &&
-                        doc.lastAccessedByUserName.avatar_url !== "undefined" ?
-                        doc.lastAccessedByUserName.avatar_url :
-                        "https://img.icons8.com/ios-glyphs/30/1c277e/user-male-circle.png"
-
-                    const docName = `${doc.doc_title}`
-                    const uploadedDate = new Date(parseInt(doc.uploaded_at))
-                    const formatedUploadedDate = `${uploadedDate.getDate()}, ${monthNames[uploadedDate.getMonth()]} ${uploadedDate.getFullYear()}`
+                const clientData = response.data
+                clientData.forEach(client => {
                     const markup = '<tr>' +
-                        '<td><a href="' + baseUrl + '/php/document/view.php?id=' + doc._id + '&cid=' + doc.doc_case_related + '"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />' + docName + '</a></td>' +
-                        '<td>' + doc.doc_type + '</td>' +
-                        '<td>' + formatFileSize(doc.filesize) + '</td>' +
-                        `<td><img width="20" height="20" src="${uploadedByUserAvatarImg}" alt="user-male-circle" style="margin-right: 0.5rem;" />` + doc.uploadedByUserName.username + '</td>' +
-                        '<td>' + doc.relatedCaseName.case_title + '</td>' +
-                        '<td>' + formatedUploadedDate + '</td>' +
-                        `<td><img width="20" height="20" src="${accessedByUserAvatarImg}" alt="user-male-circle" style="margin-right: 0.5rem;" />` + doc.lastAccessedByUserName.username + '</td>' +
+                        '<td><a href="' + baseUrl + '/php/employee/view.php?id=' + client._id + '">' + client.username + '</a></td>' +
+                        '<td>' + client.type + '</td>' +
+                        '<td>' + client.number + '</td>' +
+                        '<td>' + client.email + '</td>' +
+                        '<td>' + client.address + '</td>' +
+                        '<td>aaa</td>' +
+                        '<td>aaa</td>' +
                         '</tr>';
 
-                    $('#document-allDocument-table tbody').append(markup);
+                    $('#client-allClient-table tbody').append(markup);
                 });
 
-                $('#document-allDocument-table').tableSort({
+                $('#client-allClient-table').tableSort({
                     animation: 'slide',
                     speed: 500
                 });
             })
             .catch(function(error) {
 
-                $('#record-not-found-div').css("display", "block")
                 if (error.response.status === 401) {
                     launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
 

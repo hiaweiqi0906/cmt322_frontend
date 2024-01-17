@@ -59,15 +59,6 @@
                             </div>
                             <span class="case-details-case-description"></span>
                             <span class="case-details-case-description1">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has been the industry&apos;s standard dummy
-                                text ever since the 1500s, when an unknown printer took a galley of
-                                type and scrambled it to make a type specimen book. It has survived
-                                not only five centuries, but also the leap into electronic
-                                typesetting, remaining essentially unchanged. It was popularised in
-                                the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                                passages, and more recently with desktop publishing software like
-                                Aldus PageMaker including versions of Lorem Ipsum.
                             </span>
                             </div>
                             <div class="case-details-container8">
@@ -109,7 +100,13 @@
                         </div>
                         <!-- </div> -->
                     
-                        <h3 class="h3-semibold-24 non-float-card" style="margin-top: 4rem;">All Documents<button style="float: right;margin-right: 1rem; background-color: #1c277e;" data-bs-toggle="modal" data-bs-target="#uploadDocumentModal" type="button" class="btn btn-primary"><img width="18" height="18" style="margin-right: 1rem;" src="https://img.icons8.com/ios-glyphs/60/ffffff/xbox-cross.png" alt="xbox-cross" />Add Document</button></h3>
+                        <h3 class="h3-semibold-24 non-float-card" style="margin-top: 4rem;">
+                            All Documents
+                            <button style="float: right;margin-right: 1rem; background-color: #1c277e;" data-bs-toggle="modal" data-bs-target="#uploadDocumentModal" type="button" class="btn btn-primary">
+                                <img width="18" height="18" style="margin-right: 1rem;" src="https://img.icons8.com/ios-glyphs/60/ffffff/xbox-cross.png" alt="xbox-cross" />
+                                Add Document
+                            </button>
+                        </h3>
                         <div class="table-section" style="height: 48%; width: 100%;overflow-y: scroll;">
                             <table id="document-allDocument-table" class="table-general">
                                 <thead>
@@ -359,8 +356,14 @@
                 for (let i = 0; i < caseData.case_client_list.length; i++) {
                     axios.get('/api/crm/' + caseData.case_client_list[i].case_member_id, )
                     .then(function(response) {
-                        document.getElementById(`case-client-image${i}`).src = response.data.avatar_url;
-                        document.getElementById(`case-client-image${i}`).style.visibility = "visible";
+                        const avatar_url = response.data.avatar_url;
+                        if(avatar_url === ""){
+                            document.getElementById(`case-client-image${i}`).src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+                            document.getElementById(`case-client-image${i}`).style.visibility = "visible";
+                        } else {
+                            document.getElementById(`case-client-image${i}`).src = response.data.avatar_url;
+                            document.getElementById(`case-client-image${i}`).style.visibility = "visible";
+                        }
 
 
                         document.querySelector(`.case-client-name${i}`).textContent = response.data.username;
@@ -380,8 +383,14 @@
                 for (let i = 0; i < caseData.case_member_list.length; i++) {
                     axios.get('/api/crm/' + caseData.case_member_list[i].case_member_id, )
                     .then(function(response) {
-                        document.getElementById(`case-member-image${i}`).src = response.data.avatar_url;
-                        document.getElementById(`case-member-image${i}`).style.visibility = "visible";
+                        const avatar_url = response.data.avatar_url;
+                        if(avatar_url === ""){
+                            document.getElementById(`case-member-image${i}`).src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+                            document.getElementById(`case-member-image${i}`).style.visibility = "visible";
+                        } else {                            
+                            document.getElementById(`case-member-image${i}`).src = response.data.avatar_url;
+                            document.getElementById(`case-member-image${i}`).style.visibility = "visible";
+                        }
 
 
                         document.querySelector(`.case-member-name${i}`).textContent = response.data.username;

@@ -1,3 +1,4 @@
+@import "https://fonts.googleapis.com/css?family=Noto+Sans";
 /* -------------------------------------------------------------------------- */
 /*                          Main, Titles, Paragraphs                          */
 /* -------------------------------------------------------------------------- */
@@ -319,6 +320,18 @@ img#document-documentInfo-documentAvatar {
     backface-visibility: hidden;
 }
 
+img#client-clientInfo-clientAvatar {
+    width: 18.75rem;
+    height: 18.75rem;
+    object-fit: contain;
+    opacity: 1;
+    display: block;
+    margin: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+
 .middle-img-hover {
     transition: .5s ease;
     opacity: 0;
@@ -618,7 +631,6 @@ table.table-general tbody tr:hover {
 /* -------------------------------------------------------------------------- */
 /*                                    Chat                                    */
 /* -------------------------------------------------------------------------- */
-@import "https://fonts.googleapis.com/css?family=Noto+Sans";
 
 ::-webkit-scrollbar {
     width: 10px;

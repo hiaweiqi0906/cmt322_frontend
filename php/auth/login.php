@@ -12,11 +12,11 @@
 
 <body>
     <form method="post" id="auth-login-loginForm">
-        <label for="email">Email:</label>
+        <label for="auth-login-loginForm-email">Email:</label>
         <input type="email" name="email" id="auth-login-loginForm-email">
         <br>
 
-        <label for="password">Password:</label>
+        <label for="auth-login-loginForm-password">Password:</label>
         <input type="password" name="login_password" id="auth-login-loginForm-password">
         <br>
 
@@ -36,7 +36,7 @@
                 })
                 .then(function(response) {
                     // Store the token in localStorage
-                    if(response.data.token && response.data.type){
+                    if (response.data.token && response.data.type) {
                         localStorage.setItem('authToken', response.data.token);
                         localStorage.setItem('type', response.data.type);
                         localStorage.setItem('name', response.data.name);
@@ -46,7 +46,7 @@
                     window.location.href = baseUrl + 'php/dashboard.php';
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    launchErrorModal(error.response.data.message)
                 });
         });
     </script>

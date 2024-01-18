@@ -65,21 +65,20 @@ const initAllTaskCards = (params) => {
                         // $( "#"+currentParent ).load(window.location.href + " #"+currentParent );
                         location.reload()
                     }).catch((err) => {
-                        console.log(err);
-                        const {
-                            status
-                        } = error.response
-                        if (status === 401) {
-                            localStorage.clear()
-                            window.location.href = baseUrl + 'php/auth/login.php';
+                        if (err.response.status === 401) {
+                            launchErrorModal("Session Expired", baseUrl + 'php/auth/login.php')
+
+                            setTimeout(function () {
+                                localStorage.clear()
+                                window.location.href = baseUrl + 'php/auth/login.php';
+                            }, 1000);
+                        } else {
+                            launchErrorModal(err.response.data.message)
                         }
                     })
 
                 }
-                // item.getElement().children.forEach((child)=>{item.getElement().children[0].children[6].
-                //     console.log(child);
-                // })
-                // console.log(item.getElement().children[0].children);//.children.id
+
                 item.getElement().style.width = '';
                 item.getElement().style.height = '';
                 item.getGrid().refreshItems([item]);

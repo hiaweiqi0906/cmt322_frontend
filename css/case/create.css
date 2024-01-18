@@ -230,40 +230,6 @@
     display: flex;
     align-items: flex-start;
   }
-  .create-new-case1-name {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  .create-new-case1-name1 {
-    font-weight: bold;
-  }
-  .create-new-case1-phone-number {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  .create-new-case1-phone-number1 {
-    text-align: center;
-    font-weight: bold;
-  }
-  .create-new-case1-address {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  .create-new-case1-address1 {
-    font-weight: bold;
-  }
   .create-new-case1-client-rows {
     flex: 0 0 auto;
     width: 100%;
@@ -272,26 +238,6 @@
     position: relative;
     align-items: center;
     justify-content: flex-start;
-  }
-  .create-new-case1-checkbox {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-checkbox01 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-checkbox02 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-checkbox03 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-checkbox04 {
-    margin-left: 10px;
-    margin-right: 10px;
   }
   .create-new-case1-assign-staff {
     flex: 0 0 auto;
@@ -335,100 +281,6 @@
     height: 100%;
     display: flex;
     align-items: flex-start;
-  }
-  .create-new-case1-name2 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  .create-new-case1-name3 {
-    font-weight: bold;
-  }
-  .create-new-case1-phone-number2 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  .create-new-case1-phone-number3 {
-    text-align: center;
-    font-weight: bold;
-  }
-  .create-new-case1-address2 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  .create-new-case1-address3 {
-    font-weight: bold;
-  }
-  .create-new-case1-staff-rows {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  .create-new-case1-checkbox05 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-staff-rows1 {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  .create-new-case1-checkbox06 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-staff-rows2 {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  .create-new-case1-checkbox07 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-staff-rows3 {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  .create-new-case1-checkbox08 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-staff-rows4 {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  .create-new-case1-checkbox09 {
-    margin-left: 10px;
-    margin-right: 10px;
   }
   .create-new-case1-container14 {
     width: 533px;

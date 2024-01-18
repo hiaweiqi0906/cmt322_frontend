@@ -24,45 +24,25 @@
                                 <div class="create-new-case1-case-info1">
                                 <div class="create-new-case1-container03">
                                     <span class="create-new-case1-case-title">Case Title</span>
-                                    <input
-                                    type="text"
-                                    placeholder="Enter Case Title (Required)"
-                                    class="create-new-case1-input-case-title input"
-                                    />
+                                    <input type="text" placeholder="Enter Case Title (Required)" class="create-new-case1-input-case-title input"/>
                                     <div class="create-new-case1-container04">
                                     <div class="create-new-case1-container05">
                                         <span class="create-new-case1-case-type">Case Type</span>
-                                        <input
-                                        type="text"
-                                        placeholder="e.g. Individual"
-                                        class="create-new-case1-textinput input"
-                                        />
+                                        <input type="text" placeholder="e.g. Individual" class="create-new-case1-textinput input"/>
                                     </div>
                                     <div class="create-new-case1-container06">
                                         <span class="create-new-case1-case-status">Case Status</span>
-                                        <input
-                                        type="text"
-                                        placeholder="e.g. Open"
-                                        class="create-new-case1-textinput1 input"
-                                        />
+                                        <input type="text" placeholder="e.g. Open" class="create-new-case1-textinput1 input"/>
                                     </div>
                                     <div class="create-new-case1-container07">
                                         <span class="create-new-case1-priority">Priority</span>
-                                        <input
-                                        type="text"
-                                        placeholder="e.g. Urgent"
-                                        class="create-new-case1-textinput2 input"
-                                        />
+                                        <input type="text" placeholder="e.g. Urgent" class="create-new-case1-textinput2 input"/>
                                     </div>
                                     <div class="create-new-case1-container08">
                                         <span class="create-new-case1-total-billed-hour">
                                         Total Billed Hour
                                         </span>
-                                        <input
-                                        type="text"
-                                        placeholder="Integer Only"
-                                        class="create-new-case1-textinput3 input"
-                                        />
+                                        <input type="text" placeholder="Integer Only" class="create-new-case1-textinput3 input"/>
                                     </div>
                                     </div>
                                 </div>

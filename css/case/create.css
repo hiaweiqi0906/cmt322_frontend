@@ -1,3 +1,10 @@
+.client-avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%
+}
+
 .create-new-case1-container {
     width: 100%;
     display: flex;
@@ -270,287 +277,19 @@
     margin-left: 10px;
     margin-right: 10px;
   }
-  .create-new-case1-client-pfp {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name01 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number01 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-self: center;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address01 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-rows1 {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
   .create-new-case1-checkbox01 {
     margin-left: 10px;
     margin-right: 10px;
-  }
-  .create-new-case1-client-pfp01 {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name02 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name03 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number02 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number03 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address02 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address03 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-rows2 {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
   }
   .create-new-case1-checkbox02 {
     margin-left: 10px;
     margin-right: 10px;
   }
-  .create-new-case1-client-pfp02 {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name04 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name05 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number04 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number05 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address04 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address05 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-rows3 {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
   .create-new-case1-checkbox03 {
     margin-left: 10px;
     margin-right: 10px;
   }
-  .create-new-case1-client-pfp03 {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name06 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name07 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number06 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number07 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address06 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address07 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-rows4 {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
   .create-new-case1-checkbox04 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-pfp04 {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name08 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name09 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number08 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number09 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address08 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address09 {
-    text-align: center;
     margin-left: 10px;
     margin-right: 10px;
   }
@@ -643,53 +382,6 @@
     margin-left: 10px;
     margin-right: 10px;
   }
-  .create-new-case1-client-pfp05 {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name10 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name11 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number10 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number11 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address10 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address11 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
   .create-new-case1-staff-rows1 {
     flex: 0 0 auto;
     width: 100%;
@@ -699,53 +391,6 @@
     justify-content: flex-start;
   }
   .create-new-case1-checkbox06 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-pfp06 {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name12 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name13 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number12 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number13 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address12 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address13 {
-    text-align: center;
     margin-left: 10px;
     margin-right: 10px;
   }
@@ -761,53 +406,6 @@
     margin-left: 10px;
     margin-right: 10px;
   }
-  .create-new-case1-client-pfp07 {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name14 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name15 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number14 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number15 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address14 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address15 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
   .create-new-case1-staff-rows3 {
     flex: 0 0 auto;
     width: 100%;
@@ -820,53 +418,6 @@
     margin-left: 10px;
     margin-right: 10px;
   }
-  .create-new-case1-client-pfp08 {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name16 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name17 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number16 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number17 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address16 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address17 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
   .create-new-case1-staff-rows4 {
     flex: 0 0 auto;
     width: 100%;
@@ -876,53 +427,6 @@
     justify-content: flex-start;
   }
   .create-new-case1-checkbox09 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-pfp09 {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  .create-new-case1-client-name18 {
-    flex: 0 0 auto;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-name19 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-phone-number18 {
-    flex: 0 0 auto;
-    width: 25%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-phone-number19 {
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .create-new-case1-client-address18 {
-    flex: 0 0 auto;
-    width: 37%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .create-new-case1-client-address19 {
-    text-align: center;
     margin-left: 10px;
     margin-right: 10px;
   }
@@ -941,7 +445,7 @@
     box-shadow: 0px 5px 10px 0px #d4d4d4;
     border-width: 0px;
     margin-right: 50px;
-    border-radius: var(--dl-radius-radius-radius8);
+    border-radius: 8px;
   }
   .create-new-case1-button1 {
     color: #ffffff;
@@ -951,7 +455,7 @@
     text-align: center;
     margin-left: 50px;
     border-width: 0px;
-    border-radius: var(--dl-radius-radius-radius8);
+    border-radius: 8px;
     background-color: #1c277e;
   }
   

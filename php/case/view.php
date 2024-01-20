@@ -26,7 +26,10 @@
     <!-- Add neccessary components, such as navbars, footer, header, etc.. -->
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
-        <h1 class="h1-main-title">Case Details</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h1-main-title">Cases</h1>
+            <a class="btn btn-primary" id="edit-case-button">Edit This Case</a>
+        </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
             <div class="col-8 row-1 nested-flex-con-col">
@@ -326,6 +329,8 @@
         // get today date
         var todayDate = new Date()
         var todayDateStr = (todayDate.getMonth() + 1) + '/' + todayDate.getDate() + '/' + todayDate.getFullYear()
+
+        document.getElementById('edit-case-button').href = baseUrl + 'php/case/editCase.php?cid=' + caseId;
 
         axios.get('/api/cases/' + caseId, )
             .then(function(response) {

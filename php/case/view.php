@@ -27,7 +27,7 @@
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center">
-            <h1 class="h1-main-title">Cases</h1>
+            <h1 class="h1-main-title">Case Details</h1>
             <a class="btn btn-primary" id="edit-case-button">Edit This Case</a>
         </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>

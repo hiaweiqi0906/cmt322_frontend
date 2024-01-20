@@ -138,7 +138,7 @@
                     $('#record-not-found-div').css("display", "none")
                 clientData.forEach((client, index) => {
                     const markup = '<tr>' +
-                        '<td><input type="checkbox" class="case-checkbox" /></td>' +
+                        '<td><input type="checkbox" class="client-checkbox" /></td>' +
                         '<td><img src="' + client.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
                         '<td style="display:none;">' + client._id + '</td>' +
                         '<td style="display:none;">' + client.type + '</td>' +
@@ -162,7 +162,7 @@
                     $('#record-not-found-div').css("display", "none")
                     staffData.forEach((staff, index) => {
                     const markup = '<tr>' +
-                        '<td><input type="checkbox" class="case-checkbox" /></td>' +
+                        '<td><input type="checkbox" class="staff-checkbox" /></td>' +
                         '<td><img src="' + staff.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
                         '<td style="display:none;">' + staff._id + '</td>' +
                         '<td style="display:none;">' + staff.type + '</td>' +
@@ -194,7 +194,7 @@
             let selectedCaseMembers = [];
 
             // Event listener for checkbox clicks
-            $(document).on('change', '.case-checkbox', function() {
+            $(document).on('change', '.client-checkbox', function() {
                 // Get the values from the corresponding row
                 const row = $(this).closest('tr');
                 const id = row.find('td:eq(2)').text();
@@ -216,14 +216,31 @@
                     // Remove the unselected case member from the array
                     selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
                 }
+            });
 
-                // console.log(selectedCaseMembers)
+            // Event listener for checkbox clicks
+            $(document).on('change', '.staff-checkbox', function() {
+                // Get the values from the corresponding row
+                const row = $(this).closest('tr');
+                const id = row.find('td:eq(2)').text();
+                const role = row.find('td:eq(3)').text();
+                const username = row.find('td:eq(4)').text();
+                const number = row.find('td:eq(5)').text();
+                const address = row.find('td:eq(6)').text();
 
-                // // Store the values in data attributes on the "Create Case" button
-                // $('#create-case-button').data('id', id);
-                // $('#create-case-button').data('username', username);
-                // $('#create-case-button').data('number', number);
-                // $('#create-case-button').data('address', address);
+                // Check if the checkbox is checked or unchecked
+                if ($(this).prop('checked')) {
+                    // console.log(id);
+                    // Add the selected case member to the array
+                    selectedCaseMembers.push({
+                        case_member_id: id,
+                        case_member_type: role,  // Assuming a default type for clients
+                        case_member_role: 'role'     // Assuming a default role for clients
+                    });
+                } else {
+                    // Remove the unselected case member from the array
+                    selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
+                }
             });
 
         function cancelButtonClick() {
@@ -233,18 +250,6 @@
 
         const submitForm = () => {
             startLoader()
-
-            const formData = {
-                case_title: $('.create-new-case1-input-case-title').val(),
-                case_description: $('.create-new-case1-textarea').val(),
-                case_type: $('.create-new-case1-textinput').val(),
-                case_status: $('.create-new-case1-textinput1').val(),
-                case_priority: $('.create-new-case1-textinput2').val(),
-                case_total_billed_hour: parseInt($('.create-new-case1-textinput3').val(), 10),
-                case_member_list: selectedCaseMembers
-            };
-
-            console.log(formData);
 
             // // Event listener for "Create Case" button click
             // $('#create-new-case1-button1').on('click', function() {
@@ -280,6 +285,18 @@
         document.getElementById('createCase-Form').addEventListener('submit', function(event) {
             // Prevent the default form submission
             event.preventDefault();
+
+            if ($('.client-checkbox:checked').length === 0) {
+                // If none is checked, prevent form submission or perform other actions
+                alert('Please select at least one client.');
+                return false; // Prevent form submission
+            }
+
+            if ($('.staff-checkbox:checked').length === 0) {
+                // If none is checked, prevent form submission or perform other actions
+                alert('Please select at least one staff.');
+                return false; // Prevent form submission
+            }
 
             submitForm();
         });

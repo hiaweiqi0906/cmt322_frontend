@@ -13,6 +13,7 @@
 
 <body>
     <?php include "../../components/common/navbar.php"; ?>
+    <div id="loader">Loading...</div>
     <div class="main-content">
         <h1 class="h1-main-title">Edit Case</h1>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
@@ -126,170 +127,101 @@
     </div>
 
     <script>
-        endLoader();
-        
         const urlParams = new URLSearchParams(window.location.search);
         const caseId = urlParams.get('cid');
 
-        axios.get('/api/cases/' + caseId, )
-            .then(function(response) {
-                
-                const caseData = response.data
-                if(caseData.length===0) 
-                    $('#record-not-found-div').css("display", "block")
-                else 
-                    $('#record-not-found-div').css("display", "none")
-
-                // document.querySelector(".faq--01 h1").innerHTML = json[0].title;
-
-                document.querySelector('.create-new-case1-input-case-title').value = caseData.case_title;
-                document.querySelector('.create-new-case1-textarea').value = caseData.case_description;
-                document.querySelector('.create-new-case1-textinput').value = caseData.case_type;
-                document.querySelector('.create-new-case1-textinput1').value = caseData.case_status;
-                document.querySelector('.create-new-case1-textinput2').value = caseData.case_priority;
-                document.querySelector('.create-new-case1-textinput3').value = caseData.case_total_billed_hour;
-
-                // document.querySelector('.case-client-name0').textContent = caseData.case_client_list[0].case_member_id;
-
-                const caseClientList = caseData.case_member_list.filter(user => user.case_member_type === 'client');
-
-                const caseStaffList = caseData.case_member_list.filter(user => user.case_member_type !== 'client');
-
-                console.log(caseClientList);
-
-                for (let i = 0; i < caseClientList.length; i++) {
-                    axios.get('/api/crm/' + caseClientList[i].case_member_id, )
-                    .then(function(response) {
-                        const avatar_url = response.data.avatar_url;
-                        if(avatar_url === ""){
-                            document.getElementById(`case-client-image${i}`).src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
-                            document.getElementById(`case-client-image${i}`).style.visibility = "visible";
-                        } else {
-                            document.getElementById(`case-client-image${i}`).src = response.data.avatar_url;
-                            document.getElementById(`case-client-image${i}`).style.visibility = "visible";
-                        }
-
-
-                        document.querySelector(`.case-client-name${i}`).textContent = response.data.username;
-                    })
-                    .catch(function(error) {
-                        const {
-                            status
-                        } = error.response
-                        if (status === 401) {
-                            localStorage.clear()
-                            window.location.href = baseUrl + 'php/auth/login.php';
-                        }
+            axios.get(`/api/crm`, )
+                .then(function(response) {
+                    // TODO: Convert into data and render it
+                    const clientData = response.data.filter(user => user.type === 'client');
+                    if(clientData.length===0) 
                         $('#record-not-found-div').css("display", "block")
+                    else 
+                        $('#record-not-found-div').css("display", "none")
+                    clientData.forEach((client, index) => {
+                        const markup = '<tr>' +
+                            '<td><input type="checkbox" class="client-checkbox" /></td>' +
+                            '<td><img src="' + client.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
+                            '<td style="display:none;">' + client._id + '</td>' +
+                            '<td style="display:none;">' + client.type + '</td>' +
+                            '<td>' + client.username + '</td>' +
+                            '<td>' + client.number + '</td>' +
+                            '<td>' + client.address + '</td>' +
+                            '</tr>';
+                        $('#create-allClient-table tbody').append(markup);
                     });
-                }
 
-                for (let i = 0; i < caseStaffList.length; i++) {
-                    axios.get('/api/crm/' + caseStaffList[i].case_member_id, )
-                    .then(function(response) {
-                        const avatar_url = response.data.avatar_url;
-                        if(avatar_url === ""){
-                            document.getElementById(`case-member-image${i}`).src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
-                            document.getElementById(`case-member-image${i}`).style.visibility = "visible";
-                        } else {                            
-                            document.getElementById(`case-member-image${i}`).src = response.data.avatar_url;
-                            document.getElementById(`case-member-image${i}`).style.visibility = "visible";
-                        }
+                    // prepare table so that it can be sorted
+                    $('#create-allClient-table').tableSort({
+                        animation: 'slide',
+                        speed: 500
+                    });
 
-
-                        document.querySelector(`.case-member-name${i}`).textContent = response.data.username;
-                    })
-                    .catch(function(error) {
-                        const {
-                            status
-                        } = error.response
-                        if (status === 401) {
-                            localStorage.clear()
-                            window.location.href = baseUrl + 'php/auth/login.php';
-                        }
+                    const staffData = response.data.filter(user => user.type !== 'client');
+                    if(staffData.length===0) 
                         $('#record-not-found-div').css("display", "block")
+                    else 
+                        $('#record-not-found-div').css("display", "none")
+                        staffData.forEach((staff, index) => {
+                        const markup = '<tr>' +
+                            '<td><input type="checkbox" class="staff-checkbox" /></td>' +
+                            '<td><img src="' + staff.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
+                            '<td style="display:none;">' + staff._id + '</td>' +
+                            '<td style="display:none;">' + staff.type + '</td>' +
+                            '<td>' + staff.username + '</td>' +
+                            '<td>' + staff.number + '</td>' +
+                            '<td>' + staff.address + '</td>' +
+                            '</tr>';
+                        $('#create-allStaff-table tbody').append(markup);
                     });
-                }
 
-            })
-            .catch(function(error) {
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
-                }
-                $('#record-not-found-div').css("display", "block")
-            });
-
-        axios.get(`/api/crm`, )
-            .then(function(response) {
-                // TODO: Convert into data and render it
-                const clientData = response.data.filter(user => user.type === 'client');
-                if(clientData.length===0) 
+                    // prepare table so that it can be sorted
+                    $('#create-allStaff-table').tableSort({
+                        animation: 'slide',
+                        speed: 500
+                    });
+                })
+                .catch(function(error) {
+                    const {
+                        status
+                    } = error.response
+                    if (status === 401) {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }
                     $('#record-not-found-div').css("display", "block")
-                else 
-                    $('#record-not-found-div').css("display", "none")
-                clientData.forEach((client, index) => {
-                    const markup = '<tr>' +
-                        '<td><input type="checkbox" class="case-checkbox" /></td>' +
-                        '<td><img src="' + client.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
-                        '<td style="display:none;">' + client._id + '</td>' +
-                        '<td style="display:none;">' + client.type + '</td>' +
-                        '<td>' + client.username + '</td>' +
-                        '<td>' + client.number + '</td>' +
-                        '<td>' + client.address + '</td>' +
-                        '</tr>';
-                    $('#create-allClient-table tbody').append(markup);
                 });
 
-                // prepare table so that it can be sorted
-                $('#create-allClient-table').tableSort({
-                    animation: 'slide',
-                    speed: 500
+                // Store the selected case members in an array
+                let selectedCaseMembers = [];
+
+                // Event listener for checkbox clicks
+                $(document).on('change', '.client-checkbox', function() {
+                    // Get the values from the corresponding row
+                    const row = $(this).closest('tr');
+                    const id = row.find('td:eq(2)').text();
+                    const role = row.find('td:eq(3)').text();
+                    const username = row.find('td:eq(4)').text();
+                    const number = row.find('td:eq(5)').text();
+                    const address = row.find('td:eq(6)').text();
+
+                    // Check if the checkbox is checked or unchecked
+                    if ($(this).prop('checked')) {
+                        // console.log(id);
+                        // Add the selected case member to the array
+                        selectedCaseMembers.push({
+                            case_member_id: id,
+                            case_member_type: role,  // Assuming a default type for clients
+                            case_member_role: 'role'     // Assuming a default role for clients
+                        });
+                    } else {
+                        // Remove the unselected case member from the array
+                        selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
+                    }
                 });
 
-                const staffData = response.data.filter(user => user.type !== 'client');
-                if(staffData.length===0) 
-                    $('#record-not-found-div').css("display", "block")
-                else 
-                    $('#record-not-found-div').css("display", "none")
-                    staffData.forEach((staff, index) => {
-                    const markup = '<tr>' +
-                        '<td><input type="checkbox" class="case-checkbox" /></td>' +
-                        '<td><img src="' + staff.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
-                        '<td style="display:none;">' + staff._id + '</td>' +
-                        '<td style="display:none;">' + staff.type + '</td>' +
-                        '<td>' + staff.username + '</td>' +
-                        '<td>' + staff.number + '</td>' +
-                        '<td>' + staff.address + '</td>' +
-                        '</tr>';
-                    $('#create-allStaff-table tbody').append(markup);
-                });
-
-                // prepare table so that it can be sorted
-                $('#create-allStaff-table').tableSort({
-                    animation: 'slide',
-                    speed: 500
-                });
-            })
-            .catch(function(error) {
-                const {
-                    status
-                } = error.response
-                if (status === 401) {
-                    localStorage.clear()
-                    window.location.href = baseUrl + 'php/auth/login.php';
-                }
-                $('#record-not-found-div').css("display", "block")
-            });
-
-            // Store the selected case members in an array
-            let selectedCaseMembers = [];
-
-            // Event listener for checkbox clicks
-            $(document).on('change', '.case-checkbox', function() {
+                            // Event listener for checkbox clicks
+            $(document).on('change', '.staff-checkbox', function() {
                 // Get the values from the corresponding row
                 const row = $(this).closest('tr');
                 const id = row.find('td:eq(2)').text();
@@ -311,35 +243,71 @@
                     // Remove the unselected case member from the array
                     selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
                 }
-
-                // console.log(selectedCaseMembers)
-
-                // // Store the values in data attributes on the "Create Case" button
-                // $('#create-case-button').data('id', id);
-                // $('#create-case-button').data('username', username);
-                // $('#create-case-button').data('number', number);
-                // $('#create-case-button').data('address', address);
             });
 
-        function cancelButtonClick() {
-            // Redirect to the desired URL
-            window.location.href = baseUrl + '/php/case/view.php?cid=' + caseId;
-        }
 
+
+            axios.get('/api/cases/' + caseId, )
+                .then(function(response) {
+                    
+                    const caseData = response.data
+                    if(caseData.length===0) 
+                        $('#record-not-found-div').css("display", "block")
+                    else 
+                        $('#record-not-found-div').css("display", "none")
+
+                    // document.querySelector(".faq--01 h1").innerHTML = json[0].title;
+
+                    document.querySelector('.create-new-case1-input-case-title').value = caseData.case_title;
+                    document.querySelector('.create-new-case1-textarea').value = caseData.case_description;
+                    document.querySelector('.create-new-case1-textinput').value = caseData.case_type;
+                    document.querySelector('.create-new-case1-textinput1').value = caseData.case_status;
+                    document.querySelector('.create-new-case1-textinput2').value = caseData.case_priority;
+                    document.querySelector('.create-new-case1-textinput3').value = caseData.case_total_billed_hour;
+
+                    // document.querySelector('.case-client-name0').textContent = caseData.case_client_list[0].case_member_id;
+
+                    const caseClientList = caseData.case_member_list.filter(user => user.case_member_type === 'client');
+
+                    const caseStaffList = caseData.case_member_list.filter(user => user.case_member_type !== 'client');
+
+                    // Iterate through the staff members in the table and check the checkboxes
+                    for (let i = 0; i < caseClientList.length; i++) {
+                        const clientId = caseClientList[i].case_member_id;
+                        const checkbox = $(`#create-allClient-table tbody tr:has(td:eq(2):contains('${clientId}')) .case-checkbox`);
+                        checkbox.prop('checked', true);
+                    }
+
+                    // Iterate through the staff members in the table and check the checkboxes
+                    for (let i = 0; i < caseStaffList.length; i++) {
+                        const staffId = caseStaffList[i].case_member_id;
+                        const checkbox = $(`#create-allStaff-table tbody tr:has(td:eq(2):contains('${staffId}')) .case-checkbox`);
+                        checkbox.prop('checked', true);
+                    }
+
+                    endLoader();
+
+                })
+                .catch(function(error) {
+                    const {
+                        status
+                    } = error.response
+                    if (status === 401) {
+                        localStorage.clear()
+                        window.location.href = baseUrl + 'php/auth/login.php';
+                    }
+                    $('#record-not-found-div').css("display", "block")
+                });
+
+                function cancelButtonClick() {
+                    // Redirect to the desired URL
+                    window.location.href = baseUrl + '/php/case/view.php?cid=' + caseId;
+                }
+            
+        
+        
         const submitForm = () => {
             startLoader()
-
-            const formData = {
-                case_title: $('.create-new-case1-input-case-title').val(),
-                case_description: $('.create-new-case1-textarea').val(),
-                case_type: $('.create-new-case1-textinput').val(),
-                case_status: $('.create-new-case1-textinput1').val(),
-                case_priority: $('.create-new-case1-textinput2').val(),
-                case_total_billed_hour: parseInt($('.create-new-case1-textinput3').val(), 10),
-                case_member_list: selectedCaseMembers
-            };
-
-            console.log(formData);
 
             // // Event listener for "Create Case" button click
             // $('#create-new-case1-button1').on('click', function() {
@@ -367,14 +335,27 @@
                     } else {
                         // alert(`Error: ${data.message}`);
                     }
-                    
+                    endLoader()
                 });
             // });
-        }
+        };
+
 
         document.getElementById('createCase-Form').addEventListener('submit', function(event) {
             // Prevent the default form submission
             event.preventDefault();
+            
+            if ($('.client-checkbox:checked').length === 0) {
+                // If none is checked, prevent form submission or perform other actions
+                alert('Please select at least one client.');
+                return false; // Prevent form submission
+            }
+
+            if ($('.staff-checkbox:checked').length === 0) {
+                // If none is checked, prevent form submission or perform other actions
+                alert('Please select at least one staff.');
+                return false; // Prevent form submission
+            }
 
             submitForm();
         });

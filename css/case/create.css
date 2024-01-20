@@ -64,9 +64,10 @@
   }
   .create-new-case1-case-title {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .create-new-case1-input-case-title {
+    font-family: 'Montserrat', sans-serif;
     width: 98%;
     padding: 5px;
     align-self: flex-start;
@@ -95,9 +96,10 @@
   }
   .create-new-case1-case-type {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .create-new-case1-textinput {
+    font-family: 'Montserrat', sans-serif;
     width: 85%;
     padding: 5px;
     margin-top: 5px;
@@ -115,9 +117,10 @@
   }
   .create-new-case1-case-status {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .create-new-case1-textinput1 {
+    font-family: 'Montserrat', sans-serif;
     width: 85%;
     padding: 5px;
     margin-top: 5px;
@@ -135,9 +138,10 @@
   }
   .create-new-case1-priority {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .create-new-case1-textinput2 {
+    font-family: 'Montserrat', sans-serif;
     width: 85%;
     padding: 5px;
     margin-top: 5px;
@@ -155,9 +159,10 @@
   }
   .create-new-case1-total-billed-hour {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .create-new-case1-textinput3 {
+    font-family: 'Montserrat', sans-serif;
     width: 85%;
     padding: 5px;
     margin-top: 5px;
@@ -176,16 +181,18 @@
   .create-new-case1-case-description {
     color: rgb(142, 142, 142);
     align-self: flex-start;
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .create-new-case1-textarea {
+    font-family: 'Montserrat', sans-serif;
     width: 100%;
-    height: 110px;
+    height: 120px;
     align-self: flex-start;
+    padding: 5px;
     margin-top: 5px;
     margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 15px;
+    margin-right: 20px;
+    margin-bottom: 5px;
   }
   .create-new-case1-assign-client {
     flex: 0 0 auto;
@@ -287,8 +294,8 @@
     height: 62px;
     display: flex;
     align-self: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     align-items: center;
     justify-content: center;
   }

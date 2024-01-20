@@ -251,7 +251,7 @@
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
         if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#delete-case-button').css("display", "none")
-        if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#create-case-button').css("display", "none")
+        if(getUserType() !== 'admin' && getUserType() !== 'partner' && getUserType() !== 'associates') $('#create-case-button').css("display", "none")
         // Chart options to be shown later
         var caseOption = {
             series: [44, 20, 30],
@@ -363,7 +363,6 @@
                 else 
                     $('#record-not-found-div').css("display", "none")
 
-                // document.querySelector(".faq--01 h1").innerHTML = json[0].title;
 
                 document.querySelector('.case-details-case-title').textContent = 'Case Title';
                 document.querySelector('.case-details-case-title1').textContent = caseData.case_title;

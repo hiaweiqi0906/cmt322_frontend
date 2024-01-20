@@ -554,6 +554,7 @@ const appointmentForm_displayCreatedFormData = (idEl, titleEl, attendeeSelectEl,
 
   // Get the title and display in form
   titleEl.value = appointment.title;
+  titleEl.disabled = true;
 
   // Get the location and display in form
   locationEl.value = appointment.location;
@@ -595,7 +596,6 @@ const appointmentForm_displayCreatedFormData = (idEl, titleEl, attendeeSelectEl,
   // If the appointment is past, set all the input into disabled state
   if (needDisable) {
     // Set the text inputs to disabled
-    titleEl.disabled = true;
     locationEl.disabled = true;
     detailsEl.disabled = true;
     allDaySwitchEl.disabled = true;
@@ -905,8 +905,8 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
   startDateID, startTimeID, endDateID, endTimeID, allDaySwitchID) => {
 
   // check the input fields does not have invalid data except date and time
-  const titleEl = document.getElementById(titleID);
-  const titleIsInvalid = titleEl.classList.contains('is-invalid');
+  // const titleEl = document.getElementById(titleID);
+  // const titleIsInvalid = titleEl.classList.contains('is-invalid');
 
   const attendeeSelectEl = document.getElementById(attendeeSelectID);
   const attendeeSelectIsInvalid = attendeeSelectEl.classList.contains('is-invalid');
@@ -924,7 +924,7 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
   const allDaySwitchEl = document.getElementById(allDaySwitchID);
 
   // If any invalid input, show the error alert
-  if (titleIsInvalid || attendeeSelectIsInvalid || locationIsInvalid || detailsIsInvalid) {
+  if (attendeeSelectIsInvalid || locationIsInvalid || detailsIsInvalid) {
     appointmentModal_callAlert('appointment-multiForm-danger-alert');
   }
   // Else check is there any changes
@@ -937,7 +937,7 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
       .then((response) => {
         const appointment = response.data;
 
-        const titleChanged = appointmentForm_checkTitleChange(titleEl, appointment.title);
+        //const titleChanged = appointmentForm_checkTitleChange(titleEl, appointment.title);
         const attendeeChanged = appointmentForm_checkAttendeeChange(attendeeSelectEl, appointment.attendees);
         const startDateChanged = appointmentForm_checkDateChange(startDateEl, appointment.dateStart);
         const endDateChanged = appointmentForm_checkDateChange(endDateEl, appointment.dateEnd)
@@ -945,10 +945,7 @@ const appointmentForm_updateAppointmentForm = (titleID, attendeeSelectID, locati
         const locationChanged = appointmentForm_checkLocationChange(locationEl, appointment.location);
         const detailsChanged = appointmentForm_checkDetailsChange(detailsEl, appointment.details);
 
-        if (titleChanged || attendeeChanged || startDateChanged || endDateChanged || timeChanged || locationChanged || detailsChanged) {
-          if (titleChanged) {
-            appointment.title = titleEl.value.trim();
-          }
+        if (attendeeChanged || startDateChanged || endDateChanged || timeChanged || locationChanged || detailsChanged) {
 
           if (attendeeChanged) {
             const oldAttendee = [];

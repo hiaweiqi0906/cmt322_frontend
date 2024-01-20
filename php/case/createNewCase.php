@@ -18,7 +18,7 @@
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
             <div class="col-8 row-1 nested-flex-con-col">
-                <!-- <form id='createCase-Form'> -->
+                <form id='createCase-Form'>
                 <div class="float-card row-1" style="min-height: 85vh;">
                     <link href="./css/case/create.css" rel="stylesheet" />
                         <span class="create-new-case1-case-info">Case Info</span>
@@ -115,11 +115,12 @@
                     <button type="button" class="create-new-case1-button button">
                     Cancel
                     </button>
-                    <button type="submit" class="create-new-case1-button1 button" onsubmit="submitForm()">
+                    <!-- <button type="submit" class="create-new-case1-button1 button" onsubmit="submitForm()"> -->
+                    <button type="submit" class="create-new-case1-button1 button">
                     Submit
                     </button>
                 </div>
-                <!-- </form> -->
+                </form>
             </div>
         </div>
     </div>
@@ -222,7 +223,6 @@
                 // $('#create-case-button').data('address', address);
             });
 
-        
         const submitForm = () => {
             startLoader()
 
@@ -268,6 +268,13 @@
                 });
             // });
         }
+
+        document.getElementById('createCase-Form').addEventListener('submit', function(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            submitForm();
+        });
     
     </script>
 </body>

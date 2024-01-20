@@ -14,7 +14,7 @@
 <body>
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
-        <h1 class="h1-main-title">Create New Case</h1>
+        <h1 class="h1-main-title">Edit Case</h1>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
             <div class="col-8 row-1 nested-flex-con-col">
@@ -338,7 +338,7 @@
                 // Use these values in your axios.post request
 
 
-                axios.post('/api/cases', {
+                axios.put('/api/cases', {
                     case_title: $('.create-new-case1-input-case-title').val(),
                     case_description: $('.create-new-case1-textarea').val(),
                     case_type: $('.create-new-case1-textinput').val(),

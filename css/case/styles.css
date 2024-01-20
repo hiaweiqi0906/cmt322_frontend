@@ -26,7 +26,7 @@
   } */
   .case-details-case-info {
     color: rgb(0, 0, 0);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     padding-bottom: 15px;
   }
@@ -47,11 +47,11 @@
   }
   .case-details-case-title {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .case-details-case-title1 {
     align-self: flex-start;
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 15px;
@@ -74,10 +74,10 @@
   }
   .case-details-case-type {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .case-details-case-type1 {
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -91,10 +91,10 @@
   }
   .case-details-case-status {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .case-details-case-status1 {
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -108,10 +108,10 @@
   }
   .case-details-priority {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .case-details-priority1 {
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -125,22 +125,24 @@
   }
   .case-details-total-billed-hour {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .case-details-total-billed-hour1 {
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
     padding-left: 10px;
     padding-right: 10px;
   }
   .case-details-case-description {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
     padding-top: 15px;
   }
   .case-details-case-description1 {
     width: 575px;
+    overflow-y: auto;
+    max-height: 200px;
     align-self: flex-start;
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
     padding-top: 0px;
     padding-left: 10px;
     padding-right: 10px;
@@ -152,6 +154,7 @@
     display: flex;
     align-items: flex-start;
     flex-direction: column;
+    padding-left: 5px;
   }
   .case-details-client-involved {
     width: 356px;
@@ -171,7 +174,7 @@
   }
   .case-details-client-involved2 {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
   }
   .case-details-client-0 {
     width: 100%;
@@ -236,7 +239,7 @@
   }
   .case-details-staff-involved2 {
     color: rgb(142, 142, 142);
-    font-family: "PT Sans";
+    font-family: 'Montserrat', sans-serif;
     padding-top: 10px;
   }
   .case-details-client-11 {

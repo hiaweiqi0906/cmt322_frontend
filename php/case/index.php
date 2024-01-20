@@ -97,7 +97,7 @@
             </div>
         </div>
         <h3 class="h3-semibold-24 non-float-card">All Cases</h3>
-        <div class="table-section">
+        <div class="table-section" style="overflow-y: auto; max-height: 300px;">
             <table id="case-allCase-table" class="table-general">
                 <thead>
                     <tr>

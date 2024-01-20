@@ -18,7 +18,7 @@
     <div class="paralegal-navbar" style="display: none">
         <ul class="navbar-v">
             <li class="navbar-logo"><img width="80" height="80" src="../../assets/CaseAceLogo.png" alt="home" /><br>CASEACE</li>
-            <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-case" href="http://localhost:3000/php/case"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/toolbox.png" alt="toolbox" /></a>Case</li>
+            <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-case" href="http://localhost:3000/php/case"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/toolbox.png" alt="toolbox" />Case</a></li>
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-document" href="http://localhost:3000/php/document"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/opened-folder.png" alt="opened-folder" />Document</a></li>
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-appointment" href="http://localhost:3000/php/appointment"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/tear-off-calendar.png" alt="tear-off-calendar" />Appointment</a></li>
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-task" href="http://localhost:3000/php/task"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/assignment-turned-in.png" alt="assignment-turned-in" />Task</a></li>

@@ -567,7 +567,7 @@
                         window.location.href = baseUrl + 'php/auth/login.php';
                     }, 1000);
                 } else {
-                    launchErrorModal(error.response.data.message)
+                    // launchErrorModal(error.response.data.message)
                 }
             });
 
@@ -629,7 +629,7 @@
                         window.location.href = baseUrl + 'php/auth/login.php';
                     }, 1000);
                 } else {
-                    launchErrorModal(error.response.data.message)
+                    // launchErrorModal(error.response.data.message)
                 }
             });
 
@@ -680,7 +680,7 @@
                             window.location.href = baseUrl + 'php/auth/login.php';
                         }, 1000);
                     } else {
-                        launchErrorModal(error.response.data.message)
+                        // launchErrorModal(error.response.data.message)
                     }
                 });
         }
@@ -769,7 +769,7 @@
                             window.location.href = baseUrl + 'php/auth/login.php';
                         }, 1000);
                     } else {
-                        launchErrorModal(error.response.data.message)
+                        // launchErrorModal(error.response.data.message)
                     }
                 });
         }

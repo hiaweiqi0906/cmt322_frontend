@@ -266,6 +266,7 @@
                     case_member_list: selectedCaseMembers
                 })
                 .then(function(response) {
+                    alert('Case created successfully');
                     window.location.href = baseUrl + 'php/case/';
                     endLoader()
                 })

@@ -17,7 +17,7 @@
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="h1-main-title">Cases</h1>
-            <a href="http://localhost/php/case/createNewCase.php" class="btn btn-primary" id="create-case-button">Create New Case</a>
+            <a class="btn btn-primary" id="create-case-button">Create New Case</a>
         </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con" id="adminOnly-case-stats">
@@ -172,6 +172,8 @@
                 height: 230,
             }
         };
+
+        document.getElementById('create-case-button').href = baseUrl + 'php/case/createNewCase.php';
 
         axios.get('/api/statistics/dashboard', )
             .then(function(response) {

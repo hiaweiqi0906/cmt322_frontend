@@ -112,7 +112,7 @@
                             </div>
                 </div>
                 <div class="create-new-case1-container14">
-                    <button type="button" class="create-new-case1-button button">
+                    <button type="button" class="create-new-case1-button button" onclick="cancelButtonClick()">
                     Cancel
                     </button>
                     <!-- <button type="submit" class="create-new-case1-button1 button" onsubmit="submitForm()"> -->
@@ -321,7 +321,12 @@
                 // $('#create-case-button').data('address', address);
             });
 
-            const submitForm = () => {
+        function cancelButtonClick() {
+            // Redirect to the desired URL
+            window.location.href = baseUrl + '/php/case/view.php?cid=' + caseId;
+        }
+
+        const submitForm = () => {
             startLoader()
 
             const formData = {
@@ -341,7 +346,7 @@
                 // Use these values in your axios.post request
 
 
-                axios.put('/api/cases', {
+                axios.put('/api/cases/' + caseId, {
                     case_title: $('.create-new-case1-input-case-title').val(),
                     case_description: $('.create-new-case1-textarea').val(),
                     case_type: $('.create-new-case1-textinput').val(),
@@ -351,7 +356,7 @@
                     case_member_list: selectedCaseMembers
                 })
                 .then(function(response) {
-                    window.location.href = baseUrl + 'php/case/';
+                    window.location.href = baseUrl + '/php/case/view.php?cid=' + caseId;
                     endLoader()
                 })
                 .catch(function(error) {

@@ -28,7 +28,8 @@
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="h1-main-title">Case Details</h1>
-            <a class="btn btn-primary" id="edit-case-button">Edit This Case</a>
+            <a class="btn btn-primary" id="delete-case-button">Delete This Case</a>
+            <a class="btn btn-primary" id="create-case-button">Edit This Case</a>
         </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
@@ -249,6 +250,8 @@
 
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
+        if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#delete-case-button').css("display", "none")
+        if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#create-case-button').css("display", "none")
         // Chart options to be shown later
         var caseOption = {
             series: [44, 20, 30],
@@ -330,7 +333,26 @@
         var todayDate = new Date()
         var todayDateStr = (todayDate.getMonth() + 1) + '/' + todayDate.getDate() + '/' + todayDate.getFullYear()
 
-        document.getElementById('edit-case-button').href = baseUrl + 'php/case/editCase.php?cid=' + caseId;
+        document.getElementById('delete-case-button').addEventListener('click', function() { 
+
+            // Send a DELETE request to the server using Axios
+            axios.delete(`/api/cases/${caseId}`)
+                .then(function(response) {
+                    // Handle success, e.g., show a success message or redirect to another page
+                    console.log(response.data); // Log the response from the server
+                    alert('Case deleted successfully');
+                    // You can also redirect the user to another page if needed
+                    window.location.href = baseUrl + 'php/case/';
+                })
+                .catch(function(error) {
+                    // Handle errors, e.g., show an error message to the user
+                    console.error(error);
+                    alert('Error deleting case');
+                });
+
+        });
+        
+        document.getElementById('create-case-button').href = baseUrl + 'php/case/editCase.php?cid=' + caseId;
 
         axios.get('/api/cases/' + caseId, )
             .then(function(response) {

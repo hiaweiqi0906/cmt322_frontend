@@ -112,7 +112,7 @@
                             </div>
                 </div>
                 <div class="create-new-case1-container14">
-                    <button type="button" class="create-new-case1-button button">
+                    <button type="button" class="create-new-case1-button button" onclick="cancelButtonClick()">
                     Cancel
                     </button>
                     <!-- <button type="submit" class="create-new-case1-button1 button" onsubmit="submitForm()"> -->
@@ -270,6 +270,11 @@
                     
                 });
             // });
+        }
+
+        function cancelButtonClick() {
+            // Redirect to the desired URL
+            window.location.href = baseUrl + 'php/case/';
         }
 
         document.getElementById('createCase-Form').addEventListener('submit', function(event) {

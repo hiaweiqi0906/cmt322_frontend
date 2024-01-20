@@ -141,6 +141,7 @@
                         '<td><input type="checkbox" class="case-checkbox" /></td>' +
                         '<td><img src="' + client.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
                         '<td style="display:none;">' + client._id + '</td>' +
+                        '<td style="display:none;">' + client.type + '</td>' +
                         '<td>' + client.username + '</td>' +
                         '<td>' + client.number + '</td>' +
                         '<td>' + client.address + '</td>' +
@@ -164,6 +165,7 @@
                         '<td><input type="checkbox" class="case-checkbox" /></td>' +
                         '<td><img src="' + staff.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
                         '<td style="display:none;">' + staff._id + '</td>' +
+                        '<td style="display:none;">' + staff.type + '</td>' +
                         '<td>' + staff.username + '</td>' +
                         '<td>' + staff.number + '</td>' +
                         '<td>' + staff.address + '</td>' +
@@ -188,17 +190,18 @@
                 $('#record-not-found-div').css("display", "block")
             });
 
-                        // Store the selected case members in an array
-                        let selectedCaseMembers = [];
+            // Store the selected case members in an array
+            let selectedCaseMembers = [];
 
             // Event listener for checkbox clicks
             $(document).on('change', '.case-checkbox', function() {
                 // Get the values from the corresponding row
                 const row = $(this).closest('tr');
                 const id = row.find('td:eq(2)').text();
-                const username = row.find('td:eq(3)').text();
-                const number = row.find('td:eq(4)').text();
-                const address = row.find('td:eq(5)').text();
+                const role = row.find('td:eq(3)').text();
+                const username = row.find('td:eq(4)').text();
+                const number = row.find('td:eq(5)').text();
+                const address = row.find('td:eq(6)').text();
 
                 // Check if the checkbox is checked or unchecked
                 if ($(this).prop('checked')) {
@@ -206,7 +209,7 @@
                     // Add the selected case member to the array
                     selectedCaseMembers.push({
                         case_member_id: id,
-                        case_member_type: 'client',  // Assuming a default type for clients
+                        case_member_type: role,  // Assuming a default type for clients
                         case_member_role: 'role'     // Assuming a default role for clients
                     });
                 } else {

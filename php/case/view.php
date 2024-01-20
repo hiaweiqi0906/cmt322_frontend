@@ -28,8 +28,10 @@
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="h1-main-title">Case Details</h1>
-            <a class="btn btn-primary" id="delete-case-button">Delete This Case</a>
-            <a class="btn btn-primary" id="create-case-button">Edit This Case</a>
+            <div class = "buttons"> 
+                <a class="btn btn-primary" id="delete-case-button" style="background-color: #1c277e; margin-right: 5px">Delete This Case</a>
+                <a class="btn btn-primary" id="create-case-button" style="background-color: #1c277e;">Edit This Case</a>
+            </div>
         </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
@@ -38,7 +40,9 @@
                 <link href="./css/case/styles.css" rel="stylesheet" />
                     <!-- <div class="case-details-container"> -->
                         <!-- <div class="case-details-container1"> -->
-                        <span class="case-details-case-info">Case Info</span>
+                        <h3 class="h3-semibold-24">
+                            Case Info
+                        </h3>
                         <div class="case-details-case-info1">
                             <div class="case-details-container2">
                             <span class="case-details-case-title"></span>
@@ -111,7 +115,7 @@
                                 Add Document
                             </button>
                         </h3>
-                        <div class="table-section" style="height: 48%; width: 100%;overflow-y: scroll;">
+                        <div class="table-section" style="height: 48%; width: 100%;overflow-y: auto;">
                             <table id="document-allDocument-table" class="table-general">
                                 <thead>
                                     <tr>

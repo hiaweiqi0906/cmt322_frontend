@@ -21,32 +21,34 @@
                 <form id='createCase-Form'>
                 <div class="float-card row-1" style="min-height: 85vh;">
                     <link href="./css/case/create.css" rel="stylesheet" />
-                        <span class="create-new-case1-case-info">Case Info</span>
+                        <h3 class="h3-semibold-24">
+                            Case Info
+                        </h3>
                             <div class="create-new-case1-case-info1">
                                 <div class="create-new-case1-container03">
                                     <span class="create-new-case1-case-title">Case Title</span>
-                                    <input type="text" placeholder="Enter Case Title (Required)" required class="create-new-case1-input-case-title input"/>
+                                    <input type="text" placeholder="Enter Case Title (Required)" required class="create-new-case1-input-case-title input" maxlength="50"/>
                                     <div class="invalid-feedback">
                                         Please provide a valid title.
                                     </div>
                                     <div class="create-new-case1-container04">
                                     <div class="create-new-case1-container05">
                                         <span class="create-new-case1-case-type">Case Type</span>
-                                        <input type="text" placeholder="e.g. Individual" required class="create-new-case1-textinput input"/>
+                                        <input type="text" placeholder="e.g. Individual" required class="create-new-case1-textinput input" maxlength="12"/>
                                     </div>
                                     <div class="create-new-case1-container06">
                                         <span class="create-new-case1-case-status">Case Status</span>
-                                        <input type="text" placeholder="e.g. Open" required class="create-new-case1-textinput1 input"/>
+                                        <input type="text" placeholder="e.g. Open" required class="create-new-case1-textinput1 input" maxlength="12"/>
                                     </div>
                                     <div class="create-new-case1-container07">
                                         <span class="create-new-case1-priority">Priority</span>
-                                        <input type="text" placeholder="e.g. Urgent" required class="create-new-case1-textinput2 input"/>
+                                        <input type="text" placeholder="e.g. Urgent" required class="create-new-case1-textinput2 input" maxlength="12"/>
                                     </div>
                                     <div class="create-new-case1-container08">
                                         <span class="create-new-case1-total-billed-hour">
                                         Total Billed Hour
                                         </span>
-                                        <input type="text" placeholder="Integer Only" required pattern="\d+" class="create-new-case1-textinput3 input"/>
+                                        <input type="text" placeholder="Integer Only" required pattern="\d+" class="create-new-case1-textinput3 input" maxlength="12"/>
                                         <div class="invalid-feedback">
                                             Please enter a valid integer for Total Billed Hour.
                                         </div>
@@ -58,44 +60,40 @@
                                     <textarea placeholder="Enter Case Description" required class="create-new-case1-textarea textarea"></textarea>
                                 </div>
                             </div>
-                            <div class="create-new-case1-assign-client">
-                                <div class="create-new-case1-assign-client1">
-                                    <span class="create-new-case1-assign-client2">Assign Client</span>
-                                    <div class="table-section">
-                                        <table id="create-allClient-table" class="table-assign-member">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-2"></th>
-                                                    <th class="col-1"></th>
-                                                    <th class="col-1">Name</th>
-                                                    <th class="col-2">Phone Number</th>
-                                                    <th class="col-2">Address</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                            <h3 class="h3-semibold-24" style="margin-top: 2rem;">Assign Client</h3>
+                            <div class="table-section" style="overflow-y: auto; max-height: 175px;">
+                                <table id="create-allClient-table" class="table-general">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-2" style="width: 5%;"></th>
+                                            <th class="col-1" style="width: 5%;"></th>
+                                            <th class="col-1" style="width: 22.5%;">Name</th>
+                                            <th class="col-1" style="width: 22.5%;">Role</th>
+                                            <th class="col-2" style="width: 22.5%;">Phone Number</th>
+                                            <th class="col-2" style="width: 22.5%;">Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                            </tbody>
-                                        </table>
-                                        <!-- <div id="record-not-found-div" style="display: block">
-                                        <img src="../../assets/no_record_found.png" style="width:30rem;display:block; margin-left: auto; margin-right: auto; margin-top: 6rem; border-radius: 20px;" alt="" >
-                                        <h3 style="width:30rem;display:block; margin-left: auto; margin-right: auto;margin-top: 0.5rem; text-align: center; color: #959595;" >No Record found yet..</h3>
+                                    </tbody>
+                                </table>
+                                <!-- <div id="record-not-found-div" style="display: block">
+                                <img src="../../assets/no_record_found.png" style="width:30rem;display:block; margin-left: auto; margin-right: auto; margin-top: 6rem; border-radius: 20px;" alt="" >
+                                <h3 style="width:30rem;display:block; margin-left: auto; margin-right: auto;margin-top: 0.5rem; text-align: center; color: #959595;" >No Record found yet..</h3>
 
-                                        </div> -->
-                                    </div>
-                                </div>
+                                </div> -->
                             </div>
-                            <div class="create-new-case1-assign-staff">
-                            <div class="create-new-case1-assign-staff1">
-                                <span class="create-new-case1-assign-staff2">Assign Staff</span>
-                                <div class="table-section">
-                                    <table id="create-allStaff-table" class="table-assign-member">
+                            <h3 class="h3-semibold-24" style="margin-top: 2rem;">Assign Staff</h3>
+                                <div class="table-section" style="overflow-y: auto; max-height: 175px;">
+                                    <table id="create-allStaff-table" class="table-general">
                                         <thead>
                                             <tr>
-                                                <th class="col-2"></th>
-                                                <th class="col-1"></th>
-                                                <th class="col-1">Name</th>
-                                                <th class="col-2">Role</th>
-                                                <th class="col-2">Phone Address</th>
+                                                <th class="col-2" style="width: 5%;"></th>
+                                                <th class="col-1" style="width: 5%;"></th>
+                                                <th class="col-1" style="width: 22.5%;">Name</th>
+                                                <th class="col-1" style="width: 22.5%;">Role</th>
+                                                <th class="col-2" style="width: 22.5%;">Phone Number</th>
+                                                <th class="col-2" style="width: 22.5%;">Address</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -108,10 +106,8 @@
 
                                     </div> -->
                                 </div>
-                            </div>
-                            </div>
                 </div>
-                <div class="create-new-case1-container14">
+                <div class="create-new-case1-container14" style="width: 100%">
                     <button type="button" class="create-new-case1-button button" onclick="cancelButtonClick()">
                     Cancel
                     </button>
@@ -128,6 +124,8 @@
     <script>
         endLoader();
 
+        $('.h2-user-greeting').text(renderUserGreeting())
+
         axios.get(`/api/crm`, )
             .then(function(response) {
                 // TODO: Convert into data and render it
@@ -138,13 +136,13 @@
                     $('#record-not-found-div').css("display", "none")
                 clientData.forEach((client, index) => {
                     const markup = '<tr>' +
-                        '<td><input type="checkbox" class="client-checkbox" /></td>' +
-                        '<td><img src="' + client.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
-                        '<td style="display:none;">' + client._id + '</td>' +
-                        '<td style="display:none;">' + client.type + '</td>' +
-                        '<td>' + client.username + '</td>' +
-                        '<td>' + client.number + '</td>' +
-                        '<td>' + client.address + '</td>' +
+                        '<td style="width: 5%; text-align: center;"><input type="checkbox" class="client-checkbox" /></td>' +
+                        '<td style="width: 5%; text-align: center;"><img src="' + client.avatar_url + '" alt="" class="client-avatar" /></td>' +
+                        '<td style="display:none; text-align: center;">' + client._id + '</td>' +
+                        '<td style="width: 22.5%; text-align: center;">' + client.username + '</td>' +
+                        '<td style="width: 22.5%; text-align: center;">' + client.type + '</td>' +
+                        '<td style="width: 22.5%; text-align: center;">' + client.number + '</td>' +
+                        '<td style="width: 22.5%; text-align: center;">' + client.address + '</td>' +
                         '</tr>';
                     $('#create-allClient-table tbody').append(markup);
                 });
@@ -162,13 +160,13 @@
                     $('#record-not-found-div').css("display", "none")
                     staffData.forEach((staff, index) => {
                     const markup = '<tr>' +
-                        '<td><input type="checkbox" class="staff-checkbox" /></td>' +
-                        '<td><img src="' + staff.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
+                        '<td style="width: 5%; text-align: center;"><input type="checkbox" class="staff-checkbox" /></td>' +
+                        '<td style="width: 5%; text-align: center;"><img src="' + staff.avatar_url + '" alt="" class="client-avatar" /></td>' +
                         '<td style="display:none;">' + staff._id + '</td>' +
-                        '<td style="display:none;">' + staff.type + '</td>' +
-                        '<td>' + staff.username + '</td>' +
-                        '<td>' + staff.number + '</td>' +
-                        '<td>' + staff.address + '</td>' +
+                        '<td style="width: 22.5%; text-align: center;">' + staff.username + '</td>' +
+                        '<td style="width: 22.5%; text-align: center;">' + staff.type + '</td>' +
+                        '<td style="width: 22.5%; text-align: center;">' + staff.number + '</td>' +
+                        '<td style="width: 22.5%; text-align: center;">' + staff.address + '</td>' +
                         '</tr>';
                     $('#create-allStaff-table tbody').append(markup);
                 });
@@ -198,8 +196,8 @@
                 // Get the values from the corresponding row
                 const row = $(this).closest('tr');
                 const id = row.find('td:eq(2)').text();
-                const role = row.find('td:eq(3)').text();
-                const username = row.find('td:eq(4)').text();
+                const username = row.find('td:eq(3)').text();
+                const role = row.find('td:eq(4)').text();
                 const number = row.find('td:eq(5)').text();
                 const address = row.find('td:eq(6)').text();
 
@@ -223,8 +221,8 @@
                 // Get the values from the corresponding row
                 const row = $(this).closest('tr');
                 const id = row.find('td:eq(2)').text();
-                const role = row.find('td:eq(3)').text();
-                const username = row.find('td:eq(4)').text();
+                const username = row.find('td:eq(3)').text();
+                const role = row.find('td:eq(4)').text();
                 const number = row.find('td:eq(5)').text();
                 const address = row.find('td:eq(6)').text();
 

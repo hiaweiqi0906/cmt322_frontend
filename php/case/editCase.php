@@ -13,41 +13,42 @@
 
 <body>
     <?php include "../../components/common/navbar.php"; ?>
-    <div id="loader">Loading...</div>
     <div class="main-content">
         <h1 class="h1-main-title">Edit Case</h1>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
             <div class="col-8 row-1 nested-flex-con-col">
-                <form id='createCase-Form'>
+                <form id='createCase-Form' style="flex-direction: column; justify-content: center; align-items: center;">
                 <div class="float-card row-1" style="min-height: 85vh;">
                     <link href="./css/case/create.css" rel="stylesheet" />
-                        <span class="create-new-case1-case-info">Edit Case Details</span>
+                        <h3 class="h3-semibold-24">
+                            Case Info
+                        </h3>
                             <div class="create-new-case1-case-info1">
                                 <div class="create-new-case1-container03">
                                     <span class="create-new-case1-case-title">Case Title</span>
-                                    <input type="text" placeholder="Enter Case Title (Required)" required class="create-new-case1-input-case-title input"/>
+                                    <input type="text" placeholder="Enter Case Title (Required)" required class="create-new-case1-input-case-title input" maxlength="50"/>
                                     <div class="invalid-feedback">
                                         Please provide a valid title.
                                     </div>
                                     <div class="create-new-case1-container04">
                                     <div class="create-new-case1-container05">
                                         <span class="create-new-case1-case-type">Case Type</span>
-                                        <input type="text" placeholder="e.g. Individual" required class="create-new-case1-textinput input"/>
+                                        <input type="text" placeholder="e.g. Individual" required class="create-new-case1-textinput input" maxlength="12"/>
                                     </div>
                                     <div class="create-new-case1-container06">
                                         <span class="create-new-case1-case-status">Case Status</span>
-                                        <input type="text" placeholder="e.g. Open" required class="create-new-case1-textinput1 input"/>
+                                        <input type="text" placeholder="e.g. Open" required class="create-new-case1-textinput1 input" maxlength="12"/>
                                     </div>
                                     <div class="create-new-case1-container07">
                                         <span class="create-new-case1-priority">Priority</span>
-                                        <input type="text" placeholder="e.g. Urgent" required class="create-new-case1-textinput2 input"/>
+                                        <input type="text" placeholder="e.g. Urgent" required class="create-new-case1-textinput2 input" maxlength="12"/>
                                     </div>
                                     <div class="create-new-case1-container08">
                                         <span class="create-new-case1-total-billed-hour">
                                         Total Billed Hour
                                         </span>
-                                        <input type="text" placeholder="Integer Only" required pattern="\d+" class="create-new-case1-textinput3 input"/>
+                                        <input type="text" placeholder="Integer Only" required pattern="\d+" class="create-new-case1-textinput3 input" maxlength="12"/>
                                         <div class="invalid-feedback">
                                             Please enter a valid integer for Total Billed Hour.
                                         </div>
@@ -59,60 +60,44 @@
                                     <textarea placeholder="Enter Case Description" required class="create-new-case1-textarea textarea"></textarea>
                                 </div>
                             </div>
-                            <div class="create-new-case1-assign-client">
-                                <div class="create-new-case1-assign-client1">
-                                    <span class="create-new-case1-assign-client2">Assign Client</span>
-                                    <div class="table-section">
-                                        <table id="create-allClient-table" class="table-assign-member">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-2"></th>
-                                                    <th class="col-1"></th>
-                                                    <th class="col-1">Name</th>
-                                                    <th class="col-2">Phone Number</th>
-                                                    <th class="col-2">Address</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                            <h3 class="h3-semibold-24" style="margin-top: 2rem;">Assign Client</h3>
+                            <div class="table-section" style="overflow-y: auto; max-height: 175px;">
+                                <table id="create-allClient-table" class="table-general">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-2" style="width: 5%;"></th>
+                                            <th class="col-1" style="width: 5%;"></th>
+                                            <th class="col-1" style="width: 22.5%;">Name</th>
+                                            <th class="col-1" style="width: 22.5%;">Role</th>
+                                            <th class="col-2" style="width: 22.5%;">Phone Number</th>
+                                            <th class="col-2" style="width: 22.5%;">Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                            </tbody>
-                                        </table>
-                                        <!-- <div id="record-not-found-div" style="display: block">
-                                        <img src="../../assets/no_record_found.png" style="width:30rem;display:block; margin-left: auto; margin-right: auto; margin-top: 6rem; border-radius: 20px;" alt="" >
-                                        <h3 style="width:30rem;display:block; margin-left: auto; margin-right: auto;margin-top: 0.5rem; text-align: center; color: #959595;" >No Record found yet..</h3>
-
-                                        </div> -->
-                                    </div>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="create-new-case1-assign-staff">
-                            <div class="create-new-case1-assign-staff1">
-                                <span class="create-new-case1-assign-staff2">Assign Staff</span>
-                                <div class="table-section">
-                                    <table id="create-allStaff-table" class="table-assign-member">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-2"></th>
-                                                <th class="col-1"></th>
-                                                <th class="col-1">Name</th>
-                                                <th class="col-2">Role</th>
-                                                <th class="col-2">Phone Address</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                            <h3 class="h3-semibold-24" style="margin-top: 2rem;">Assign Staff</h3>
+                            <div class="table-section" style="overflow-y: auto; max-height: 175px;">
+                                <table id="create-allStaff-table" class="table-general">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-2" style="width: 5%;"></th>
+                                            <th class="col-1" style="width: 5%;"></th>
+                                            <th class="col-1" style="width: 22.5%;">Name</th>
+                                            <th class="col-1" style="width: 22.5%;">Role</th>
+                                            <th class="col-2" style="width: 22.5%;">Phone Number</th>
+                                            <th class="col-2" style="width: 22.5%;">Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                        </tbody>
-                                    </table>
-                                    <!-- <div id="record-not-found-div" style="display: block">
-                                    <img src="../../assets/no_record_found.png" style="width:30rem;display:block; margin-left: auto; margin-right: auto; margin-top: 6rem; border-radius: 20px;" alt="" >
-                                    <h3 style="width:30rem;display:block; margin-left: auto; margin-right: auto;margin-top: 0.5rem; text-align: center; color: #959595;" >No Record found yet..</h3>
-
-                                    </div> -->
-                                </div>
-                            </div>
+                                    </tbody>
+                                </table>
                             </div>
                 </div>
-                <div class="create-new-case1-container14">
+                <div class="create-new-case1-container14" style="width: 100%">
                     <button type="button" class="create-new-case1-button button" onclick="cancelButtonClick()">
                     Cancel
                     </button>
@@ -127,6 +112,7 @@
     </div>
 
     <script>
+        $('.h2-user-greeting').text(renderUserGreeting())
         const urlParams = new URLSearchParams(window.location.search);
         const caseId = urlParams.get('cid');
 
@@ -140,13 +126,13 @@
                         $('#record-not-found-div').css("display", "none")
                     clientData.forEach((client, index) => {
                         const markup = '<tr>' +
-                            '<td><input type="checkbox" class="client-checkbox" /></td>' +
-                            '<td><img src="' + client.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
-                            '<td style="display:none;">' + client._id + '</td>' +
-                            '<td style="display:none;">' + client.type + '</td>' +
-                            '<td>' + client.username + '</td>' +
-                            '<td>' + client.number + '</td>' +
-                            '<td>' + client.address + '</td>' +
+                            '<td style="width: 5%; text-align: center;"><input type="checkbox" class="client-checkbox" /></td>' +
+                            '<td style="width: 5%; text-align: center;"><img src="' + client.avatar_url + '" alt="" class="client-avatar" /></td>' +
+                            '<td style="display:none; text-align: center;">' + client._id + '</td>' +
+                            '<td style="width: 22.5%; text-align: center;">' + client.username + '</td>' +
+                            '<td style="width: 22.5%; text-align: center;">' + client.type + '</td>' +
+                            '<td style="width: 22.5%; text-align: center;">' + client.number + '</td>' +
+                            '<td style="width: 22.5%; text-align: center;">' + client.address + '</td>' +
                             '</tr>';
                         $('#create-allClient-table tbody').append(markup);
                     });
@@ -164,13 +150,13 @@
                         $('#record-not-found-div').css("display", "none")
                         staffData.forEach((staff, index) => {
                         const markup = '<tr>' +
-                            '<td><input type="checkbox" class="staff-checkbox" /></td>' +
-                            '<td><img src="' + staff.avatar_url + '" alt="avatar" class="client-avatar" /></td>' +
-                            '<td style="display:none;">' + staff._id + '</td>' +
-                            '<td style="display:none;">' + staff.type + '</td>' +
-                            '<td>' + staff.username + '</td>' +
-                            '<td>' + staff.number + '</td>' +
-                            '<td>' + staff.address + '</td>' +
+                            '<td style="width: 5%; text-align: center;"><input type="checkbox" class="staff-checkbox" /></td>' +
+                            '<td style="width: 5%; text-align: center;"><img src="' + staff.avatar_url + '" alt="" class="client-avatar" /></td>' +
+                            '<td style="display:none; text-align: center;">' + staff._id + '</td>' +
+                            '<td style="width: 22.5%; text-align: center;">' + staff.username + '</td>' +
+                            '<td style="width: 22.5%; text-align: center;">' + staff.type + '</td>' +
+                            '<td style="width: 22.5%; text-align: center;">' + staff.number + '</td>' +
+                            '<td style="width: 22.5%; text-align: center;">' + staff.address + '</td>' +
                             '</tr>';
                         $('#create-allStaff-table tbody').append(markup);
                     });
@@ -180,113 +166,58 @@
                         animation: 'slide',
                         speed: 500
                     });
-                })
-                .catch(function(error) {
-                    const {
-                        status
-                    } = error.response
-                    if (status === 401) {
-                        localStorage.clear()
-                        window.location.href = baseUrl + 'php/auth/login.php';
-                    }
-                    $('#record-not-found-div').css("display", "block")
-                });
 
-                // Store the selected case members in an array
-                let selectedCaseMembers = [];
+                    axios.get('/api/cases/' + caseId, )
+                        .then(function(response) {
+                            
+                            const caseData = response.data
+                            if(caseData.length===0) 
+                                $('#record-not-found-div').css("display", "block")
+                            else 
+                                $('#record-not-found-div').css("display", "none")
 
-                // Event listener for checkbox clicks
-                $(document).on('change', '.client-checkbox', function() {
-                    // Get the values from the corresponding row
-                    const row = $(this).closest('tr');
-                    const id = row.find('td:eq(2)').text();
-                    const role = row.find('td:eq(3)').text();
-                    const username = row.find('td:eq(4)').text();
-                    const number = row.find('td:eq(5)').text();
-                    const address = row.find('td:eq(6)').text();
+                            // document.querySelector(".faq--01 h1").innerHTML = json[0].title;
 
-                    // Check if the checkbox is checked or unchecked
-                    if ($(this).prop('checked')) {
-                        // console.log(id);
-                        // Add the selected case member to the array
-                        selectedCaseMembers.push({
-                            case_member_id: id,
-                            case_member_type: role,  // Assuming a default type for clients
-                            case_member_role: 'role'     // Assuming a default role for clients
+                            document.querySelector('.create-new-case1-input-case-title').value = caseData.case_title;
+                            document.querySelector('.create-new-case1-textarea').value = caseData.case_description;
+                            document.querySelector('.create-new-case1-textinput').value = caseData.case_type;
+                            document.querySelector('.create-new-case1-textinput1').value = caseData.case_status;
+                            document.querySelector('.create-new-case1-textinput2').value = caseData.case_priority;
+                            document.querySelector('.create-new-case1-textinput3').value = caseData.case_total_billed_hour;
+
+                            // document.querySelector('.case-client-name0').textContent = caseData.case_client_list[0].case_member_id;
+
+                            const caseClientList = caseData.case_member_list.filter(user => user.case_member_type === 'client');
+
+                            const caseStaffList = caseData.case_member_list.filter(user => user.case_member_type !== 'client');
+
+                            // Iterate through the staff members in the table and check the checkboxes
+                            for (let i = 0; i < caseClientList.length; i++) {
+                                const clientId = caseClientList[i].case_member_id;
+                                const checkbox = $(`#create-allClient-table tbody tr:has(td:eq(2):contains('${clientId}')) .client-checkbox`);
+                                checkbox.prop('checked', true);
+                            }
+
+                            // Iterate through the staff members in the table and check the checkboxes
+                            for (let i = 0; i < caseStaffList.length; i++) {
+                                const staffId = caseStaffList[i].case_member_id;
+                                const checkbox = $(`#create-allStaff-table tbody tr:has(td:eq(2):contains('${staffId}')) .staff-checkbox`);
+                                checkbox.prop('checked', true);
+                            }
+
+                            endLoader();
+
+                        })
+                        .catch(function(error) {
+                            const {
+                                status
+                            } = error.response
+                            if (status === 401) {
+                                localStorage.clear()
+                                window.location.href = baseUrl + 'php/auth/login.php';
+                            }
+                            $('#record-not-found-div').css("display", "block")
                         });
-                    } else {
-                        // Remove the unselected case member from the array
-                        selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
-                    }
-                });
-
-                            // Event listener for checkbox clicks
-            $(document).on('change', '.staff-checkbox', function() {
-                // Get the values from the corresponding row
-                const row = $(this).closest('tr');
-                const id = row.find('td:eq(2)').text();
-                const role = row.find('td:eq(3)').text();
-                const username = row.find('td:eq(4)').text();
-                const number = row.find('td:eq(5)').text();
-                const address = row.find('td:eq(6)').text();
-
-                // Check if the checkbox is checked or unchecked
-                if ($(this).prop('checked')) {
-                    // console.log(id);
-                    // Add the selected case member to the array
-                    selectedCaseMembers.push({
-                        case_member_id: id,
-                        case_member_type: role,  // Assuming a default type for clients
-                        case_member_role: 'role'     // Assuming a default role for clients
-                    });
-                } else {
-                    // Remove the unselected case member from the array
-                    selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
-                }
-            });
-
-
-
-            axios.get('/api/cases/' + caseId, )
-                .then(function(response) {
-                    
-                    const caseData = response.data
-                    if(caseData.length===0) 
-                        $('#record-not-found-div').css("display", "block")
-                    else 
-                        $('#record-not-found-div').css("display", "none")
-
-                    // document.querySelector(".faq--01 h1").innerHTML = json[0].title;
-
-                    document.querySelector('.create-new-case1-input-case-title').value = caseData.case_title;
-                    document.querySelector('.create-new-case1-textarea').value = caseData.case_description;
-                    document.querySelector('.create-new-case1-textinput').value = caseData.case_type;
-                    document.querySelector('.create-new-case1-textinput1').value = caseData.case_status;
-                    document.querySelector('.create-new-case1-textinput2').value = caseData.case_priority;
-                    document.querySelector('.create-new-case1-textinput3').value = caseData.case_total_billed_hour;
-
-                    // document.querySelector('.case-client-name0').textContent = caseData.case_client_list[0].case_member_id;
-
-                    const caseClientList = caseData.case_member_list.filter(user => user.case_member_type === 'client');
-
-                    const caseStaffList = caseData.case_member_list.filter(user => user.case_member_type !== 'client');
-
-                    // Iterate through the staff members in the table and check the checkboxes
-                    for (let i = 0; i < caseClientList.length; i++) {
-                        const clientId = caseClientList[i].case_member_id;
-                        const checkbox = $(`#create-allClient-table tbody tr:has(td:eq(2):contains('${clientId}')) .case-checkbox`);
-                        checkbox.prop('checked', true);
-                    }
-
-                    // Iterate through the staff members in the table and check the checkboxes
-                    for (let i = 0; i < caseStaffList.length; i++) {
-                        const staffId = caseStaffList[i].case_member_id;
-                        const checkbox = $(`#create-allStaff-table tbody tr:has(td:eq(2):contains('${staffId}')) .case-checkbox`);
-                        checkbox.prop('checked', true);
-                    }
-
-                    endLoader();
-
                 })
                 .catch(function(error) {
                     const {
@@ -298,6 +229,66 @@
                     }
                     $('#record-not-found-div').css("display", "block")
                 });
+
+                // // Store the selected case members in an array
+                // let selectedCaseMembers = [];
+
+                // // Event listener for checkbox clicks
+                // $(document).on('change', '.client-checkbox', function() {
+                //     // Get the values from the corresponding row
+                //     const row = $(this).closest('tr');
+                //     const id = row.find('td:eq(2)').text();
+                //     const username = row.find('td:eq(3)').text();
+                //     const role = row.find('td:eq(4)').text();
+                //     const number = row.find('td:eq(5)').text();
+                //     const address = row.find('td:eq(6)').text();
+
+                //     // Check if the checkbox is checked or unchecked
+                //     if ($(this).prop('checked')) {
+                //         // console.log(id);
+                //         // Add the selected case member to the array
+                //         selectedCaseMembers.push({
+                //             case_member_id: id,
+                //             case_member_type: role,  // Assuming a default type for clients
+                //             case_member_role: 'role'     // Assuming a default role for clients
+                //         });
+                //     } else {
+                //         // Remove the unselected case member from the array
+                //         selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
+                //     }
+                // });
+
+                // // Event listener for checkbox clicks
+                // $(document).on('change', '.staff-checkbox', function() {
+                //     // Get the values from the corresponding row
+                //     const row = $(this).closest('tr');
+                //     const id = row.find('td:eq(2)').text();
+                //     const username = row.find('td:eq(3)').text();
+                //     const role = row.find('td:eq(4)').text();
+                //     const number = row.find('td:eq(5)').text();
+                //     const address = row.find('td:eq(6)').text();
+
+                //     // Check if the checkbox is checked or unchecked
+                //     if ($(this).prop('checked')) {
+                //         // console.log(id);
+                //         // Add the selected case member to the array
+                //         selectedCaseMembers.push({
+                //             case_member_id: id,
+                //             case_member_type: role,  // Assuming a default type for clients
+                //             case_member_role: 'role'     // Assuming a default role for clients
+
+                            
+                //         });
+                //         console.log(selectedCaseMembers);
+                //     } else {
+                //         // Remove the unselected case member from the array
+                //         selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
+                //     }
+                // });
+
+
+
+
 
                 function cancelButtonClick() {
                     // Redirect to the desired URL
@@ -312,6 +303,40 @@
             // // Event listener for "Create Case" button click
             // $('#create-new-case1-button1').on('click', function() {
                 // Use these values in your axios.post request
+
+                let selectedCaseMembers = [];
+
+                $('.client-checkbox').each(function () {
+                    if ($(this).prop('checked')) {
+                        // Get the values from the corresponding row
+                        const row = $(this).closest('tr');
+                        const id = row.find('td:eq(2)').text();
+                        const role = row.find('td:eq(4)').text(); // Assuming role is in the 4th column
+
+                        // Add the selected case member to the array
+                        selectedCaseMembers.push({
+                            case_member_id: id,
+                            case_member_type: role,
+                            case_member_role: 'role' // Assuming a default role for clients
+                        });
+                    }
+                });
+
+                $('.staff-checkbox').each(function () {
+                    if ($(this).prop('checked')) {
+                        // Get the values from the corresponding row
+                        const row = $(this).closest('tr');
+                        const id = row.find('td:eq(2)').text();
+                        const role = row.find('td:eq(4)').text(); // Assuming role is in the 4th column
+
+                        // Add the selected case member to the array
+                        selectedCaseMembers.push({
+                            case_member_id: id,
+                            case_member_type: role,
+                            case_member_role: 'role' // Assuming a default role for clients
+                        });
+                    }
+                });
 
 
                 axios.put('/api/cases/' + caseId, {
@@ -339,7 +364,6 @@
                 });
             // });
         };
-
 
         document.getElementById('createCase-Form').addEventListener('submit', function(event) {
             // Prevent the default form submission

@@ -226,6 +226,11 @@
                 // $('#create-case-button').data('address', address);
             });
 
+        function cancelButtonClick() {
+            // Redirect to the desired URL
+            window.location.href = baseUrl + 'php/case/';
+        }
+
         const submitForm = () => {
             startLoader()
 
@@ -270,11 +275,6 @@
                     
                 });
             // });
-        }
-
-        function cancelButtonClick() {
-            // Redirect to the desired URL
-            window.location.href = baseUrl + 'php/case/';
         }
 
         document.getElementById('createCase-Form').addEventListener('submit', function(event) {

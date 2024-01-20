@@ -21,7 +21,7 @@
                 <form id='createCase-Form'>
                 <div class="float-card row-1" style="min-height: 85vh;">
                     <link href="./css/case/create.css" rel="stylesheet" />
-                        <span class="create-new-case1-case-info">Case Info</span>
+                        <span class="create-new-case1-case-info">Edit Case Details</span>
                             <div class="create-new-case1-case-info1">
                                 <div class="create-new-case1-container03">
                                     <span class="create-new-case1-case-title">Case Title</span>
@@ -127,6 +127,9 @@
 
     <script>
         endLoader();
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const caseId = urlParams.get('cid');
 
         axios.get('/api/cases/' + caseId, )
             .then(function(response) {
@@ -139,12 +142,12 @@
 
                 // document.querySelector(".faq--01 h1").innerHTML = json[0].title;
 
-                document.querySelector('.case-details-case-title1').placeholder = caseData.case_title;
-                document.querySelector('.case-details-case-description1').placeholder = caseData.case_description;
-                document.querySelector('.case-details-case-type1').placeholder = caseData.case_type;
-                document.querySelector('.case-details-case-status1').placeholder = caseData.case_status;
-                document.querySelector('.case-details-priority1').placeholder = caseData.case_priority;
-                document.querySelector('.case-details-total-billed-hour1').placeholder = caseData.case_total_billed_hour;
+                document.querySelector('.create-new-case1-input-case-title').value = caseData.case_title;
+                document.querySelector('.create-new-case1-textarea').value = caseData.case_description;
+                document.querySelector('.create-new-case1-textinput').value = caseData.case_type;
+                document.querySelector('.create-new-case1-textinput1').value = caseData.case_status;
+                document.querySelector('.create-new-case1-textinput2').value = caseData.case_priority;
+                document.querySelector('.create-new-case1-textinput3').value = caseData.case_total_billed_hour;
 
                 // document.querySelector('.case-client-name0').textContent = caseData.case_client_list[0].case_member_id;
 
@@ -318,7 +321,7 @@
                 // $('#create-case-button').data('address', address);
             });
 
-        const submitForm = () => {
+            const submitForm = () => {
             startLoader()
 
             const formData = {

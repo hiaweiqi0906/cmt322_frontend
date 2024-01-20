@@ -213,7 +213,8 @@ const appointmentCalendar_createCalendar = (id, appointments, username, needFilt
     //hiddenDays: [0, 6],               // To make the calendar only show Monday to Friday in time grid week
     slotMinTime: '07:00:00',            // To set the start time
     slotMaxTime: '19:00:00',            // To set the end time
-    aspectRatio: 1.65,                  // The ratio of width to height (high ratio means smaller height)
+    contentHeight: 'auto',              // To ensure the each time slot in calendar is same
+    //aspectRatio: 1.95,                // The ratio of width to height (high ratio means smaller height)
     timeZone: 'UTC',
     nowIndicator: true,                 // To mark the current time
     now: moment().format('YYYY-MM-DDTHH:mm'),   // Used for current time indicator

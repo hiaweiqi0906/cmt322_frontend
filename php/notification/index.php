@@ -28,6 +28,7 @@
         // Options for statistics graph later
 
         const getImage = (c) => {
+            console.log(c.notification_type);
             switch (c.notification_type) {
                 case "addDocument": {
                     return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;"width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/agreement-new.png" alt="agreement-new"/>'
@@ -47,6 +48,30 @@
                 }
                 case "finishedTask": {
                     return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/task-completed.png" alt="agreement-delete"/>'
+                    break;
+                }
+                case "newAppointment":{
+                    return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/event-accepted-tentatively.png" alt="new-appointment"/>'
+                    break;
+                }
+                case "updateAppointment":{
+                    return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/create-new.png" alt="update-appointment"/>'
+                    break;
+                }
+                case "removeAttendees":{
+                    return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/remove-user-male.png" alt="remove-attendees"/>'
+                    break;
+                }
+                case "cancelAppointment":{
+                    return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/cancel.png" alt="cancel-appointment"/>'
+                    break;
+                }
+                case "acceptAppointment":{
+                    return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/event-accepted.png" alt="accept-appointment"/>'
+                    break;
+                }
+                case "declineAppointment":{
+                    return '<img style="display: block; margin-left: auto; margin-right: auto; margin-top: 1rem;" width="40" height="40" src="https://img.icons8.com/ios-glyphs/90/1c277e/event-declined.png" alt="decline-appointment"/>'
                     break;
                 }
                 default: {

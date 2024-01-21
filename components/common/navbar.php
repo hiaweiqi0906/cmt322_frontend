@@ -13,6 +13,7 @@
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-employee" href="http://localhost:3000/php/employee"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/employee-card.png" alt="employee-card" />Employee</a></li>
             <li class="navbar-v nb-notifications" onclick="startLoader()"><a class="nb-e nb-notification" href="http://localhost:3000/php/notification"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/alarm.png" alt="settings--v1" />Notifications</a></li>
             <li class="navbar-v nb-setting"><a class="nb-e nb-setting" onclick="getUserDetails_setting()" data-bs-toggle="modal" data-bs-target="#editSetting"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/settings--v1.png" alt="settings--v1" />Settings</a></li>
+            <li class="navbar-v nb-logout" onclick="startLoader()"><a class="nb-e nb-logout" href="http://localhost:3000/php/auth/logout.php"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/exit.png" alt="settings--v1" />Logout</a></li>
         </ul>
     </div>
     <div class="paralegal-navbar" style="display: none">
@@ -24,6 +25,7 @@
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-task" href="http://localhost:3000/php/task"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/assignment-turned-in.png" alt="assignment-turned-in" />Task</a></li>
             <li class="navbar-v nb-notifications" onclick="startLoader()"><a class="nb-e nb-notification" href="http://localhost:3000/php/notification"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/alarm.png" alt="settings--v1" />Notifications</a></li>
             <li class="navbar-v nb-setting"><a class="nb-e nb-setting" onclick="getUserDetails_setting()" data-bs-toggle="modal" data-bs-target="#editSetting"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/settings--v1.png" alt="settings--v1" />Settings</a></li>
+            <li class="navbar-v nb-logout" onclick="startLoader()"><a class="nb-e nb-logout" href="http://localhost:3000/php/auth/logout.php"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/exit.png" alt="settings--v1" />Logout</a></li>
         </ul>
     </div>
 
@@ -35,6 +37,7 @@
             <li class="navbar-v" onclick="startLoader()"><a class="nb-e nb-appointment" href="http://localhost:3000/php/appointment"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/tear-off-calendar.png" alt="tear-off-calendar" />Appointment</a></li>
             <li class="navbar-v nb-notifications" onclick="startLoader()"><a class="nb-e nb-notification" href="http://localhost:3000/php/notification"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/alarm.png" alt="settings--v1" />Notifications</a></li>
             <li class="navbar-v nb-setting"><a class="nb-e nb-setting" onclick="getUserDetails_setting()" data-bs-toggle="modal" data-bs-target="#editSetting"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/settings--v1.png" alt="settings--v1" />Settings</a></li>
+            <li class="navbar-v nb-logout" onclick="startLoader()"><a class="nb-e nb-logout" href="http://localhost:3000/php/auth/logout.php"><img width="36" height="36" src="https://img.icons8.com/ios-glyphs/60/ffffff/exit.png" alt="settings--v1" />Logout</a></li>
         </ul>
     </div>
 </div>

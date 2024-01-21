@@ -13,97 +13,126 @@
     </script>
 </head>
 
+<style>
+  .common-pfp-style {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%
+  }
+</style>
+
 <body>
     <!-- Add neccessary components, such as navbars, footer, header, etc.. -->
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
-        <h1 class="h1-main-title">Cases</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h1-main-title">Case Details</h1>
+            <div class = "buttons"> 
+                <a class="btn btn-primary" id="delete-case-button" style="background-color: #1c277e; margin-right: 5px">Delete This Case</a>
+                <a class="btn btn-primary" id="create-case-button" style="background-color: #1c277e;">Edit This Case</a>
+            </div>
+        </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con">
             <div class="col-8 row-1 nested-flex-con-col">
                 <div class="float-card row-1" style="min-height: 85vh;">
-                    <h3 class="h3-semibold-24">Case Info</h3>
-                    <div class="nested-flex-con-row">
-                        <div class="col-7">
-                            <div class="chart-div" id="document-documentInfo-chart">
-
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div class="nested-flex-con-col row-1-statistics">
-                                <div class="nested-flex-con-row row-1-statistics">
-                                    <div class="col-4 two-line-statistics">
-                                        <div style="width: 85px;">
-                                            <p>Total Documents</p>
-                                            <div class="big-number-statistics-block">
-                                                <span class="big-number-statistics">99</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4 two-line-statistics">
-                                        <div style="width: 85px;">
-                                            <p>Average Filesize</p>
-                                            <div class="big-number-statistics-block">
-
-                                                <span class="big-number-statistics">99</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4 three-line-statistics">
-                                        <div style="width: 70px;">
-                                            <p>Document Opened Rate</p>
-                                            <div class="big-number-statistics-block">
-
-                                                <span class="big-number-statistics">99</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                <link href="./css/case/styles.css" rel="stylesheet" />
+                    <!-- <div class="case-details-container"> -->
+                        <!-- <div class="case-details-container1"> -->
+                        <h3 class="h3-semibold-24">
+                            Case Info
+                        </h3>
+                        <div class="case-details-case-info1">
+                            <div class="case-details-container2">
+                            <span class="case-details-case-title"></span>
+                            <span class="case-details-case-title1"></span>
+                            <div class="case-details-container3">
+                                <div class="case-details-container4">
+                                <span class="case-details-case-type"></span>
+                                <span class="case-details-case-type1"></span>
                                 </div>
-                                <div class="nested-flex-con-row row-1-statistics">
-                                    <div class="col-6 two-line-statistics">
-                                        <div style="width: 80px;">
-                                            <p>Document Uploaded</p>
-                                            <div class="big-number-statistics-block">
-
-                                                <span class="big-number-statistics">99</span>
-                                                <span class="small-number-statistics">/case</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 two-line-statistics">
-                                        <div style="width: 80px;">
-                                            <p>Document Uploaded</p>
-                                            <div class="big-number-statistics-block">
-
-                                                <span class="big-number-statistics">99</span>
-                                                <span class="small-number-statistics">/case</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="case-details-container5">
+                                <span class="case-details-case-status"></span>
+                                <span class="case-details-case-status1"></span>
+                                </div>
+                                <div class="case-details-container6">
+                                <span class="case-details-priority"></span>
+                                <span class="case-details-priority1"></span>
+                                </div>
+                                <div class="case-details-container7">
+                                <span class="case-details-total-billed-hour"></span>
+                                <span class="case-details-total-billed-hour1"></span>
                                 </div>
                             </div>
+                            <span class="case-details-case-description"></span>
+                            <span class="case-details-case-description1">
+                            </span>
+                            </div>
+                            <div class="case-details-container8">
+                            <div class="case-details-client-involved">
+                                <div class="case-details-client-involved1">
+                                <span class="case-details-client-involved2">Client Involved</span>
+                                <div class="case-details-client-0">
+                                    <img alt=" " id="case-client-image0" style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%; visibility: hidden;"/>
+                                    <span class="case-client-name0"></span>
+                                </div>
+                                <div class="case-details-client-1">
+                                    <img alt=" " id="case-client-image1" style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%; visibility: hidden;"/>
+                                    <span class="case-client-name1"></span>
+                                </div>
+                                <div class="case-details-client-2">
+                                    <img alt=" " id="case-client-image2" style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%; visibility: hidden;"/>
+                                    <span class="case-client-name2"></span>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="case-details-staff-involved">
+                                <div class="case-details-staff-involved1">
+                                <span class="case-details-staff-involved2">Staff Involved</span>
+                                <div class="case-details-client-11">
+                                    <img alt=" " id="case-member-image0" style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%; visibility: hidden;"/>
+                                    <span class="case-member-name0"></span>
+                                </div>
+                                <div class="case-details-client-21">
+                                    <img alt=" " id="case-member-image1" style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%; visibility: hidden;"/>
+                                    <span class="case-member-name1"></span>
+                                </div>
+                                <div class="case-details-client-31">
+                                    <img alt=" " id="case-member-image2" style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%; visibility: hidden;"/>
+                                    <span class="case-member-name2"></span>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
                         </div>
-                    </div>
-                    <h3 class="h3-semibold-24 non-float-card" style="margin-top: 4rem;">All Documents<button style="float: right;margin-right: 1rem; background-color: #1c277e;" data-bs-toggle="modal" data-bs-target="#uploadDocumentModal" type="button" class="btn btn-primary"><img width="18" height="18" style="margin-right: 1rem;" src="https://img.icons8.com/ios-glyphs/60/ffffff/xbox-cross.png" alt="xbox-cross" />Add Document</button></h3>
-                    <div class="table-section" style="height: 48%; width: 100%;overflow-y: scroll;">
-                        <table id="document-allDocument-table" class="table-general">
-                            <thead>
-                                <tr>
-                                    <th class="col-2">Name </th>
-                                    <th class="col-1">Type </th>
-                                    <th class="col-1">File Size </th>
-                                    <th class="col-2">Uploaded By </th>
-                                    <th class="col-2">Updated Date </th>
-                                    <th class="col-2">Last Accessed </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-
-                    </div>
+                        <!-- </div> -->
+                    
+                        <h3 class="h3-semibold-24 non-float-card" style="margin-top: 4rem;">
+                            All Documents
+                            <button style="float: right;margin-right: 1rem; background-color: #1c277e;" data-bs-toggle="modal" data-bs-target="#uploadDocumentModal" type="button" class="btn btn-primary">
+                                <img width="18" height="18" style="margin-right: 1rem;" src="https://img.icons8.com/ios-glyphs/60/ffffff/xbox-cross.png" alt="xbox-cross" />
+                                Add Document
+                            </button>
+                        </h3>
+                        <div class="table-section" style="height: 48%; width: 100%;overflow-y: auto;">
+                            <table id="document-allDocument-table" class="table-general">
+                                <thead>
+                                    <tr>
+                                        <th class="col-2">Name </th>
+                                        <th class="col-1">Type </th>
+                                        <th class="col-1">File Size </th>
+                                        <th class="col-2">Uploaded By </th>
+                                        <th class="col-2">Updated Date </th>
+                                        <th class="col-2">Last Accessed </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+            
+                        </div>
                 </div>
-
             </div>
             <div class="col-4 row-1" style="">
                 <!-- Overall Analytics for Documents -->
@@ -225,6 +254,8 @@
 
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
+        if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#delete-case-button').css("display", "none")
+        if(getUserType() !== 'admin' && getUserType() !== 'partner' && getUserType() !== 'associates') $('#create-case-button').css("display", "none")
         // Chart options to be shown later
         var caseOption = {
             series: [44, 20, 30],
@@ -300,9 +331,131 @@
         let documentType = document.getElementById('input-documentType');
         let documentDesc = document.getElementById('input-documentDesc');
 
+        console.log(caseId);
+
         // get today date
         var todayDate = new Date()
         var todayDateStr = (todayDate.getMonth() + 1) + '/' + todayDate.getDate() + '/' + todayDate.getFullYear()
+
+        document.getElementById('delete-case-button').addEventListener('click', function() { 
+
+            // Send a DELETE request to the server using Axios
+            axios.delete(`/api/cases/${caseId}`)
+                .then(function(response) {
+                    // Handle success, e.g., show a success message or redirect to another page
+                    console.log(response.data); // Log the response from the server
+                    alert('Case deleted successfully');
+                    // You can also redirect the user to another page if needed
+                    window.location.href = baseUrl + 'php/case/';
+                })
+                .catch(function(error) {
+                    // Handle errors, e.g., show an error message to the user
+                    console.error(error);
+                    alert('Error deleting case');
+                });
+
+        });
+        
+        document.getElementById('create-case-button').href = baseUrl + 'php/case/editCase.php?cid=' + caseId;
+
+        axios.get('/api/cases/' + caseId, )
+            .then(function(response) {
+                
+                const caseData = response.data
+                if(caseData.length===0) 
+                    $('#record-not-found-div').css("display", "block")
+                else 
+                    $('#record-not-found-div').css("display", "none")
+
+
+                document.querySelector('.case-details-case-title').textContent = 'Case Title';
+                document.querySelector('.case-details-case-title1').textContent = caseData.case_title;
+                document.querySelector('.case-details-case-description').textContent = 'Case Description';
+                document.querySelector('.case-details-case-description1').textContent = caseData.case_description;
+                document.querySelector('.case-details-case-type').textContent = 'Case Type';
+                document.querySelector('.case-details-case-type1').textContent = caseData.case_type;
+                document.querySelector('.case-details-case-status').textContent = 'Case Status';
+                document.querySelector('.case-details-case-status1').textContent = caseData.case_status;
+                document.querySelector('.case-details-priority').textContent = 'Priority';
+                document.querySelector('.case-details-priority1').textContent = caseData.case_priority;
+                document.querySelector('.case-details-total-billed-hour').textContent = 'Total Billed Hour';
+                document.querySelector('.case-details-total-billed-hour1').textContent = caseData.case_total_billed_hour;
+
+                // document.querySelector('.case-client-name0').textContent = caseData.case_client_list[0].case_member_id;
+
+                const caseClientList = caseData.case_member_list.filter(user => user.case_member_type === 'client');
+
+                const caseStaffList = caseData.case_member_list.filter(user => user.case_member_type !== 'client');
+
+                console.log(caseClientList);
+
+                for (let i = 0; i < caseClientList.length; i++) {
+                    axios.get('/api/crm/' + caseClientList[i].case_member_id, )
+                    .then(function(response) {
+                        const avatar_url = response.data.avatar_url;
+                        if(avatar_url === ""){
+                            document.getElementById(`case-client-image${i}`).src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+                            document.getElementById(`case-client-image${i}`).style.visibility = "visible";
+                        } else {
+                            document.getElementById(`case-client-image${i}`).src = response.data.avatar_url;
+                            document.getElementById(`case-client-image${i}`).style.visibility = "visible";
+                        }
+
+
+                        document.querySelector(`.case-client-name${i}`).textContent = response.data.username;
+                    })
+                    .catch(function(error) {
+                        const {
+                            status
+                        } = error.response
+                        if (status === 401) {
+                            localStorage.clear()
+                            window.location.href = baseUrl + 'php/auth/login.php';
+                        }
+                        $('#record-not-found-div').css("display", "block")
+                    });
+                }
+
+                for (let i = 0; i < caseStaffList.length; i++) {
+                    axios.get('/api/crm/' + caseStaffList[i].case_member_id, )
+                    .then(function(response) {
+                        const avatar_url = response.data.avatar_url;
+                        if(avatar_url === ""){
+                            document.getElementById(`case-member-image${i}`).src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+                            document.getElementById(`case-member-image${i}`).style.visibility = "visible";
+                        } else {                            
+                            document.getElementById(`case-member-image${i}`).src = response.data.avatar_url;
+                            document.getElementById(`case-member-image${i}`).style.visibility = "visible";
+                        }
+
+
+                        document.querySelector(`.case-member-name${i}`).textContent = response.data.username;
+                    })
+                    .catch(function(error) {
+                        const {
+                            status
+                        } = error.response
+                        if (status === 401) {
+                            localStorage.clear()
+                            window.location.href = baseUrl + 'php/auth/login.php';
+                        }
+                        $('#record-not-found-div').css("display", "block")
+                    });
+                }
+
+            })
+            .catch(function(error) {
+                const {
+                    status
+                } = error.response
+                if (status === 401) {
+                    localStorage.clear()
+                    window.location.href = baseUrl + 'php/auth/login.php';
+                }
+                $('#record-not-found-div').css("display", "block")
+            });
+        
+
 
         // Get all mssages in this selected case
         axios.get(`/api/cases/${caseId}/message`, )
@@ -444,7 +597,7 @@
                         window.location.href = baseUrl + 'php/auth/login.php';
                     }, 1000);
                 } else {
-                    launchErrorModal(error.response.data.message)
+                    // launchErrorModal(error.response.data.message)
                 }
             });
 
@@ -506,7 +659,7 @@
                         window.location.href = baseUrl + 'php/auth/login.php';
                     }, 1000);
                 } else {
-                    launchErrorModal(error.response.data.message)
+                    // launchErrorModal(error.response.data.message)
                 }
             });
 
@@ -557,7 +710,7 @@
                             window.location.href = baseUrl + 'php/auth/login.php';
                         }, 1000);
                     } else {
-                        launchErrorModal(error.response.data.message)
+                        // launchErrorModal(error.response.data.message)
                     }
                 });
         }
@@ -646,7 +799,7 @@
                             window.location.href = baseUrl + 'php/auth/login.php';
                         }, 1000);
                     } else {
-                        launchErrorModal(error.response.data.message)
+                        // launchErrorModal(error.response.data.message)
                     }
                 });
         }

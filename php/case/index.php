@@ -9,13 +9,26 @@
     <script>
         checkProtectedRoutes();
     </script>
+    <style>
+    th.col-1, th.col-2, td {
+        /* width: 160px; */
+        text-align: center;
+        vertical-align: middle;
+        /* white-space: nowrap; */
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    </style>
 </head>
 
 <body>
     <!-- Add neccessary components, such as navbars, footer, header, etc.. -->
     <?php include "../../components/common/navbar.php"; ?>
     <div class="main-content">
-        <h1 class="h1-main-title">Cases</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h1-main-title">Cases</h1>
+            <a class="btn btn-primary" id="create-case-button" style="background-color: #1c277e;">Create New Case</a>
+        </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con" id="adminOnly-case-stats">
             <div class="col-8 row-1 nested-flex-con-col">
@@ -33,7 +46,7 @@
                                         <div style="width: 85px;">
                                             <p>Total Num of Cases</p>
                                             <div class="big-number-statistics-block">
-                                                <span class="big-number-statistics">36</span>
+                                                <span class="big-number-statistics total-number-of-cases">36</span>
                                             </div>
                                         </div>
                                     </div>
@@ -94,17 +107,16 @@
             </div>
         </div>
         <h3 class="h3-semibold-24 non-float-card">All Cases</h3>
-        <div class="table-section">
+        <div class="table-section" style="overflow-y: auto;">
             <table id="case-allCase-table" class="table-general">
                 <thead>
                     <tr>
-                        <th class="col-2">Name </th>
-                        <th class="col-1">Type </th>
-                        <th class="col-1">File Size </th>
-                        <th class="col-2">Uploaded By </th>
-                        <th class="col-2">Case Involved </th>
-                        <th class="col-2">Updated Date </th>
-                        <th class="col-2">Last Accessed </th>
+                        <th class="col-2" style="width: 5%;"></th>
+                        <th class="col-2" style="width: 35%;">Case Title</th>
+                        <th class="col-1" style="width: 15%;">Case Type</th>
+                        <th class="col-1" style="width: 15%;">Case Status</th>
+                        <th class="col-2" style="width: 15%; text-align: center;">Priority</th>
+                        <th class="col-2" style="width: 15%;">Total Billed Hour</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -120,7 +132,8 @@
     </div>
     <script>
         $('.h2-user-greeting').text(renderUserGreeting())
-        if (getUserType() !== 'admin' && getUserType() !== 'partner') $('#adminOnly-case-stats').css("display", "none")
+        if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#adminOnly-case-stats').css("display", "none")
+        if(getUserType() !== 'admin' && getUserType() !== 'partner') $('#create-case-button').css("display", "none")
         // Options for statistics graph later
         var caseOption = {
             series: [44, 20, 30],
@@ -168,6 +181,22 @@
                 height: 230,
             }
         };
+
+        document.getElementById('create-case-button').href = baseUrl + 'php/case/createNewCase.php';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select the table-section element
+            const tableSection = document.querySelector('.table-section');
+
+            // Check the user type and set max-height accordingly
+            if (getUserType() === 'admin' || getUserType() === 'partner') {
+                tableSection.style.maxHeight = '900px';
+                
+            } else {
+                // If not admin, remove the max-height property
+                // tableSection.style.maxHeight = '';
+            }
+        });
 
         axios.get('/api/statistics/dashboard', )
             .then(function(response) {
@@ -474,6 +503,11 @@
         axios.get(`/api/cases/`, )
             .then(function(response) {
                 const caseData = response.data
+
+                document.querySelector('.total-number-of-cases').textContent = caseData.length;
+                const uniqueCaseTypes = [...new Set(caseData.map(c => c.case_type))];
+
+
                 if (caseData.length === 0)
                     $('#record-not-found-div').css("display", "block")
                 else
@@ -481,15 +515,22 @@
                 caseData.forEach(c => {
                     // Convert every cases into rows 
                     // TODO: This is dummy data. Change the dummy data into real data rows to be shown.
+                    const caseURL = baseUrl + '/php/case/view.php?cid=' + c._id;
+
                     const markup = '<tr>' +
-                        '<td><a href="' + baseUrl + '/php/case/view.php?cid=' + c._id + '"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/pdf-2.png" alt="pdf-2" />NULL</a></td>' +
-                        '<td>null</td>' +
-                        '<td>null</td>' +
-                        '<td>null</td>' +
-                        '<td>null</td>' +
-                        '<td>null</td>' +
-                        '<td>null</td>' +
+                        '<td style="width: 5%; text-align: center;><a href="' + caseURL + '"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/1c277e/document.png" alt="   " /></a></td>' +
+                        '<td style="width: 35%; text-align: center;"><a href="' + caseURL + '">' + c.case_title + '</td>' +
+                        '<td style="width: 15%; text-align: center;"><a href="' + caseURL + '">' + c.case_type + '</td>' +
+                        '<td style="width: 15%; text-align: center;"><a href="' + caseURL + '">' + c.case_status + '</td>' +
+                        '<td style="width: 15%; text-align: center;"><a href="' + caseURL + '">' + c.case_priority + '</td>' +
+                        '<td style="width: 15% text-align: center;;"><a href="' + caseURL + '">' + c.case_total_billed_hour + '</td>' +
                         '</tr>';
+
+                        jQuery(document).ready(function($) {
+                            $(".clickable-row").click(function() {
+                                window.location = $(this).data("href");
+                            });
+                        });
                     $('#case-allCase-table tbody').append(markup);
                 });
 

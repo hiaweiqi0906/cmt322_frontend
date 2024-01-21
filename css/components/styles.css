@@ -43,15 +43,21 @@ ul.navbar-v {
     overflow: auto;
 }
 
-li.nb-setting {
+li.nb-logout {
     position: absolute;
     bottom: 0;
     width: calc(100% - 2rem);
 }
 
-li.nb-notifications {
+li.nb-setting {
     position: absolute;
     bottom: 4rem;
+    width: calc(100% - 2rem);
+}
+
+li.nb-notifications {
+    position: absolute;
+    bottom: 8rem;
     width: calc(100% - 2rem);
 }
 

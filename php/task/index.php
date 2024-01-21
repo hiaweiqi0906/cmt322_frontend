@@ -5,7 +5,7 @@
     <?php include "../../components/common/header.php"; ?>      <!-- Common header file-->
     <?php include "../../components/task/header.php" ?>  <!-- Appointment specific header file -->
     <?php include "../../components/common/scripts.php"; ?>     <!-- Common script -->
-    <title>Appointments</title>
+    <title>Tasks</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.2/web-animations.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/haltu/muuri@0.9.5/dist/muuri.min.js"></script>

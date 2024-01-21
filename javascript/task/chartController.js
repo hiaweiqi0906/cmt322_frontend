@@ -38,13 +38,13 @@ const appointmentChart_createPieChart = (id, appointments) => {
             total: {
               show: true,
               fontSize: '14px',
-              label: 'Total Appointments'
+              label: 'Total Tasks'
             }
           },
         },
       },
     },
-    labels: ['Scheduled Appointments', 'Cancelled Appointments'],   // Category label
+    labels: ['Scheduled Tasks', 'Cancelled Tasks'],   // Category label
     series: [scheduledAppointments, cancelledAppointments]          // The value for each category
   }
 

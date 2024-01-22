@@ -27,7 +27,7 @@
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="h1-main-title">Cases</h1>
-            <a class="btn btn-primary" id="create-case-button" style="background-color: #1c277e;">Create New Case</a>
+            <a class="btn btn-primary" id="create-case-button" style="background-color: #1c277e; font-family: 'Montserrat', sans-serif;">Create New Case</a>
         </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>
         <div class="flex-con" id="adminOnly-case-stats">

@@ -65,7 +65,7 @@
                                 <table id="create-allClient-table" class="table-general">
                                     <thead>
                                         <tr>
-                                            <th class="col-2" style="width: 5%;"></th>
+                                            <th class="col-2" style="width: 5%;" !important></th>
                                             <th class="col-1" style="width: 5%;"></th>
                                             <th class="col-1" style="width: 22.5%;">Name</th>
                                             <th class="col-1" style="width: 22.5%;">Role</th>
@@ -125,14 +125,22 @@
                     else 
                         $('#record-not-found-div').css("display", "none")
                     clientData.forEach((client, index) => {
+                        avatar_url = client.avatar_url;
+
+                        if(avatar_url === ""){
+                            avatar_url = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+                        } else {                            
+
+                        }
+                        
                         const markup = '<tr>' +
                             '<td style="width: 5%; text-align: center;"><input type="checkbox" class="client-checkbox" /></td>' +
                             '<td style="width: 5%; text-align: center;"><img src="' + client.avatar_url + '" alt="" class="client-avatar" /></td>' +
                             '<td style="display:none; text-align: center;">' + client._id + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + client.username + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + client.type + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + client.number + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + client.address + '</td>' +
+                            '<td style="width: 15%; max-width: 100px; text-align: center;">' + client.username + '</td>' +
+                            '<td style="width: 15%; max-width: 100px; text-align: center;">' + client.type + '</td>' +
+                            '<td style="width: 15%; max-width: 100px; text-align: center;">' + client.number + '</td>' +
+                            '<td style="width: 45%; max-width: 300px; text-align: center;">' + client.address + '</td>' +
                             '</tr>';
                         $('#create-allClient-table tbody').append(markup);
                     });
@@ -143,81 +151,95 @@
                         speed: 500
                     });
 
-                    const staffData = response.data.filter(user => user.type !== 'client');
-                    if(staffData.length===0) 
-                        $('#record-not-found-div').css("display", "block")
-                    else 
-                        $('#record-not-found-div').css("display", "none")
-                        staffData.forEach((staff, index) => {
-                        const markup = '<tr>' +
-                            '<td style="width: 5%; text-align: center;"><input type="checkbox" class="staff-checkbox" /></td>' +
-                            '<td style="width: 5%; text-align: center;"><img src="' + staff.avatar_url + '" alt="" class="client-avatar" /></td>' +
-                            '<td style="display:none; text-align: center;">' + staff._id + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + staff.username + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + staff.type + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + staff.number + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + staff.address + '</td>' +
-                            '</tr>';
-                        $('#create-allStaff-table tbody').append(markup);
-                    });
-
-                    // prepare table so that it can be sorted
-                    $('#create-allStaff-table').tableSort({
-                        animation: 'slide',
-                        speed: 500
-                    });
-
-                    axios.get('/api/cases/' + caseId, )
+                    axios.get(`/api/crm/employee`, )
                         .then(function(response) {
-                            
-                            const caseData = response.data
-                            if(caseData.length===0) 
-                                $('#record-not-found-div').css("display", "block")
-                            else 
-                                $('#record-not-found-div').css("display", "none")
 
-                            // document.querySelector(".faq--01 h1").innerHTML = json[0].title;
-
-                            document.querySelector('.create-new-case1-input-case-title').value = caseData.case_title;
-                            document.querySelector('.create-new-case1-textarea').value = caseData.case_description;
-                            document.querySelector('.create-new-case1-textinput').value = caseData.case_type;
-                            document.querySelector('.create-new-case1-textinput1').value = caseData.case_status;
-                            document.querySelector('.create-new-case1-textinput2').value = caseData.case_priority;
-                            document.querySelector('.create-new-case1-textinput3').value = caseData.case_total_billed_hour;
-
-                            // document.querySelector('.case-client-name0').textContent = caseData.case_client_list[0].case_member_id;
-
-                            const caseClientList = caseData.case_member_list.filter(user => user.case_member_type === 'client');
-
-                            const caseStaffList = caseData.case_member_list.filter(user => user.case_member_type !== 'client');
-
-                            // Iterate through the staff members in the table and check the checkboxes
-                            for (let i = 0; i < caseClientList.length; i++) {
-                                const clientId = caseClientList[i].case_member_id;
-                                const checkbox = $(`#create-allClient-table tbody tr:has(td:eq(2):contains('${clientId}')) .client-checkbox`);
-                                checkbox.prop('checked', true);
-                            }
-
-                            // Iterate through the staff members in the table and check the checkboxes
-                            for (let i = 0; i < caseStaffList.length; i++) {
-                                const staffId = caseStaffList[i].case_member_id;
-                                const checkbox = $(`#create-allStaff-table tbody tr:has(td:eq(2):contains('${staffId}')) .staff-checkbox`);
-                                checkbox.prop('checked', true);
-                            }
-
-                            endLoader();
-
-                        })
-                        .catch(function(error) {
-                            const {
-                                status
-                            } = error.response
-                            if (status === 401) {
-                                localStorage.clear()
-                                window.location.href = baseUrl + 'php/auth/login.php';
-                            }
+                        const staffData = response.data.filter(user => user.type !== 'client');
+                        if(staffData.length===0) 
                             $('#record-not-found-div').css("display", "block")
+                        else 
+                            $('#record-not-found-div').css("display", "none")
+                            staffData.forEach((staff, index) => {
+
+                            avatar_url = staff.avatar_url;
+
+                            if(avatar_url === ""){
+                                avatar_url = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+                            } else {                            
+
+                            }
+
+                            const markup = '<tr>' +
+                                '<td style="width: 5%; text-align: center;"><input type="checkbox" class="staff-checkbox" /></td>' +
+                                '<td style="width: 5%; text-align: center;"><img src="' + avatar_url + '" alt="" class="client-avatar" /></td>' +
+                                '<td style="display:none; text-align: center;">' + staff._id + '</td>' +
+                                '<td style="width: 15%; max-width: 100px; text-align: center;">' + staff.username + '</td>' +
+                                '<td style="width: 15%; max-width: 100px; text-align: center;">' + staff.type + '</td>' +
+                                '<td style="width: 15%; max-width: 100px; text-align: center;">' + staff.number + '</td>' +
+                                '<td style="width: 45%; max-width: 300px; text-align: center;">' + staff.address + '</td>' +
+                                '</tr>';
+                            $('#create-allStaff-table tbody').append(markup);
                         });
+
+                        // prepare table so that it can be sorted
+                        $('#create-allStaff-table').tableSort({
+                            animation: 'slide',
+                            speed: 500
+                        });
+
+                        axios.get('/api/cases/' + caseId, )
+                            .then(function(response) {
+                                
+                                const caseData = response.data
+                                if(caseData.length===0) 
+                                    $('#record-not-found-div').css("display", "block")
+                                else 
+                                    $('#record-not-found-div').css("display", "none")
+
+                                // document.querySelector(".faq--01 h1").innerHTML = json[0].title;
+
+                                document.querySelector('.create-new-case1-input-case-title').value = caseData.case_title;
+                                document.querySelector('.create-new-case1-textarea').value = caseData.case_description;
+                                document.querySelector('.create-new-case1-textinput').value = caseData.case_type;
+                                document.querySelector('.create-new-case1-textinput1').value = caseData.case_status;
+                                document.querySelector('.create-new-case1-textinput2').value = caseData.case_priority;
+                                document.querySelector('.create-new-case1-textinput3').value = caseData.case_total_billed_hour;
+
+                                // document.querySelector('.case-client-name0').textContent = caseData.case_client_list[0].case_member_id;
+
+                                const caseClientList = caseData.case_member_list.filter(user => user.case_member_type === 'client');
+
+                                const caseStaffList = caseData.case_member_list.filter(user => user.case_member_type !== 'client');
+
+                                // Iterate through the staff members in the table and check the checkboxes
+                                for (let i = 0; i < caseClientList.length; i++) {
+                                    const clientId = caseClientList[i].case_member_id;
+                                    const checkbox = $(`#create-allClient-table tbody tr:has(td:eq(2):contains('${clientId}')) .client-checkbox`);
+                                    checkbox.prop('checked', true);
+                                }
+
+                                // Iterate through the staff members in the table and check the checkboxes
+                                for (let i = 0; i < caseStaffList.length; i++) {
+                                    const staffId = caseStaffList[i].case_member_id;
+                                    const checkbox = $(`#create-allStaff-table tbody tr:has(td:eq(2):contains('${staffId}')) .staff-checkbox`);
+                                    checkbox.prop('checked', true);
+                                }
+
+                                endLoader();
+
+                            })
+                            .catch(function(error) {
+                                const {
+                                    status
+                                } = error.response
+                                if (status === 401) {
+                                    localStorage.clear()
+                                    window.location.href = baseUrl + 'php/auth/login.php';
+                                }
+                                $('#record-not-found-div').css("display", "block")
+                            });
+
+                    })
                 })
                 .catch(function(error) {
                     const {
@@ -229,66 +251,6 @@
                     }
                     $('#record-not-found-div').css("display", "block")
                 });
-
-                // // Store the selected case members in an array
-                // let selectedCaseMembers = [];
-
-                // // Event listener for checkbox clicks
-                // $(document).on('change', '.client-checkbox', function() {
-                //     // Get the values from the corresponding row
-                //     const row = $(this).closest('tr');
-                //     const id = row.find('td:eq(2)').text();
-                //     const username = row.find('td:eq(3)').text();
-                //     const role = row.find('td:eq(4)').text();
-                //     const number = row.find('td:eq(5)').text();
-                //     const address = row.find('td:eq(6)').text();
-
-                //     // Check if the checkbox is checked or unchecked
-                //     if ($(this).prop('checked')) {
-                //         // console.log(id);
-                //         // Add the selected case member to the array
-                //         selectedCaseMembers.push({
-                //             case_member_id: id,
-                //             case_member_type: role,  // Assuming a default type for clients
-                //             case_member_role: 'role'     // Assuming a default role for clients
-                //         });
-                //     } else {
-                //         // Remove the unselected case member from the array
-                //         selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
-                //     }
-                // });
-
-                // // Event listener for checkbox clicks
-                // $(document).on('change', '.staff-checkbox', function() {
-                //     // Get the values from the corresponding row
-                //     const row = $(this).closest('tr');
-                //     const id = row.find('td:eq(2)').text();
-                //     const username = row.find('td:eq(3)').text();
-                //     const role = row.find('td:eq(4)').text();
-                //     const number = row.find('td:eq(5)').text();
-                //     const address = row.find('td:eq(6)').text();
-
-                //     // Check if the checkbox is checked or unchecked
-                //     if ($(this).prop('checked')) {
-                //         // console.log(id);
-                //         // Add the selected case member to the array
-                //         selectedCaseMembers.push({
-                //             case_member_id: id,
-                //             case_member_type: role,  // Assuming a default type for clients
-                //             case_member_role: 'role'     // Assuming a default role for clients
-
-                            
-                //         });
-                //         console.log(selectedCaseMembers);
-                //     } else {
-                //         // Remove the unselected case member from the array
-                //         selectedCaseMembers = selectedCaseMembers.filter(member => member.case_member_id !== id);
-                //     }
-                // });
-
-
-
-
 
                 function cancelButtonClick() {
                     // Redirect to the desired URL

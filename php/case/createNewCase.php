@@ -135,14 +135,22 @@
                 else 
                     $('#record-not-found-div').css("display", "none")
                 clientData.forEach((client, index) => {
+                    avatar_url = client.avatar_url;
+
+                    if(avatar_url === ""){
+                        avatar_url = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+                    } else {                            
+
+                    }
+
                     const markup = '<tr>' +
                         '<td style="width: 5%; text-align: center;"><input type="checkbox" class="client-checkbox" /></td>' +
-                        '<td style="width: 5%; text-align: center;"><img src="' + client.avatar_url + '" alt="" class="client-avatar" /></td>' +
+                        '<td style="width: 5%; text-align: center;"><img src="' + avatar_url + '" alt="" class="client-avatar" /></td>' +
                         '<td style="display:none; text-align: center;">' + client._id + '</td>' +
-                        '<td style="width: 22.5%; text-align: center;">' + client.username + '</td>' +
-                        '<td style="width: 22.5%; text-align: center;">' + client.type + '</td>' +
-                        '<td style="width: 22.5%; text-align: center;">' + client.number + '</td>' +
-                        '<td style="width: 22.5%; text-align: center;">' + client.address + '</td>' +
+                        '<td style="width: 15%; max-width: 100px; text-align: center;">' + client.username + '</td>' +
+                        '<td style="width: 15%; max-width: 100px; text-align: center;">' + client.type + '</td>' +
+                        '<td style="width: 15%; max-width: 100px; text-align: center;">' + client.number + '</td>' +
+                        '<td style="width: 45%; max-width: 300px; text-align: center;">' + client.address + '</td>' +
                         '</tr>';
                     $('#create-allClient-table tbody').append(markup);
                 });
@@ -152,6 +160,21 @@
                     animation: 'slide',
                     speed: 500
                 });
+            })
+            .catch(function(error) {
+                const {
+                    status
+                } = error.response
+                if (status === 401) {
+                    localStorage.clear()
+                    window.location.href = baseUrl + 'php/auth/login.php';
+                }
+                $('#record-not-found-div').css("display", "block")
+            });
+
+            axios.get(`/api/crm/employee`, )
+            .then(function(response) {
+                // TODO: Convert into data and render it
 
                 const staffData = response.data.filter(user => user.type !== 'client');
                 if(staffData.length===0) 
@@ -159,14 +182,22 @@
                 else 
                     $('#record-not-found-div').css("display", "none")
                     staffData.forEach((staff, index) => {
+                        avatar_url = staff.avatar_url;
+
+                        if(avatar_url === ""){
+                            avatar_url = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+                        } else {                            
+
+                        }
+
                     const markup = '<tr>' +
                         '<td style="width: 5%; text-align: center;"><input type="checkbox" class="staff-checkbox" /></td>' +
-                        '<td style="width: 5%; text-align: center;"><img src="' + staff.avatar_url + '" alt="" class="client-avatar" /></td>' +
+                        '<td style="width: 5%; text-align: center;"><img src="' + avatar_url + '" alt="" class="client-avatar" /></td>' +
                         '<td style="display:none;">' + staff._id + '</td>' +
-                        '<td style="width: 22.5%; text-align: center;">' + staff.username + '</td>' +
-                        '<td style="width: 22.5%; text-align: center;">' + staff.type + '</td>' +
-                        '<td style="width: 22.5%; text-align: center;">' + staff.number + '</td>' +
-                        '<td style="width: 22.5%; text-align: center;">' + staff.address + '</td>' +
+                        '<td style="width: 15%; max-width: 100px; text-align: center;">' + staff.username + '</td>' +
+                        '<td style="width: 15%; max-width: 100px; text-align: center;">' + staff.type + '</td>' +
+                        '<td style="width: 15%; max-width: 100px; text-align: center;">' + staff.number + '</td>' +
+                        '<td style="width: 45%; max-width: 300px; text-align: center;">' + staff.address + '</td>' +
                         '</tr>';
                     $('#create-allStaff-table tbody').append(markup);
                 });

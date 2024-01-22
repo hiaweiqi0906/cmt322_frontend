@@ -29,8 +29,8 @@
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="h1-main-title">Case Details</h1>
             <div class = "buttons"> 
-                <a class="btn btn-primary" id="delete-case-button" style="background-color: #1c277e; margin-right: 5px">Delete This Case</a>
-                <a class="btn btn-primary" id="create-case-button" style="background-color: #1c277e;">Edit This Case</a>
+                <a class="btn btn-primary" id="delete-case-button" style="background-color: #1c277e; margin-right: 5px; font-family: 'Montserrat', sans-serif;">Delete This Case</a>
+                <a class="btn btn-primary" id="create-case-button" style="background-color: #1c277e; font-family: 'Montserrat', sans-serif;">Edit This Case</a>
             </div>
         </div>
         <h2 class="h2-user-greeting">Greeting, user!</h2>

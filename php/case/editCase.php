@@ -65,7 +65,7 @@
                                 <table id="create-allClient-table" class="table-general">
                                     <thead>
                                         <tr>
-                                            <th class="col-2" style="width: 5%;"></th>
+                                            <th class="col-2" style="width: 5%;" !important></th>
                                             <th class="col-1" style="width: 5%;"></th>
                                             <th class="col-1" style="width: 22.5%;">Name</th>
                                             <th class="col-1" style="width: 22.5%;">Role</th>
@@ -137,10 +137,10 @@
                             '<td style="width: 5%; text-align: center;"><input type="checkbox" class="client-checkbox" /></td>' +
                             '<td style="width: 5%; text-align: center;"><img src="' + client.avatar_url + '" alt="" class="client-avatar" /></td>' +
                             '<td style="display:none; text-align: center;">' + client._id + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + client.username + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + client.type + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + client.number + '</td>' +
-                            '<td style="width: 22.5%; text-align: center;">' + client.address + '</td>' +
+                            '<td style="width: 15%; max-width: 100px; text-align: center;">' + client.username + '</td>' +
+                            '<td style="width: 15%; max-width: 100px; text-align: center;">' + client.type + '</td>' +
+                            '<td style="width: 15%; max-width: 100px; text-align: center;">' + client.number + '</td>' +
+                            '<td style="width: 45%; max-width: 300px; text-align: center;">' + client.address + '</td>' +
                             '</tr>';
                         $('#create-allClient-table tbody').append(markup);
                     });
@@ -173,10 +173,10 @@
                                 '<td style="width: 5%; text-align: center;"><input type="checkbox" class="staff-checkbox" /></td>' +
                                 '<td style="width: 5%; text-align: center;"><img src="' + avatar_url + '" alt="" class="client-avatar" /></td>' +
                                 '<td style="display:none; text-align: center;">' + staff._id + '</td>' +
-                                '<td style="width: 22.5%; text-align: center;">' + staff.username + '</td>' +
-                                '<td style="width: 22.5%; text-align: center;">' + staff.type + '</td>' +
-                                '<td style="width: 22.5%; text-align: center;">' + staff.number + '</td>' +
-                                '<td style="width: 22.5%; text-align: center;">' + staff.address + '</td>' +
+                                '<td style="width: 15%; max-width: 100px; text-align: center;">' + staff.username + '</td>' +
+                                '<td style="width: 15%; max-width: 100px; text-align: center;">' + staff.type + '</td>' +
+                                '<td style="width: 15%; max-width: 100px; text-align: center;">' + staff.number + '</td>' +
+                                '<td style="width: 45%; max-width: 300px; text-align: center;">' + staff.address + '</td>' +
                                 '</tr>';
                             $('#create-allStaff-table tbody').append(markup);
                         });

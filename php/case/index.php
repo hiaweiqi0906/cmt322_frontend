@@ -44,7 +44,7 @@
                                 <div class="nested-flex-con-row row-1-statistics">
                                     <div class="col-4 two-line-statistics">
                                         <div style="width: 85px;">
-                                            <p>Total Num of Cases</p>
+                                            <p>Total Number of Cases</p>
                                             <div class="big-number-statistics-block">
                                                 <span class="big-number-statistics total-number-of-cases">36</span>
                                             </div>
